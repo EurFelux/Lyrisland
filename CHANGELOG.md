@@ -5,6 +5,7 @@
 ### Fixed
 
 - Full 模式歌词加载过程中封面图片布局偏移
+- Full 模式长歌词行换行而非使用 MarqueeText 单行滚动显示
 
 ### Added
 

@@ -18,7 +18,8 @@ struct LyricsScrollView: View {
                             text: line.text,
                             translation: line.translation,
                             isCurrent: line.id == currentLineIndex,
-                            distance: abs(line.id - currentLineIndex)
+                            distance: abs(line.id - currentLineIndex),
+                            lineDuration: lineDuration(for: line.id)
                         )
                         .frame(maxWidth: .infinity, alignment: alignment)
                         .environment(\.layoutDirection, line.text.isRTL ? .rightToLeft : .leftToRight)
@@ -39,6 +40,11 @@ struct LyricsScrollView: View {
             }
         }
     }
+
+    private func lineDuration(for index: Int) -> Double? {
+        guard index + 1 < lyrics.lines.count else { return nil }
+        return lyrics.lines[index + 1].time - lyrics.lines[index].time
+    }
 }
 
 /// Individual lyric line — Equatable so SwiftUI skips body evaluation
@@ -48,14 +54,26 @@ private struct LyricLineRow: View, Equatable {
     let translation: String?
     let isCurrent: Bool
     let distance: Int
+    let lineDuration: Double?
 
     var body: some View {
         VStack(spacing: 2) {
-            Text(text)
-                .font(.system(size: isCurrent ? 15 : 12, weight: isCurrent ? .bold : .regular))
-                .foregroundStyle(isCurrent ? .white : .white.opacity(0.35))
-                .blur(radius: blurAmount)
-                .scaleEffect(isCurrent ? 1.0 : 0.95)
+            if isCurrent {
+                MarqueeText(
+                    text: text,
+                    font: .system(size: 15, weight: .bold),
+                    color: .white,
+                    loops: false,
+                    lineDuration: lineDuration
+                )
+            } else {
+                Text(text)
+                    .font(.system(size: 12))
+                    .foregroundStyle(.white.opacity(0.35))
+                    .lineLimit(1)
+                    .blur(radius: blurAmount)
+                    .scaleEffect(0.95)
+            }
 
             if let translation {
                 Text(translation)
