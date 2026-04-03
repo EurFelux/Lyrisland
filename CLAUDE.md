@@ -43,7 +43,7 @@ After cloning, run `prek install` to set up the git pre-commit hook.
 - When a commit resolves a GitHub issue, the commit message **must** include `Fixes #<number>` (e.g. `Fixes #3`) so GitHub automatically closes the issue on push.
 - Use [Conventional Commits](https://www.conventionalcommits.org/) format: `<type>(<scope>): <description>`. Common types: `feat`, `fix`, `refactor`, `docs`, `chore`, `style`, `perf`, `test`. Example: `fix(lyrics): resolve long line truncation with marquee scrolling`.
 - New features and bug fixes that touch pure logic (parsers, matchers, models) should include unit tests in `Tests/` using **Swift Testing** (`import Testing`, `@Test`, `@Suite`). Run `xcodebuild test` to verify before committing.
-- After completing a coding task, use the **code-reviewer** agent (`pr-review-toolkit:code-reviewer`) to review the changes before committing.
+- After completing a coding task, use the **code-reviewer** agent (`pr-review-toolkit:code-reviewer`) to review the changes. If the review raises issues (critical or important), fix them and re-run the reviewer. **Repeat until the reviewer approves** before committing.
 
 ## Architecture
 
