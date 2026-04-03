@@ -20,6 +20,7 @@
 
 ### Fixed
 
+- 切换歌曲时旧歌词短暂闪现：在加载新歌词前立即清除 `currentLyrics`，避免 UI 显示上一首歌的歌词 (#50)
 - Expanded 灵动岛歌词改为逐行平滑滚动（ScrollViewReader + scrollTo），替代原有滑动窗口就地刷新；移除 Expanded 视图中对双行歌词模式的引用，双行模式仅作用于 Compact 状态 (#33)
 - 首次进入 Full 模式时歌词不会自动滚动到当前播放行，需等下一次行切换才会滚动 (#39)
 - 菜单栏点击"设置"无反应：LSUIElement 应用中私有 selector 不可靠，改为手动管理 Settings 窗口 (#31)
