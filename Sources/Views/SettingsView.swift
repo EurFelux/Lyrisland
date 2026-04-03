@@ -2,6 +2,8 @@ import KeyboardShortcuts
 import SwiftUI
 
 struct SettingsView: View {
+    @ObservedObject var lyricsManager: LyricsManager
+
     var body: some View {
         TabView {
             GeneralTab()
@@ -14,7 +16,7 @@ struct SettingsView: View {
                     Label(String(localized: "settings.tab.appearance"), systemImage: "paintbrush")
                 }
 
-            LyricsTab()
+            LyricsTab(lyricsManager: lyricsManager)
                 .tabItem {
                     Label(String(localized: "settings.tab.lyrics"), systemImage: "music.note.list")
                 }
@@ -126,6 +128,7 @@ private struct AppearanceTab: View {
 // MARK: - Lyrics
 
 private struct LyricsTab: View {
+    @ObservedObject var lyricsManager: LyricsManager
     @AppStorage("currentLyricsOffset") private var currentOffset: Double = 0
 
     var body: some View {
@@ -161,21 +164,51 @@ private struct LyricsTab: View {
             }
 
             Section {
-                VStack(alignment: .leading, spacing: 4) {
-                    ForEach(providerOrder, id: \.self) { name in
-                        Text(name)
+                ForEach($lyricsManager.providerSettings.entries) { $entry in
+                    HStack {
+                        Image(systemName: "line.3.horizontal")
+                            .foregroundStyle(.tertiary)
+                        Text(Self.displayName(for: entry.id))
+                        Spacer()
+                        Toggle("", isOn: $entry.isEnabled)
+                            .labelsHidden()
+                            .toggleStyle(.switch)
+                            .controlSize(.small)
                     }
+                }
+                .onMove { from, to in
+                    lyricsManager.providerSettings.entries.move(fromOffsets: from, toOffset: to)
+                }
+
+                HStack {
+                    Text(String(localized: "settings.lyrics.providers_hint"))
+                        .foregroundStyle(.tertiary)
+                        .font(.caption)
+                    Spacer()
+                    Button(String(localized: "settings.lyrics.providers_reset")) {
+                        lyricsManager.updateProviderSettings(.default)
+                    }
+                    .controlSize(.small)
                 }
             } header: {
                 Text(String(localized: "settings.lyrics.providers_section"))
             }
         }
         .formStyle(.grouped)
+        .onChange(of: lyricsManager.providerSettings) { _, newValue in
+            newValue.save()
+        }
     }
 
-    /// Keep in sync with LyricsManager.providers
-    private var providerOrder: [String] {
-        ["LRCLIB", "Musixmatch", "Soda Music", "Netease"]
+    private static let displayNames: [String: String] = [
+        "lrclib": "LRCLIB",
+        "musixmatch": "Musixmatch",
+        "sodamusic": "Soda Music",
+        "netease": "Netease",
+    ]
+
+    private static func displayName(for id: String) -> String {
+        displayNames[id] ?? id
     }
 }
 

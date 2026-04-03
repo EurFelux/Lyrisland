@@ -32,13 +32,32 @@ final class LyricsManager: ObservableObject {
         userOffset = 0
     }
 
-    /// Providers sorted by priority (lower = tried first).
-    private let providers: [LyricsProvider] = [
-        LRCLibProvider(), // 0 — open, free, no auth
-        MusixmatchProvider(), // 1 — strong for Western music, richsync
-        SodaMusicProvider(), // 2 — ByteDance, good for Chinese lyrics
-        NeteaseProvider(), // 3 — Netease Cloud Music, strong for Chinese/Asian music
+    /// User-configured provider order and enable/disable state.
+    @Published var providerSettings: ProviderSettings
+
+    /// All available providers (registry; runtime order is governed by providerSettings).
+    private let allProviders: [LyricsProvider] = [
+        LRCLibProvider(),
+        MusixmatchProvider(),
+        SodaMusicProvider(),
+        NeteaseProvider(),
     ]
+
+    /// Active providers filtered and sorted by user-configured order.
+    private var orderedProviders: [LyricsProvider] {
+        let enabledIds = providerSettings.entries.filter(\.isEnabled).map(\.id)
+        return enabledIds.compactMap { id in
+            allProviders.first { $0.name == id }
+        }
+    }
+
+    init() {
+        providerSettings = ProviderSettings.load()
+    }
+
+    func updateProviderSettings(_ settings: ProviderSettings) {
+        providerSettings = settings
+    }
 
     /// Two-tier cache (memory + disk) keyed by track ID.
     private let cache = Cache<String, SyncedLyrics>(
@@ -64,7 +83,7 @@ final class LyricsManager: ObservableObject {
         defer { isLoading = false }
 
         // Walk the fallback chain
-        for provider in providers.sorted(by: { $0.priority < $1.priority }) {
+        for provider in orderedProviders {
             do {
                 if let lyrics = try await provider.fetchLyrics(for: track) {
                     logInfo("Lyrics found via \(provider.name) for: \(track.title)")

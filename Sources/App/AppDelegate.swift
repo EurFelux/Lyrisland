@@ -10,7 +10,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var helpWindow: NSWindow?
     private var statusItem: NSStatusItem?
     private let spotifyService = SpotifyAppleScriptService()
-    private let lyricsManager = LyricsManager()
+    let lyricsManager = LyricsManager()
     private let syncEngine = PlaybackSyncEngine()
     private let appState = AppState()
 
@@ -319,7 +319,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             )
             window.center()
             window.title = String(localized: "menu.settings")
-            window.contentView = NSHostingView(rootView: SettingsView())
+            window.contentView = NSHostingView(rootView: SettingsView(lyricsManager: lyricsManager))
             window.isReleasedWhenClosed = false
             settingsWindow = window
             window.makeKeyAndOrderFront(nil)
