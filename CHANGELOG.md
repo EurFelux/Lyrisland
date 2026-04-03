@@ -17,6 +17,7 @@
 
 ### Fixed
 
+- 菜单栏点击"设置"无反应：LSUIElement 应用需先激活再发送 action，并添加 selector 回退兼容 (#31)
 - 自由拖拽模式下拖动灵动岛不再需要长按 0.5 秒，鼠标按下即可直接拖拽 (#25)
 - Full 视图歌词列表滚动卡顿：移除 `tick` 的 30fps 全局发布，视图改为仅响应 `currentLineIndex` 变更；`LyricsScrollView` 不再依赖 `syncEngine`，仅接收必要数据 (#15)
 - 跑马灯歌词在当前行结束前会跳回起点重新滚动，改为单次滚动后停留在末尾，新增 `loops` 参数控制是否循环 (#14)
