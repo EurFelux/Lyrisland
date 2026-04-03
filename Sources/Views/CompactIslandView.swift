@@ -134,5 +134,9 @@ private struct DualLineRow: View, Equatable {
             loops: false,
             lineDuration: lineDuration
         )
+        // Force recreation when the row transitions from next→current (or vice-versa).
+        // Without this, SwiftUI reuses the same MarqueeText instance and the stale
+        // animationPhase (.idle with scrollEnabled=false) never restarts.
+        .id(isCurrent)
     }
 }
