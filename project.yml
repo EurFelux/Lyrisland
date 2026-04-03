@@ -20,6 +20,11 @@ settings:
     MACOSX_DEPLOYMENT_TARGET: "14.0"
     DEVELOPMENT_TEAM: ""
 
+packages:
+  KeyboardShortcuts:
+    url: https://github.com/sindresorhus/KeyboardShortcuts
+    from: "2.0.0"
+
 targets:
   Lyrisland:
     type: application
@@ -32,6 +37,8 @@ targets:
         INFOPLIST_FILE: Sources/App/Info.plist
         CODE_SIGN_ENTITLEMENTS: Sources/App/Lyrisland.entitlements
         ENABLE_HARDENED_RUNTIME: true
+    dependencies:
+      - package: KeyboardShortcuts
     preBuildScripts:
       - script: |
           if which swiftformat >/dev/null; then
