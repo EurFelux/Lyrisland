@@ -43,10 +43,13 @@ struct CompactIslandView: View {
     }
 
     private var displayText: String {
-        // Has lyrics and a current line
-        if let lyrics = lyricsManager.currentLyrics,
-           let idx = lyrics.lineIndex(at: syncEngine.position) {
-            return lyrics.lines[idx].text
+        // Has lyrics loaded
+        if let lyrics = lyricsManager.currentLyrics {
+            if let idx = lyrics.lineIndex(at: syncEngine.position) {
+                return lyrics.lines[idx].text
+            }
+            // Before first line — lyrics are loaded but haven't started yet
+            return "♪"
         }
 
         // Loading lyrics
@@ -69,8 +72,8 @@ struct CompactIslandView: View {
     }
 
     private var displayTextOpacity: Color {
-        if lyricsManager.currentLyrics != nil,
-           lyricsManager.currentLyrics?.lineIndex(at: syncEngine.position) != nil {
+        if let lyrics = lyricsManager.currentLyrics,
+           lyrics.lineIndex(at: syncEngine.position) != nil {
             return .white
         }
         return .white.opacity(0.5)
