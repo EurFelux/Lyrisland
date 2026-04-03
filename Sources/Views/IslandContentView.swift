@@ -125,11 +125,9 @@ struct IslandContentView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.top, 6)
 
-                // Playback controls
+                // Remaining space: controls centered within it
                 PlaybackControlsView(syncEngine: syncEngine)
-                    .padding(.top, 4)
-
-                Spacer(minLength: 0)
+                    .frame(maxHeight: .infinity)
             }
         }
     }
@@ -137,7 +135,7 @@ struct IslandContentView: View {
     private var artworkSize: CGFloat {
         switch islandState {
         case .compact: 36
-        case .expanded: 128
+        case .expanded: 110
         case .full: 200
         }
     }
@@ -149,7 +147,7 @@ struct IslandContentView: View {
         case .expanded:
             EdgeInsets(top: 12, leading: 10, bottom: 12, trailing: 10)
         case .full:
-            EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0)
+            EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0)
         }
     }
 
@@ -168,7 +166,7 @@ struct IslandContentView: View {
     static func contentHeight(for state: IslandState, dualLine: Bool = false, artwork: Bool = true) -> CGFloat {
         switch state {
         case .compact: dualLine ? 62 : artwork ? 48 : 38
-        case .expanded: artwork ? 160 : 120
+        case .expanded: artwork ? 140 : 120
         case .full: artwork ? 340 : 340
         }
     }
