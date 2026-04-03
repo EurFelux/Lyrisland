@@ -31,6 +31,9 @@ struct ExpandedIslandView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
 
+            Divider()
+                .background(.white.opacity(0.15))
+
             if let lyrics = lyricsManager.currentLyrics {
                 let currentIdx = syncEngine.currentLineIndex ?? 0
                 let range = contextRange(around: currentIdx, total: lyrics.lines.count)

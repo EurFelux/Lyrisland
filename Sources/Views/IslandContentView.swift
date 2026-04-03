@@ -145,7 +145,13 @@ struct IslandContentView: View {
         case .compact:
             EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
         case .expanded:
-            EdgeInsets(top: 12, leading: 10, bottom: 12, trailing: 10)
+            // In attached mode, move bottom padding to top so the content clears the notch.
+            // The bottom padding otherwise pushes the bottom-aligned content up into the menu bar area.
+            if isAttached {
+                EdgeInsets(top: 24, leading: 10, bottom: 0, trailing: 10)
+            } else {
+                EdgeInsets(top: 12, leading: 10, bottom: 12, trailing: 10)
+            }
         case .full:
             EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0)
         }
