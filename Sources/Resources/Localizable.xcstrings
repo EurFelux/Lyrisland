@@ -356,10 +356,34 @@
         "zh-Hans": { "stringUnit": { "state": "translated", "value": "偏移" } }
       }
     },
+    "settings.lyrics.current_offset": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Current Offset" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "当前偏移" } }
+      }
+    },
+    "settings.lyrics.offset.earlier": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "−0.5s" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "−0.5秒" } }
+      }
+    },
+    "settings.lyrics.offset.later": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "+0.5s" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "+0.5秒" } }
+      }
+    },
+    "settings.lyrics.offset.reset": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Reset" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "重置" } }
+      }
+    },
     "settings.lyrics.offset_hint": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Use ⌘[ and ⌘] to adjust lyrics timing offset while playing. Press ⌘0 to reset." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "播放时使用 ⌘[ 和 ⌘] 调整歌词时间偏移，按 ⌘0 重置。" } }
+        "en": { "stringUnit": { "state": "translated", "value": "Also adjustable with ⌘[ / ⌘] / ⌘0" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "也可使用 ⌘[ / ⌘] / ⌘0 调整" } }
       }
     },
     "settings.lyrics.providers_section": {

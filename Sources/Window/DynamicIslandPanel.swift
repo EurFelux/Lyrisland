@@ -223,4 +223,6 @@ extension Notification.Name {
     static let islandTapped = Notification.Name("islandTapped")
     static let islandPositionModeChanged = Notification.Name("islandPositionModeChanged")
     static let islandPositionModeSettingsChanged = Notification.Name("islandPositionModeSettingsChanged")
+    static let lyricsOffsetAdjust = Notification.Name("lyricsOffsetAdjust")
+    static let lyricsOffsetReset = Notification.Name("lyricsOffsetReset")
 }

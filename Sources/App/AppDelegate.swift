@@ -1,5 +1,4 @@
 import AppKit
-import Combine
 import SwiftUI
 
 @MainActor
@@ -11,7 +10,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let lyricsManager = LyricsManager()
     private let syncEngine = PlaybackSyncEngine()
     private let appState = AppState()
-    private var cancellables = Set<AnyCancellable>()
 
     func applicationDidFinishLaunching(_: Notification) {
         Log.shared.cleanupOldLogs()
@@ -72,10 +70,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private var trackMenuItem: NSMenuItem?
     private var sourceMenuItem: NSMenuItem?
-    private var dualLineMenuItem: NSMenuItem?
-    private var showArtworkMenuItem: NSMenuItem?
-    private var offsetMenuItem: NSMenuItem?
-    private var positionModeMenuItem: NSMenuItem?
 
     private func setupMenuBar() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -99,62 +93,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         menu.addItem(NSMenuItem(title: String(localized: "menu.show_hide"), action: #selector(toggleIsland), keyEquivalent: "l"))
 
-        dualLineMenuItem = NSMenuItem(title: String(localized: "menu.dual_line"), action: #selector(toggleDualLine), keyEquivalent: "d")
-        dualLineMenuItem?.state = appState.dualLineMode ? .on : .off
-        menu.addItem(dualLineMenuItem!)
-
-        showArtworkMenuItem = NSMenuItem(
-            title: String(localized: "menu.show_artwork"),
-            action: #selector(toggleArtwork),
-            keyEquivalent: "a"
-        )
-        showArtworkMenuItem?.state = appState.showArtwork ? .on : .off
-        menu.addItem(showArtworkMenuItem!)
-
-        let isAttached = UserDefaults.standard.islandPositionMode == .attached
-        positionModeMenuItem = NSMenuItem(
-            title: isAttached ? String(localized: "menu.position.detach") : String(localized: "menu.position.attach"),
-            action: #selector(togglePositionMode),
-            keyEquivalent: "p"
-        )
-        positionModeMenuItem?.target = self
-        menu.addItem(positionModeMenuItem!)
-
-        menu.addItem(.separator())
-
-        // Offset controls
-        let offsetHeader = NSMenuItem(title: String(localized: "menu.offset"), action: nil, keyEquivalent: "")
-        offsetHeader.isEnabled = false
-        menu.addItem(offsetHeader)
-
-        offsetMenuItem = NSMenuItem(title: String(format: String(localized: "menu.offset.value"), 0.0), action: nil, keyEquivalent: "")
-        offsetMenuItem?.isEnabled = false
-        menu.addItem(offsetMenuItem!)
-
-        menu.addItem(NSMenuItem(title: String(localized: "menu.offset.earlier"), action: #selector(offsetEarlier), keyEquivalent: "["))
-        menu.addItem(NSMenuItem(title: String(localized: "menu.offset.later"), action: #selector(offsetLater), keyEquivalent: "]"))
-        menu.addItem(NSMenuItem(title: String(localized: "menu.offset.reset"), action: #selector(offsetReset), keyEquivalent: "0"))
-
         menu.addItem(.separator())
         menu.addItem(NSMenuItem(title: String(localized: "menu.settings"), action: #selector(openSettings), keyEquivalent: ","))
         menu.addItem(NSMenuItem(title: String(localized: "menu.quit"), action: #selector(quitApp), keyEquivalent: "q"))
 
         statusItem?.menu = menu
-
-        // Sync menu item states when AppState changes (e.g. from Settings window)
-        appState.$dualLineMode
-            .receive(on: RunLoop.main)
-            .sink { [weak self] value in
-                self?.dualLineMenuItem?.state = value ? .on : .off
-            }
-            .store(in: &cancellables)
-
-        appState.$showArtwork
-            .receive(on: RunLoop.main)
-            .sink { [weak self] value in
-                self?.showArtworkMenuItem?.state = value ? .on : .off
-            }
-            .store(in: &cancellables)
     }
 
     private func updateMenuInfo(state: SpotifyPlaybackState? = nil) {
@@ -170,9 +113,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             sourceMenuItem?.isHidden = true
         }
-
-        let offset = lyricsManager.userOffset
-        offsetMenuItem?.title = String(format: String(localized: "menu.offset.value"), offset)
     }
 
     // MARK: - Island Panel
@@ -188,26 +128,44 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(positionModeDidChange),
-            name: .islandPositionModeChanged,
+            selector: #selector(positionModeSettingsChanged(_:)),
+            name: .islandPositionModeSettingsChanged,
             object: nil
         )
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(positionModeSettingsChanged(_:)),
-            name: .islandPositionModeSettingsChanged,
+            selector: #selector(handleOffsetAdjust(_:)),
+            name: .lyricsOffsetAdjust,
             object: nil
         )
-    }
 
-    @objc private func positionModeDidChange() {
-        updatePositionModeMenuItem()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleOffsetReset),
+            name: .lyricsOffsetReset,
+            object: nil
+        )
     }
 
     @objc private func positionModeSettingsChanged(_ notification: Notification) {
         guard let mode = notification.object as? IslandPositionMode else { return }
         islandPanel?.setPositionMode(mode)
+    }
+
+    @objc private func handleOffsetAdjust(_ notification: Notification) {
+        guard let delta = notification.object as? Double else { return }
+        lyricsManager.adjustOffset(by: delta)
+        syncOffsetToDefaults()
+    }
+
+    @objc private func handleOffsetReset() {
+        lyricsManager.resetOffset()
+        syncOffsetToDefaults()
+    }
+
+    private func syncOffsetToDefaults() {
+        UserDefaults.standard.set(lyricsManager.userOffset, forKey: "currentLyricsOffset")
     }
 
     // MARK: - Playback Monitoring
@@ -257,6 +215,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if trackChanged {
                 lastTrackId = state.trackId
                 lyricsManager.resetOffset()
+                UserDefaults.standard.set(0.0, forKey: "currentLyricsOffset")
                 let track = TrackInfo(
                     id: state.trackId,
                     title: state.title,
@@ -277,51 +236,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Actions
 
-    @objc private func toggleDualLine() {
-        appState.dualLineMode.toggle()
-        dualLineMenuItem?.state = appState.dualLineMode ? .on : .off
-    }
-
-    @objc private func toggleArtwork() {
-        appState.showArtwork.toggle()
-        showArtworkMenuItem?.state = appState.showArtwork ? .on : .off
-    }
-
-    @objc private func togglePositionMode() {
-        guard let panel = islandPanel else { return }
-        let newMode: IslandPositionMode = panel.positionMode == .attached ? .detached : .attached
-        panel.setPositionMode(newMode)
-        updatePositionModeMenuItem()
-    }
-
-    private func updatePositionModeMenuItem() {
-        guard let panel = islandPanel else { return }
-        positionModeMenuItem?.title = panel.positionMode == .attached
-            ? String(localized: "menu.position.detach")
-            : String(localized: "menu.position.attach")
-    }
-
     @objc private func toggleIsland() {
         if islandPanel?.isVisible == true {
             islandPanel?.orderOut(nil)
         } else {
             islandPanel?.orderFrontRegardless()
         }
-    }
-
-    @objc private func offsetEarlier() {
-        lyricsManager.adjustOffset(by: -0.5)
-        updateMenuInfo()
-    }
-
-    @objc private func offsetLater() {
-        lyricsManager.adjustOffset(by: 0.5)
-        updateMenuInfo()
-    }
-
-    @objc private func offsetReset() {
-        lyricsManager.resetOffset()
-        updateMenuInfo()
     }
 
     @objc private func openSettings() {

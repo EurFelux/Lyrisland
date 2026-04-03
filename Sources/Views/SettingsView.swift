@@ -74,12 +74,36 @@ private struct AppearanceTab: View {
 // MARK: - Lyrics
 
 private struct LyricsTab: View {
+    @AppStorage("currentLyricsOffset") private var currentOffset: Double = 0
+
     var body: some View {
         Form {
             Section {
+                HStack {
+                    Text(String(localized: "settings.lyrics.current_offset"))
+                    Spacer()
+                    Text(String(format: "%+.1fs", currentOffset))
+                        .monospacedDigit()
+                        .foregroundStyle(.secondary)
+                }
+
+                HStack(spacing: 12) {
+                    Button(String(localized: "settings.lyrics.offset.earlier")) {
+                        NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: -0.5)
+                    }
+                    Button(String(localized: "settings.lyrics.offset.later")) {
+                        NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: 0.5)
+                    }
+                    Spacer()
+                    Button(String(localized: "settings.lyrics.offset.reset")) {
+                        NotificationCenter.default.post(name: .lyricsOffsetReset, object: nil)
+                    }
+                }
+                .controlSize(.small)
+
                 Text(String(localized: "settings.lyrics.offset_hint"))
-                    .foregroundStyle(.secondary)
-                    .font(.callout)
+                    .foregroundStyle(.tertiary)
+                    .font(.caption)
             } header: {
                 Text(String(localized: "settings.lyrics.offset_section"))
             }
