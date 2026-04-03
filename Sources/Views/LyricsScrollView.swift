@@ -21,6 +21,7 @@ struct LyricsScrollView: View {
                             distance: abs(line.id - currentLineIndex)
                         )
                         .frame(maxWidth: .infinity, alignment: alignment)
+                        .environment(\.layoutDirection, line.text.isRTL ? .rightToLeft : .leftToRight)
                         .id(line.id)
                     }
 

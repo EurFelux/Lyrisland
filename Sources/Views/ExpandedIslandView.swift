@@ -38,16 +38,19 @@ struct ExpandedIslandView: View {
                 ForEach(lyrics.lines[range]) { line in
                     let isCurrent = line.id == currentIdx
                     let distance = abs(line.id - currentIdx)
+                    let lineDirection: LayoutDirection = line.text.isRTL ? .rightToLeft : .leftToRight
 
                     if isCurrent {
                         MarqueeText(
                             text: line.text,
                             font: .system(size: 15, weight: .bold),
                             color: .white,
-                            loops: false
+                            loops: false,
+                            lineDuration: lineDuration(for: currentIdx, in: lyrics)
                         )
                         .frame(height: 20)
                         .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
+                        .environment(\.layoutDirection, lineDirection)
                         .transition(.push(from: .bottom))
                     } else {
                         Text(line.text)
@@ -60,6 +63,7 @@ struct ExpandedIslandView: View {
                             .blur(radius: blurFor(distance: distance))
                             .frame(height: 20)
                             .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
+                            .environment(\.layoutDirection, lineDirection)
                             .transition(.push(from: .bottom))
                     }
                 }
@@ -68,6 +72,7 @@ struct ExpandedIslandView: View {
                 Text("lyrics.no_lyrics")
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.4))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .animation(.smooth(duration: 0.35), value: syncEngine.currentLineIndex)
@@ -95,5 +100,10 @@ struct ExpandedIslandView: View {
         case 2: 0.3
         default: 0.8
         }
+    }
+
+    private func lineDuration(for index: Int, in lyrics: SyncedLyrics) -> Double? {
+        guard index + 1 < lyrics.lines.count else { return nil }
+        return lyrics.lines[index + 1].time - lyrics.lines[index].time
     }
 }

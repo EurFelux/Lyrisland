@@ -13,6 +13,7 @@ struct MarqueeText: View {
     var startDelay: Double = 1.5
     var endDelay: Double = 1.5
     var fadeWidth: CGFloat = 16
+    var lineDuration: Double?
 
     @State private var textWidth: CGFloat = 0
     @State private var containerWidth: CGFloat = 0
@@ -25,6 +26,22 @@ struct MarqueeText: View {
 
     private var needsScroll: Bool {
         scrollEnabled && overflow > 0
+    }
+
+    private var textIsRTL: Bool {
+        text.isRTL
+    }
+
+    /// How long the scroll animation should take.
+    /// When `lineDuration` is set, fits the scroll to finish 0.5s before the line ends.
+    /// Falls back to the constant `speed` (points per second).
+    private var scrollDuration: Double {
+        if let lineDuration {
+            // Time budget = line duration - pause before scroll - 0.5s buffer
+            let budget = lineDuration - startDelay - 0.5
+            if budget > 0.3 { return budget }
+        }
+        return overflow / speed
     }
 
     var body: some View {
@@ -66,6 +83,9 @@ struct MarqueeText: View {
                 }
                 .clipped()
                 .mask(fadeMask)
+                // Isolate internal layout from external RTL layoutDirection.
+                // Scroll direction is handled by our own textIsRTL logic.
+                .environment(\.layoutDirection, .leftToRight)
             }
             .task(id: animationPhase) {
                 await runAnimationPhase()
@@ -110,19 +130,25 @@ struct MarqueeText: View {
             try? await Task.sleep(for: .milliseconds(50))
             guard !Task.isCancelled else { return }
             if needsScroll {
+                // RTL text starts showing the right portion (beginning),
+                // then scrolls left to reveal the end.
+                if textIsRTL { offset = -overflow }
                 animationPhase = .start
             }
 
         case .start:
             guard needsScroll else { return }
+            // RTL text must start showing the right portion (beginning).
+            // Set the offset here where measurements are guaranteed available.
+            if textIsRTL { offset = -overflow }
             try? await Task.sleep(for: .seconds(startDelay))
             guard !Task.isCancelled else { return }
             animationPhase = .scrolling
 
         case .scrolling:
-            let duration = overflow / speed
+            let duration = scrollDuration
             withAnimation(.linear(duration: duration)) {
-                offset = -overflow
+                offset = textIsRTL ? 0 : -overflow
             }
             try? await Task.sleep(for: .seconds(duration))
             guard !Task.isCancelled else { return }
@@ -132,7 +158,7 @@ struct MarqueeText: View {
             try? await Task.sleep(for: .seconds(endDelay))
             guard !Task.isCancelled else { return }
             if loops {
-                offset = 0
+                offset = textIsRTL ? -overflow : 0
                 animationPhase = .idle
             }
         }

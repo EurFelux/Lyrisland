@@ -6,6 +6,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var islandPanel: DynamicIslandPanel?
     private var onboardingWindow: NSWindow?
     private var settingsWindow: NSWindow?
+    private var helpWindow: NSWindow?
     private var statusItem: NSStatusItem?
     private let spotifyService = SpotifyAppleScriptService()
     private let lyricsManager = LyricsManager()
@@ -97,6 +98,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         menu.addItem(.separator())
         menu.addItem(NSMenuItem(title: String(localized: "menu.settings"), action: #selector(openSettings), keyEquivalent: ","))
+        menu.addItem(NSMenuItem(title: String(localized: "menu.help"), action: #selector(openHelp), keyEquivalent: "?"))
         menu.addItem(NSMenuItem(title: String(localized: "menu.quit"), action: #selector(quitApp), keyEquivalent: "q"))
 
         statusItem?.menu = menu
@@ -245,6 +247,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             islandPanel?.orderFrontRegardless()
         }
+    }
+
+    @objc private func openHelp() {
+        if let window = helpWindow {
+            window.makeKeyAndOrderFront(nil)
+        } else {
+            let window = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 420, height: 480),
+                styleMask: [.titled, .closable],
+                backing: .buffered,
+                defer: false
+            )
+            window.center()
+            window.title = String(localized: "menu.help")
+            window.contentView = NSHostingView(rootView: HelpView())
+            window.isReleasedWhenClosed = false
+            window.titlebarAppearsTransparent = true
+            window.backgroundColor = NSColor(white: 0.1, alpha: 1)
+            helpWindow = window
+            window.makeKeyAndOrderFront(nil)
+        }
+        NSApp.activate()
     }
 
     @objc private func openSettings() {

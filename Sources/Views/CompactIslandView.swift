@@ -26,8 +26,13 @@ struct CompactIslandView: View {
                 let indices = idx + 1 < lyrics.lines.count ? [idx, idx + 1] : [idx]
                 VStack(alignment: appState.resolvedHorizontalAlignment, spacing: 2) {
                     ForEach(indices, id: \.self) { lineIdx in
-                        DualLineRow(text: lyrics.lines[lineIdx].text, isCurrent: lineIdx == idx)
-                            .transition(.push(from: .bottom).combined(with: .opacity))
+                        DualLineRow(
+                            text: lyrics.lines[lineIdx].text,
+                            isCurrent: lineIdx == idx,
+                            lineDuration: lineDuration(for: lineIdx, in: lyrics)
+                        )
+                        .environment(\.layoutDirection, lyrics.lines[lineIdx].text.isRTL ? .rightToLeft : .leftToRight)
+                        .transition(.push(from: .bottom).combined(with: .opacity))
                     }
                 }
                 .animation(.smooth(duration: 0.35), value: idx)
@@ -38,12 +43,14 @@ struct CompactIslandView: View {
                     text: displayText,
                     font: .system(size: 13, weight: .medium),
                     color: displayTextOpacity,
-                    loops: false
+                    loops: false,
+                    lineDuration: currentLineDuration
                 )
                 .transition(.push(from: .bottom).combined(with: .opacity))
                 .id(currentLineIndex ?? -1)
                 .animation(.smooth(duration: 0.35), value: currentLineIndex)
                 .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
+                .environment(\.layoutDirection, displayText.isRTL ? .rightToLeft : .leftToRight)
             }
         }
         // padding handled by parent IslandContentView
@@ -95,12 +102,23 @@ struct CompactIslandView: View {
         }
         return .white.opacity(0.5)
     }
+
+    private var currentLineDuration: Double? {
+        guard let lyrics = lyricsManager.currentLyrics, let idx = currentLineIndex else { return nil }
+        return lineDuration(for: idx, in: lyrics)
+    }
+
+    private func lineDuration(for index: Int, in lyrics: SyncedLyrics) -> Double? {
+        guard index + 1 < lyrics.lines.count else { return nil }
+        return lyrics.lines[index + 1].time - lyrics.lines[index].time
+    }
 }
 
 /// Lightweight equatable row with marquee support for long text.
 private struct DualLineRow: View, Equatable {
     let text: String
     let isCurrent: Bool
+    var lineDuration: Double?
 
     var body: some View {
         MarqueeText(
@@ -108,7 +126,8 @@ private struct DualLineRow: View, Equatable {
             font: isCurrent ? .system(size: 13, weight: .medium) : .system(size: 11),
             color: isCurrent ? .white : .white.opacity(0.4),
             scrollEnabled: isCurrent,
-            loops: false
+            loops: false,
+            lineDuration: lineDuration
         )
     }
 }
