@@ -28,6 +28,9 @@ struct LyricsScrollView: View {
                 }
                 .padding(.horizontal, 20)
             }
+            .onAppear {
+                proxy.scrollTo(currentLineIndex, anchor: .center)
+            }
             .onChange(of: currentLineIndex) { _, newIdx in
                 withAnimation(.easeInOut(duration: 0.3)) {
                     proxy.scrollTo(newIdx, anchor: .center)
