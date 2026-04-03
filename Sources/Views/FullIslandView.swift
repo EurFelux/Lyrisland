@@ -40,16 +40,21 @@ struct FullIslandView: View {
                     alignment: appState.resolvedLyricsAlignment
                 )
             } else if lyricsManager.isLoading {
-                Spacer()
-                ProgressView()
-                    .scaleEffect(0.7)
-                    .tint(.white.opacity(0.5))
-                Spacer()
+                VStack {
+                    Spacer()
+                    ProgressView()
+                        .scaleEffect(0.7)
+                        .tint(.white.opacity(0.5))
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.horizontal, 20)
             } else {
                 Text("lyrics.no_synced")
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.4))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.horizontal, 20)
             }
         }
     }

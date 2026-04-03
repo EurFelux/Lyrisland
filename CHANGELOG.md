@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Full 模式歌词加载过程中封面图片布局偏移
+
 ### Added
 
 - GitHub Actions release workflow：push tag 自动构建并发布 DMG + zip 到 GitHub Releases
