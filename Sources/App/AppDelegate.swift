@@ -178,6 +178,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func setPollRate(_ rate: PollRate) {
         guard rate != currentPollRate else { return }
+        logDebug("Poll rate changed: \(currentPollRate) → \(rate)")
         currentPollRate = rate
         pollTimer?.invalidate()
         pollTimer = Timer.scheduledTimer(withTimeInterval: rate.rawValue, repeats: true) { [weak self] _ in

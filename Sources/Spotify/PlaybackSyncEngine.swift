@@ -55,6 +55,7 @@ final class PlaybackSyncEngine: ObservableObject {
 
     func setTrackId(_ id: String?) {
         if id != currentTrackId {
+            logInfo("Track changed: \(id ?? "nil")")
             currentTrackId = id
         }
     }

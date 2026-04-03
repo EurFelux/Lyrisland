@@ -57,7 +57,10 @@ actor ArtworkCache {
         let task = Task<NSImage?, Never> { [session] in
             guard let (data, _) = try? await session.data(from: url),
                   let image = NSImage(data: data)
-            else { return nil }
+            else {
+                logWarning("Artwork fetch failed for track: \(trackId)")
+                return nil
+            }
             try? data.write(to: filePath, options: .atomic)
             return image
         }

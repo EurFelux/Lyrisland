@@ -60,6 +60,7 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
             throw MusixmatchError.tokenFailed
         }
 
+        logDebug("[musixmatch] Token acquired")
         userToken = token
         return token
     }
@@ -83,12 +84,14 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
                     if statusCode == 401 {
                         let hint = header["hint"] as? String ?? ""
                         if hint == "renew" {
+                            logDebug("[musixmatch] Token expired, renewing (attempt \(attempt + 1))")
                             userToken = nil
                             _ = try await ensureToken()
                             continue
                         }
                         if hint == "captcha" {
                             if attempt < maxCaptchaRetries - 1 {
+                                logDebug("[musixmatch] Captcha required, retrying (attempt \(attempt + 1))")
                                 try await Task.sleep(for: .seconds(1))
                                 continue
                             }

@@ -10,7 +10,11 @@ struct NeteaseProvider: LyricsProvider {
     private let lyricURL = "https://music.163.com/api/song/lyric"
 
     func fetchLyrics(for track: TrackInfo) async throws -> SyncedLyrics? {
-        guard let songId = try await searchTrack(track) else { return nil }
+        guard let songId = try await searchTrack(track) else {
+            logDebug("[netease] No matching track found")
+            return nil
+        }
+        logDebug("[netease] Matched song ID: \(songId)")
         return try await fetchSongLyrics(songId: songId)
     }
 

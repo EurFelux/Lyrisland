@@ -10,9 +10,12 @@ struct LRCLibProvider: LyricsProvider {
 
     func fetchLyrics(for track: TrackInfo) async throws -> SyncedLyrics? {
         // Try exact match first, then search fallback
+        logDebug("[lrclib] Trying exact match for: \(track.title)")
         if let lyrics = try await fetchExact(track: track) {
+            logDebug("[lrclib] Exact match found")
             return lyrics
         }
+        logDebug("[lrclib] Exact match failed, trying search fallback")
         return try await fetchSearch(track: track)
     }
 

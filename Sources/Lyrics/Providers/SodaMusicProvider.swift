@@ -10,7 +10,11 @@ struct SodaMusicProvider: LyricsProvider {
     private let trackURL = "https://api.qishui.com/luna/pc/track_v2"
 
     func fetchLyrics(for track: TrackInfo) async throws -> SyncedLyrics? {
-        guard let trackId = try await searchTrack(track) else { return nil }
+        guard let trackId = try await searchTrack(track) else {
+            logDebug("[sodamusic] No matching track found")
+            return nil
+        }
+        logDebug("[sodamusic] Matched track ID: \(trackId)")
         return try await fetchTrackLyrics(trackId: trackId)
     }
 
