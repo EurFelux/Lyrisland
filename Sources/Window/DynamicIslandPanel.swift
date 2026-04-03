@@ -84,7 +84,7 @@ final class DynamicIslandPanel: NSPanel {
 
     /// Center the panel horizontally, flush with the top of the screen (no gap).
     private func positionAttachedToMenuBar() {
-        guard let screen = NSScreen.main else { return }
+        guard let screen = screen ?? NSScreen.main else { return }
         let x = screen.frame.midX - frame.width / 2
         let y = screen.frame.maxY - frame.height
         setFrameOrigin(NSPoint(x: x, y: y))
@@ -105,7 +105,7 @@ final class DynamicIslandPanel: NSPanel {
 
     /// Whether the current position is close enough to snap back to attached mode.
     private func isNearAttachedPosition() -> Bool {
-        guard let screen = NSScreen.main else { return false }
+        guard let screen = screen ?? NSScreen.main else { return false }
         let distanceFromTop = screen.frame.maxY - frame.maxY
         return distanceFromTop < 20
     }
@@ -121,7 +121,7 @@ final class DynamicIslandPanel: NSPanel {
         let newX: CGFloat
         let newY: CGFloat
 
-        if positionMode == .attached, let screen = NSScreen.main {
+        if positionMode == .attached, let screen = screen ?? NSScreen.main {
             newX = screen.frame.midX - newSize.width / 2
             newY = screen.frame.maxY - newSize.height
         } else {
@@ -225,4 +225,11 @@ extension Notification.Name {
     static let islandPositionModeSettingsChanged = Notification.Name("islandPositionModeSettingsChanged")
     static let lyricsOffsetAdjust = Notification.Name("lyricsOffsetAdjust")
     static let lyricsOffsetReset = Notification.Name("lyricsOffsetReset")
+}
+
+extension NSScreen {
+    /// Whether this screen has a camera notch (e.g. MacBook Pro/Air built-in display).
+    var hasNotch: Bool {
+        safeAreaInsets.top > 0
+    }
 }

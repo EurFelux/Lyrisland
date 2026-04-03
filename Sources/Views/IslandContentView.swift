@@ -133,9 +133,12 @@ struct IslandContentView: View {
 
     // MARK: - Sizing
 
-    /// Height of the menu bar area (the part hidden behind the notch/menu bar).
-    static var menuBarHeight: CGFloat {
-        guard let screen = NSScreen.main else { return 25 }
+    /// Extra height to extend behind the notch/menu bar in attached mode.
+    /// Only needed on notched displays where the island emerges from the notch.
+    /// Non-notch screens get no extension — the island sits flush at the screen top.
+    static func menuBarHeight(for screen: NSScreen? = nil) -> CGFloat {
+        guard let screen = screen ?? NSScreen.main else { return 0 }
+        guard screen.hasNotch else { return 0 }
         return screen.frame.maxY - screen.visibleFrame.maxY
     }
 
@@ -151,7 +154,13 @@ struct IslandContentView: View {
     /// Radius of the inverse corner "ears" in attached mode.
     static let earRadius: CGFloat = 10
 
-    static func size(for state: IslandState, attached: Bool = false, dualLine: Bool = false, artwork: Bool = true) -> NSSize {
+    static func size(
+        for state: IslandState,
+        attached: Bool = false,
+        dualLine: Bool = false,
+        artwork: Bool = true,
+        screen: NSScreen? = nil
+    ) -> NSSize {
         let h = contentHeight(for: state, dualLine: dualLine, artwork: artwork)
         let w: CGFloat = switch state {
         case .compact: 350
@@ -159,7 +168,7 @@ struct IslandContentView: View {
         case .full: artwork ? 540 : 400
         }
         if attached {
-            return NSSize(width: w, height: h + menuBarHeight)
+            return NSSize(width: w, height: h + menuBarHeight(for: screen))
         }
         return NSSize(width: w, height: h)
     }
@@ -180,7 +189,8 @@ struct IslandContentView: View {
             for: state,
             attached: isAttached,
             dualLine: appState.dualLineMode,
-            artwork: appState.showArtwork
+            artwork: appState.showArtwork,
+            screen: window.screen
         ))
     }
 }
