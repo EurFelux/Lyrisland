@@ -75,10 +75,23 @@ Lyrisland は、画面上部にダイナミックアイランド（Dynamic Islan
 #### フリーフロート
 ![Detached](Assets/screenshots/detached-compact.png)
 
+## インストール
+
+### Homebrew（推奨）
+
+```bash
+brew tap EurFelux/lyrisland
+brew install --cask lyrisland
+```
+
+### 手動ダウンロード
+
+[GitHub Releases](https://github.com/EurFelux/Lyrisland/releases) から最新の `.dmg` をダウンロードし、開いて Lyrisland をアプリケーションフォルダにドラッグしてください。
+
 ## はじめに
 
 1. [Spotify デスクトップアプリ](https://www.spotify.com/download/)がインストールされていることを確認
-2. Lyrisland をダウンロードして開く
+2. Lyrisland を開く
 3. 初回起動時、macOS がオートメーション権限を要求します — 許可してください
 4. Spotify で曲を再生すると、歌詞が画面上部に自動表示されます
 

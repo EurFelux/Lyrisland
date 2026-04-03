@@ -75,10 +75,23 @@ Lyrisland displays real-time Spotify lyrics at the top of your screen in a Dynam
 #### Free Floating
 ![Detached](Assets/screenshots/detached-compact.png)
 
+## Installation
+
+### Homebrew (recommended)
+
+```bash
+brew tap EurFelux/lyrisland
+brew install --cask lyrisland
+```
+
+### Manual Download
+
+Download the latest `.dmg` from [GitHub Releases](https://github.com/EurFelux/Lyrisland/releases), open it, and drag Lyrisland to Applications.
+
 ## Getting Started
 
 1. Make sure [Spotify Desktop](https://www.spotify.com/download/) is installed
-2. Download and open Lyrisland
+2. Open Lyrisland
 3. On first launch, macOS will request Automation permission — please allow it
 4. Play a song in Spotify, and lyrics will automatically appear at the top of your screen
 
