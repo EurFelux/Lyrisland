@@ -72,7 +72,7 @@ Currently only Spotify is supported.
 
 ## Credits
 
-- [Lyricify Lyrics Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) — Musixmatch lyrics API reference
+- [Lyricify Lyrics Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) — Musixmatch & Netease lyrics API reference
 
 ## License
 

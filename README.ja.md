@@ -72,7 +72,7 @@ Lyrisland は、画面上部にダイナミックアイランド（Dynamic Islan
 
 ## Credits
 
-- [Lyricify Lyrics Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) — Musixmatch 歌詞 API リファレンス
+- [Lyricify Lyrics Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) — Musixmatch・Netease 歌詞 API リファレンス
 
 ## License
 
