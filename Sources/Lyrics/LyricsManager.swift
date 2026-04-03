@@ -49,6 +49,9 @@ final class LyricsManager: ObservableObject {
     )
 
     func loadLyrics(for track: TrackInfo) async {
+        // Clear stale lyrics immediately so the UI never shows the previous track's lyrics
+        currentLyrics = nil
+
         // Check cache (memory → disk)
         if let cached = await cache.get(track.id) {
             logDebug("Lyrics cache hit for: \(track.title) — \(track.artist)")
