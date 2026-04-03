@@ -4,6 +4,7 @@
 
 ### Added
 
+- GitHub Actions CI 流水线：PR 到 main 时自动运行 xcodegen、构建、SwiftFormat 检查、SwiftLint 检查和单元测试 (#22)
 - Apple 风格设置窗口（⌘,），包含通用、外观、歌词、关于四个标签页，支持灵动岛位置模式、专辑封面、双行歌词等偏好设置 (#18)
 - 通用两层缓存抽象 `Cache<Key, Value>`：支持内存 + 磁盘双层缓存、LRU 淘汰、可配置容量限制、并发请求合并；`ArtworkCache` 和 `LyricsManager` 已迁移至该通用缓存，歌词现支持磁盘持久化 (#17)
 - 灵动岛支持"吸附菜单栏"和"自由拖拽"两种位置模式，可通过菜单栏切换，位置偏好跨启动持久化 (#7)

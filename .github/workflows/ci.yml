@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-lint:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: brew install xcodegen swiftformat swiftlint
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Build
+        run: |
+          xcodebuild -project Lyrisland.xcodeproj \
+            -scheme Lyrisland \
+            -destination 'platform=macOS' \
+            build
+
+      - name: Check formatting
+        run: |
+          if ! swiftformat --lint Sources; then
+            echo "::error::SwiftFormat found formatting issues. Run 'swiftformat Sources' locally to fix."
+            exit 1
+          fi
+
+      - name: Lint
+        run: swiftlint Sources
+
+      - name: Test
+        run: |
+          xcodebuild test \
+            -project Lyrisland.xcodeproj \
+            -scheme LyrislandTests \
+            -destination 'platform=macOS'
