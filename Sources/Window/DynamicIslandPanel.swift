@@ -149,9 +149,10 @@ final class DynamicIslandPanel: NSPanel {
     private var windowOriginOnMouseDown: NSPoint?
     private var isDragUnlocked = false
     private var longPressTimer: Timer?
+    private var isInSnapZone = false
 
     /// How long the user must hold before dragging is allowed.
-    private static let longPressDuration: TimeInterval = 0.5
+    private static let longPressDuration: TimeInterval = 0.3
 
     override func mouseDown(with _: NSEvent) {
         mouseDownOrigin = NSEvent.mouseLocation
@@ -186,6 +187,16 @@ final class DynamicIslandPanel: NSPanel {
         let newX = windowOrigin.x + (current.x - origin.x)
         let newY = windowOrigin.y + (current.y - origin.y)
         setFrameOrigin(NSPoint(x: newX, y: newY))
+
+        // Update snap zone feedback
+        let nearSnap = isNearAttachedPosition()
+        if nearSnap != isInSnapZone {
+            isInSnapZone = nearSnap
+            NotificationCenter.default.post(name: .islandSnapZoneChanged, object: nearSnap)
+            if nearSnap {
+                NSHapticFeedbackManager.defaultPerformer.perform(.alignment, performanceTime: .now)
+            }
+        }
     }
 
     override func mouseUp(with _: NSEvent) {
@@ -208,6 +219,11 @@ final class DynamicIslandPanel: NSPanel {
                 }
             }
         }
+        if isInSnapZone {
+            isInSnapZone = false
+            NotificationCenter.default.post(name: .islandSnapZoneChanged, object: false)
+        }
+
         mouseDownOrigin = nil
         windowOriginOnMouseDown = nil
         isDragUnlocked = false
@@ -240,6 +256,7 @@ extension Notification.Name {
     static let islandTapped = Notification.Name("islandTapped")
     static let islandPositionModeChanged = Notification.Name("islandPositionModeChanged")
     static let islandPositionModeSettingsChanged = Notification.Name("islandPositionModeSettingsChanged")
+    static let islandSnapZoneChanged = Notification.Name("islandSnapZoneChanged")
     static let lyricsOffsetAdjust = Notification.Name("lyricsOffsetAdjust")
     static let lyricsOffsetReset = Notification.Name("lyricsOffsetReset")
 }
