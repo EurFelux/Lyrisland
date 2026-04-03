@@ -68,8 +68,16 @@ struct IslandContentView: View {
             .padding(.horizontal, isAttached ? Self.earRadius : 0)
             .padding(contentPadding)
         }
-        // No explicit size — fill the panel, let NSPanel drive sizing
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: isAttached ? .bottom : .topLeading)
+        // Fill the panel. In detached mode, cap to the exact panel height so
+        // the clipShape aligns with the NSPanel edges (prevents corner overflow).
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: isAttached
+                ? .infinity
+                : Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
+                + Self.verticalPadding(for: islandState),
+            alignment: isAttached ? .bottom : .topLeading
+        )
         .clipShape(
             isAttached
                 ? AnyShape(AttachedIslandShape(bottomRadius: cornerRadius, inverseRadius: Self.earRadius))
@@ -188,6 +196,13 @@ struct IslandContentView: View {
     /// Radius of the inverse corner "ears" in attached mode.
     static let earRadius: CGFloat = 10
 
+    /// Total vertical content padding for a given state (top + bottom).
+    /// In attached mode this is absorbed by the menu-bar extension; in detached
+    /// mode it must be added to the panel height explicitly.
+    static func verticalPadding(for state: IslandState) -> CGFloat {
+        state == .expanded ? 24 : 0
+    }
+
     static func size(
         for state: IslandState,
         attached: Bool = false,
@@ -204,7 +219,7 @@ struct IslandContentView: View {
         if attached {
             return NSSize(width: w, height: h + menuBarHeight(for: screen))
         }
-        return NSSize(width: w, height: h)
+        return NSSize(width: w, height: h + verticalPadding(for: state))
     }
 
     private func cycleState() {
