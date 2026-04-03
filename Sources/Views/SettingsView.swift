@@ -23,7 +23,7 @@ struct SettingsView: View {
                     Label(String(localized: "settings.tab.about"), systemImage: "info.circle")
                 }
         }
-        .frame(width: 420, height: 280)
+        .frame(width: 420, height: 380)
     }
 }
 
@@ -58,9 +58,48 @@ private struct AppearanceTab: View {
     @AppStorage("showArtwork") private var showArtwork = true
     @AppStorage("dualLineMode") private var dualLineMode = false
     @AppStorage("lyricsAlignment") private var lyricsAlignment = "center"
+    @AppStorage("backgroundStyle") private var backgroundStyle = "solid"
+    @AppStorage("solidColorHex") private var solidColorHex = "#141414"
+
+    private static let defaultSolidHex = "#141414"
+
+    private var solidColorBinding: Binding<Color> {
+        Binding(
+            get: { Color(hex: solidColorHex) ?? Color(white: 0.08) },
+            set: { solidColorHex = $0.hexString }
+        )
+    }
 
     var body: some View {
         Form {
+            Section {
+                Picker(String(localized: "settings.appearance.background_style"), selection: $backgroundStyle) {
+                    Text(String(localized: "settings.appearance.bg.solid")).tag("solid")
+                    Text(String(localized: "settings.appearance.bg.album_gradient")).tag("albumGradient")
+                    Text(String(localized: "settings.appearance.bg.vibrancy")).tag("vibrancy")
+                    Text(String(localized: "settings.appearance.bg.animated_gradient")).tag("animatedGradient")
+                }
+                .pickerStyle(.radioGroup)
+
+                if backgroundStyle == "solid" {
+                    HStack {
+                        ColorPicker(
+                            String(localized: "settings.appearance.solid_color"),
+                            selection: solidColorBinding,
+                            supportsOpacity: false
+                        )
+                        if solidColorHex != Self.defaultSolidHex {
+                            Button(String(localized: "settings.appearance.solid_color_reset")) {
+                                solidColorHex = Self.defaultSolidHex
+                            }
+                            .controlSize(.small)
+                        }
+                    }
+                }
+            } header: {
+                Text(String(localized: "settings.appearance.background_section"))
+            }
+
             Section {
                 Toggle(String(localized: "settings.appearance.show_artwork"), isOn: $showArtwork)
                 Toggle(String(localized: "settings.appearance.dual_line"), isOn: $dualLineMode)

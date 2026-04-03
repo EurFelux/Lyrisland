@@ -36,15 +36,36 @@ final class AppState: ObservableObject {
         didSet { UserDefaults.standard.set(lyricsAlignment, forKey: "lyricsAlignment") }
     }
 
+    @Published var backgroundStyle: BackgroundStyle {
+        didSet { UserDefaults.standard.set(backgroundStyle.rawValue, forKey: "backgroundStyle") }
+    }
+
+    /// Hex string for the user's custom solid background color (e.g. "#141414").
+    @Published var solidColorHex: String {
+        didSet { UserDefaults.standard.set(solidColorHex, forKey: "solidColorHex") }
+    }
+
+    /// Resolved SwiftUI Color from the stored hex string.
+    var solidColor: Color {
+        Color(hex: solidColorHex) ?? Color(white: 0.08)
+    }
+
     private var defaultsObserver: AnyCancellable?
 
     init() {
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
         dualLineMode = UserDefaults.standard.bool(forKey: "dualLineMode")
         // Default to true for new installs (key absent returns false, so use register)
-        UserDefaults.standard.register(defaults: ["showArtwork": true, "lyricsAlignment": "center"])
+        UserDefaults.standard.register(defaults: [
+            "showArtwork": true,
+            "lyricsAlignment": "center",
+            "backgroundStyle": "solid",
+            "solidColorHex": "#141414",
+        ])
         showArtwork = UserDefaults.standard.bool(forKey: "showArtwork")
         lyricsAlignment = UserDefaults.standard.string(forKey: "lyricsAlignment") ?? "center"
+        backgroundStyle = BackgroundStyle(rawValue: UserDefaults.standard.string(forKey: "backgroundStyle") ?? "solid") ?? .solid
+        solidColorHex = UserDefaults.standard.string(forKey: "solidColorHex") ?? "#141414"
 
         // Sync changes from @AppStorage (Settings window) back to @Published properties
         defaultsObserver = NotificationCenter.default
@@ -54,10 +75,14 @@ final class AppState: ObservableObject {
                 guard let self else { return }
                 let newDualLine = UserDefaults.standard.bool(forKey: "dualLineMode")
                 let newShowArtwork = UserDefaults.standard.bool(forKey: "showArtwork")
-                let newAlignment = UserDefaults.standard.string(forKey: "lyricsAlignment") ?? "left"
+                let newAlignment = UserDefaults.standard.string(forKey: "lyricsAlignment") ?? "center"
+                let newBgStyle = BackgroundStyle(rawValue: UserDefaults.standard.string(forKey: "backgroundStyle") ?? "solid") ?? .solid
                 if dualLineMode != newDualLine { dualLineMode = newDualLine }
                 if showArtwork != newShowArtwork { showArtwork = newShowArtwork }
                 if lyricsAlignment != newAlignment { lyricsAlignment = newAlignment }
+                if backgroundStyle != newBgStyle { backgroundStyle = newBgStyle }
+                let newSolidHex = UserDefaults.standard.string(forKey: "solidColorHex") ?? "#141414"
+                if solidColorHex != newSolidHex { solidColorHex = newSolidHex }
             }
     }
 
