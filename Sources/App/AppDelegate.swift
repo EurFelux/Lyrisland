@@ -41,7 +41,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             defer: false
         )
         window.center()
-        window.title = "Welcome to SpotifyLyricBar"
+        window.title = "Welcome to Lyrisland"
         window.contentView = NSHostingView(rootView: onboardingView)
         window.isReleasedWhenClosed = false
         window.titlebarAppearsTransparent = true
@@ -68,7 +68,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupMenuBar() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let button = statusItem?.button {
-            button.image = NSImage(systemSymbolName: "music.note", accessibilityDescription: "SpotifyLyricBar")
+            button.image = NSImage(systemSymbolName: "music.note", accessibilityDescription: "Lyrisland")
         }
 
         let menu = NSMenu()

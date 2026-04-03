@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct SpotifyLyricBarApp: App {
+struct LyrislandApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>SpotifyLyricBar</string>
+    <string>Lyrisland</string>
     <key>CFBundleDisplayName</key>
-    <string>Spotify Lyric Bar</string>
+    <string>Lyrisland</string>
     <key>CFBundleIdentifier</key>
     <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
     <key>CFBundleVersion</key>
@@ -19,6 +19,6 @@
     <key>LSUIElement</key>
     <true/>
     <key>NSAppleEventsUsageDescription</key>
-    <string>SpotifyLyricBar needs Apple Events access to read Spotify playback status.</string>
+    <string>Lyrisland needs Apple Events access to read Spotify playback status.</string>
 </dict>
 </plist>

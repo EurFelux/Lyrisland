@@ -14,7 +14,7 @@ struct OnboardingView: View {
                 Image(systemName: "music.note.list")
                     .font(.system(size: 48))
                     .foregroundStyle(.white)
-                Text("SpotifyLyricBar")
+                Text("Lyrisland")
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.white)
                 Text("Desktop lyrics in a Dynamic Island")
