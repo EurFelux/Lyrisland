@@ -17,6 +17,7 @@
 
 ### Fixed
 
+- 修复长歌词行 MarqueeText 不再自动滚动的问题：`.id()` 导致视图重建时 `@State` 重置，GeometryReader 尚未测量完成动画就已退出 (#28)
 - 自由拖拽模式下拖动灵动岛不再需要长按 0.5 秒，鼠标按下即可直接拖拽 (#25)
 - 吸附模式在无刘海外接显示器上有多余顶部间距：改为根据屏幕是否有刘海（`safeAreaInsets.top`）动态决定是否延伸至菜单栏后方，并使用面板实际所在屏幕而非 `NSScreen.main` 计算位置 (#21)
 - Full 视图歌词列表滚动卡顿：移除 `tick` 的 30fps 全局发布，视图改为仅响应 `currentLineIndex` 变更；`LyricsScrollView` 不再依赖 `syncEngine`，仅接收必要数据 (#15)

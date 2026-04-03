@@ -17,7 +17,7 @@ struct MarqueeText: View {
     @State private var textWidth: CGFloat = 0
     @State private var containerWidth: CGFloat = 0
     @State private var offset: CGFloat = 0
-    @State private var animationPhase: AnimationPhase = .start
+    @State private var animationPhase: AnimationPhase = .idle
 
     private var overflow: CGFloat {
         max(0, textWidth - containerWidth)
@@ -45,6 +45,11 @@ struct MarqueeText: View {
                         .onChange(of: geo.size.width) { _, newWidth in containerWidth = newWidth }
                         .onChange(of: text) { _, _ in resetAnimation() }
                         .onChange(of: containerWidth) { _, _ in resetAnimation() }
+                        .onChange(of: textWidth) { _, _ in
+                            if animationPhase == .idle, needsScroll {
+                                animationPhase = .start
+                            }
+                        }
                         .background(
                             Text(text)
                                 .font(font)
@@ -94,15 +99,22 @@ struct MarqueeText: View {
 
     private func resetAnimation() {
         offset = 0
-        animationPhase = .start
+        animationPhase = .idle
     }
 
     @MainActor
     private func runAnimationPhase() async {
-        guard needsScroll else { return }
-
         switch animationPhase {
+        case .idle:
+            // Wait for GeometryReader to measure, then kick off if needed.
+            try? await Task.sleep(for: .milliseconds(50))
+            guard !Task.isCancelled else { return }
+            if needsScroll {
+                animationPhase = .start
+            }
+
         case .start:
+            guard needsScroll else { return }
             try? await Task.sleep(for: .seconds(startDelay))
             guard !Task.isCancelled else { return }
             animationPhase = .scrolling
@@ -121,12 +133,13 @@ struct MarqueeText: View {
             guard !Task.isCancelled else { return }
             if loops {
                 offset = 0
-                animationPhase = .start
+                animationPhase = .idle
             }
         }
     }
 
     private enum AnimationPhase: Equatable {
+        case idle
         case start
         case scrolling
         case end
