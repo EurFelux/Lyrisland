@@ -132,53 +132,68 @@ private struct LyricsTab: View {
     @AppStorage("currentLyricsOffset") private var currentOffset: Double = 0
 
     var body: some View {
-        Form {
-            Section {
-                HStack {
-                    Text(String(localized: "settings.lyrics.current_offset"))
-                    Spacer()
-                    Text(String(format: "%+.1fs", currentOffset))
-                        .monospacedDigit()
-                        .foregroundStyle(.secondary)
-                }
-
-                HStack(spacing: 12) {
-                    Button(String(localized: "settings.lyrics.offset.earlier")) {
-                        NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: -0.5)
-                    }
-                    Button(String(localized: "settings.lyrics.offset.later")) {
-                        NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: 0.5)
-                    }
-                    Spacer()
-                    Button(String(localized: "settings.lyrics.offset.reset")) {
-                        NotificationCenter.default.post(name: .lyricsOffsetReset, object: nil)
-                    }
-                }
-                .controlSize(.small)
-
-                Text(String(localized: "settings.lyrics.offset_hint"))
-                    .foregroundStyle(.tertiary)
-                    .font(.caption)
-            } header: {
-                Text(String(localized: "settings.lyrics.offset_section"))
-            }
-
-            Section {
-                ForEach($lyricsManager.providerSettings.entries) { $entry in
+        VStack(spacing: 0) {
+            Form {
+                Section {
                     HStack {
-                        Image(systemName: "line.3.horizontal")
-                            .foregroundStyle(.tertiary)
-                        Text(Self.displayName(for: entry.id))
+                        Text(String(localized: "settings.lyrics.current_offset"))
                         Spacer()
-                        Toggle("", isOn: $entry.isEnabled)
-                            .labelsHidden()
-                            .toggleStyle(.switch)
-                            .controlSize(.small)
+                        Text(String(format: "%+.1fs", currentOffset))
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                    }
+
+                    HStack(spacing: 12) {
+                        Button(String(localized: "settings.lyrics.offset.earlier")) {
+                            NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: -0.5)
+                        }
+                        Button(String(localized: "settings.lyrics.offset.later")) {
+                            NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: 0.5)
+                        }
+                        Spacer()
+                        Button(String(localized: "settings.lyrics.offset.reset")) {
+                            NotificationCenter.default.post(name: .lyricsOffsetReset, object: nil)
+                        }
+                    }
+                    .controlSize(.small)
+
+                    Text(String(localized: "settings.lyrics.offset_hint"))
+                        .foregroundStyle(.tertiary)
+                        .font(.caption)
+                } header: {
+                    Text(String(localized: "settings.lyrics.offset_section"))
+                }
+            }
+            .formStyle(.grouped)
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text(String(localized: "settings.lyrics.providers_section"))
+                    .font(.system(size: 11))
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                    .padding(.leading, 24)
+
+                List {
+                    ForEach($lyricsManager.providerSettings.entries) { $entry in
+                        HStack {
+                            Image(systemName: "line.3.horizontal")
+                                .foregroundStyle(.tertiary)
+                            Text(Self.displayName(for: entry.id))
+                            Spacer()
+                            Toggle("", isOn: $entry.isEnabled)
+                                .labelsHidden()
+                                .toggleStyle(.switch)
+                                .controlSize(.small)
+                        }
+                    }
+                    .onMove { from, to in
+                        lyricsManager.providerSettings.entries.move(fromOffsets: from, toOffset: to)
                     }
                 }
-                .onMove { from, to in
-                    lyricsManager.providerSettings.entries.move(fromOffsets: from, toOffset: to)
-                }
+                .listStyle(.inset)
+                .frame(height: 120)
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+                .padding(.horizontal, 20)
 
                 HStack {
                     Text(String(localized: "settings.lyrics.providers_hint"))
@@ -190,11 +205,10 @@ private struct LyricsTab: View {
                     }
                     .controlSize(.small)
                 }
-            } header: {
-                Text(String(localized: "settings.lyrics.providers_section"))
+                .padding(.horizontal, 24)
             }
+            .padding(.bottom, 12)
         }
-        .formStyle(.grouped)
         .onChange(of: lyricsManager.providerSettings) { _, newValue in
             newValue.save()
         }
