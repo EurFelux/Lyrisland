@@ -39,6 +39,7 @@ After cloning, run `prek install` to set up the git pre-commit hook.
 ## Workflow
 
 - **Never commit directly to `main`.** The `main` branch is protected. For any fix or feature, create a new branch (e.g. `feat/cache-layer`, `fix/marquee-reset`) from `main`, commit there, and open a PR to merge back.
+- **⚠️ Every new issue/task MUST get its own branch from `origin/main`.** Never mix unrelated fixes into an existing feature branch. When starting a new issue, the very first step is always `git checkout -b <type>/<desc> origin/main`. Changes for different issues must live in separate branches and separate PRs.
 - Always update `CHANGELOG.md` under the `Unreleased` section when resolving an issue (bug fix or feature). Include the issue number (e.g. `#1`).
 - When a commit resolves a GitHub issue, the commit message **must** include `Fixes #<number>` (e.g. `Fixes #3`) so GitHub automatically closes the issue on push.
 - Use [Conventional Commits](https://www.conventionalcommits.org/) format: `<type>(<scope>): <description>`. Common types: `feat`, `fix`, `refactor`, `docs`, `chore`, `style`, `perf`, `test`. Example: `fix(lyrics): resolve long line truncation with marquee scrolling`.
