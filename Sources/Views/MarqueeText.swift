@@ -27,6 +27,10 @@ struct MarqueeText: View {
         scrollEnabled && overflow > 0
     }
 
+    private var textIsRTL: Bool {
+        text.isRTL
+    }
+
     var body: some View {
         // Use a truncated Text as the layout driver for intrinsic height + width negotiation,
         // then overlay the actual (possibly scrolling) content on top.
@@ -98,7 +102,7 @@ struct MarqueeText: View {
     }
 
     private func resetAnimation() {
-        offset = 0
+        offset = textIsRTL ? -overflow : 0
         animationPhase = .idle
     }
 
@@ -110,6 +114,9 @@ struct MarqueeText: View {
             try? await Task.sleep(for: .milliseconds(50))
             guard !Task.isCancelled else { return }
             if needsScroll {
+                // RTL text starts showing the right portion (beginning),
+                // then scrolls left to reveal the end.
+                if textIsRTL { offset = -overflow }
                 animationPhase = .start
             }
 
@@ -122,7 +129,7 @@ struct MarqueeText: View {
         case .scrolling:
             let duration = overflow / speed
             withAnimation(.linear(duration: duration)) {
-                offset = -overflow
+                offset = textIsRTL ? 0 : -overflow
             }
             try? await Task.sleep(for: .seconds(duration))
             guard !Task.isCancelled else { return }
@@ -132,7 +139,7 @@ struct MarqueeText: View {
             try? await Task.sleep(for: .seconds(endDelay))
             guard !Task.isCancelled else { return }
             if loops {
-                offset = 0
+                offset = textIsRTL ? -overflow : 0
                 animationPhase = .idle
             }
         }

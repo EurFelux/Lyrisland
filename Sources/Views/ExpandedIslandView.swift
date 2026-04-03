@@ -38,6 +38,7 @@ struct ExpandedIslandView: View {
                 ForEach(lyrics.lines[range]) { line in
                     let isCurrent = line.id == currentIdx
                     let distance = abs(line.id - currentIdx)
+                    let lineDirection: LayoutDirection = line.text.isRTL ? .rightToLeft : .leftToRight
 
                     if isCurrent {
                         MarqueeText(
@@ -48,6 +49,7 @@ struct ExpandedIslandView: View {
                         )
                         .frame(height: 20)
                         .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
+                        .environment(\.layoutDirection, lineDirection)
                         .transition(.push(from: .bottom))
                     } else {
                         Text(line.text)
@@ -60,6 +62,7 @@ struct ExpandedIslandView: View {
                             .blur(radius: blurFor(distance: distance))
                             .frame(height: 20)
                             .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
+                            .environment(\.layoutDirection, lineDirection)
                             .transition(.push(from: .bottom))
                     }
                 }

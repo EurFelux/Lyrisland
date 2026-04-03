@@ -27,6 +27,7 @@ struct CompactIslandView: View {
                 VStack(alignment: appState.resolvedHorizontalAlignment, spacing: 2) {
                     ForEach(indices, id: \.self) { lineIdx in
                         DualLineRow(text: lyrics.lines[lineIdx].text, isCurrent: lineIdx == idx)
+                            .environment(\.layoutDirection, lyrics.lines[lineIdx].text.isRTL ? .rightToLeft : .leftToRight)
                             .transition(.push(from: .bottom).combined(with: .opacity))
                     }
                 }
@@ -44,6 +45,7 @@ struct CompactIslandView: View {
                 .id(currentLineIndex ?? -1)
                 .animation(.smooth(duration: 0.35), value: currentLineIndex)
                 .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
+                .environment(\.layoutDirection, displayText.isRTL ? .rightToLeft : .leftToRight)
             }
         }
         // padding handled by parent IslandContentView
