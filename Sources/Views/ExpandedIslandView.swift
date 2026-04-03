@@ -68,6 +68,7 @@ struct ExpandedIslandView: View {
                 Text("lyrics.no_lyrics")
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.4))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .animation(.smooth(duration: 0.35), value: syncEngine.currentLineIndex)

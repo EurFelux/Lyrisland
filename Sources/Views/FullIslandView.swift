@@ -46,11 +46,10 @@ struct FullIslandView: View {
                     .tint(.white.opacity(0.5))
                 Spacer()
             } else {
-                Spacer()
                 Text("lyrics.no_synced")
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.4))
-                Spacer()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
     }
