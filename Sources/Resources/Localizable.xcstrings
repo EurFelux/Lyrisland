@@ -224,6 +224,12 @@
         "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示专辑封面" } }
       }
     },
+    "menu.settings": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Settings…" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "设置…" } }
+      }
+    },
     "menu.quit": {
       "localizations": {
         "en": { "stringUnit": { "state": "translated", "value": "Quit" } },

@@ -136,6 +136,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem(title: String(localized: "menu.offset.reset"), action: #selector(offsetReset), keyEquivalent: "0"))
 
         menu.addItem(.separator())
+        menu.addItem(NSMenuItem(title: String(localized: "menu.settings"), action: #selector(openSettings), keyEquivalent: ","))
         menu.addItem(NSMenuItem(title: String(localized: "menu.quit"), action: #selector(quitApp), keyEquivalent: "q"))
 
         statusItem?.menu = menu
@@ -321,6 +322,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func offsetReset() {
         lyricsManager.resetOffset()
         updateMenuInfo()
+    }
+
+    @objc private func openSettings() {
+        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     @objc private func quitApp() {
