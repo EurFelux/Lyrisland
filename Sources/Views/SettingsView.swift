@@ -1,3 +1,4 @@
+import KeyboardShortcuts
 import SwiftUI
 
 struct SettingsView: View {
@@ -16,6 +17,11 @@ struct SettingsView: View {
             LyricsTab()
                 .tabItem {
                     Label(String(localized: "settings.tab.lyrics"), systemImage: "music.note.list")
+                }
+
+            ShortcutsTab()
+                .tabItem {
+                    Label(String(localized: "settings.tab.shortcuts"), systemImage: "keyboard")
                 }
 
             AboutTab()
@@ -170,6 +176,46 @@ private struct LyricsTab: View {
     /// Keep in sync with LyricsManager.providers
     private var providerOrder: [String] {
         ["LRCLIB", "Musixmatch", "Soda Music", "Netease"]
+    }
+}
+
+// MARK: - Shortcuts
+
+private struct ShortcutsTab: View {
+    private struct ShortcutEntry: Identifiable {
+        let id: String
+        let name: KeyboardShortcuts.Name
+        let label: LocalizedStringResource
+    }
+
+    private let entries: [ShortcutEntry] = [
+        ShortcutEntry(id: "toggleLyrics", name: .toggleLyrics, label: "settings.shortcuts.toggle_lyrics"),
+        ShortcutEntry(id: "openSettings", name: .openSettings, label: "settings.shortcuts.open_settings"),
+        ShortcutEntry(id: "openHelp", name: .openHelp, label: "settings.shortcuts.open_help"),
+        ShortcutEntry(id: "quitApp", name: .quitApp, label: "settings.shortcuts.quit_app"),
+    ]
+
+    var body: some View {
+        Form {
+            Section {
+                ForEach(entries) { entry in
+                    KeyboardShortcuts.Recorder(String(localized: entry.label), name: entry.name)
+                }
+            } header: {
+                Text(String(localized: "settings.shortcuts.section"))
+            }
+
+            Section {
+                HStack {
+                    Spacer()
+                    Button(String(localized: "settings.shortcuts.reset_all")) {
+                        KeyboardShortcuts.resetAll()
+                    }
+                    Spacer()
+                }
+            }
+        }
+        .formStyle(.grouped)
     }
 }
 
