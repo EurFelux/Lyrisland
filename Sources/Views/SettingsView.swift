@@ -209,7 +209,7 @@ private struct ShortcutsTab: View {
                 HStack {
                     Spacer()
                     Button(String(localized: "settings.shortcuts.reset_all")) {
-                        KeyboardShortcuts.resetAll()
+                        KeyboardShortcuts.reset(KeyboardShortcuts.Name.allCases)
                     }
                     Spacer()
                 }
