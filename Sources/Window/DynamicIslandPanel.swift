@@ -4,9 +4,12 @@ import SwiftUI
 /// A borderless, always-on-top floating panel that mimics the iOS Dynamic Island.
 final class DynamicIslandPanel: NSPanel {
     private(set) var positionMode: IslandPositionMode
+    private var hasAppliedScreenLayout = false
 
     init(contentView: some View) {
         positionMode = UserDefaults.standard.islandPositionMode
+        // Calculate initial size without screen info — notch detection is deferred
+        // until the panel is ordered on screen (see orderFront).
         let initialSize = IslandContentView.size(for: .compact, attached: positionMode == .attached)
 
         super.init(
@@ -208,6 +211,20 @@ final class DynamicIslandPanel: NSPanel {
         mouseDownOrigin = nil
         windowOriginOnMouseDown = nil
         isDragUnlocked = false
+    }
+
+    override func orderFront(_ sender: Any?) {
+        super.orderFront(sender)
+        // On first appearance the panel now has a valid screen.
+        // Recalculate size and position so notch detection works correctly.
+        if !hasAppliedScreenLayout {
+            hasAppliedScreenLayout = true
+            if positionMode == .attached {
+                let correctSize = IslandContentView.size(for: .compact, attached: true, screen: screen)
+                setContentSize(correctSize)
+                positionAttachedToMenuBar()
+            }
+        }
     }
 
     override var canBecomeKey: Bool {
