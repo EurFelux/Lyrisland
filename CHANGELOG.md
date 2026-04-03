@@ -5,7 +5,9 @@
 ### Fixed
 
 - Full 模式歌词加载过程中封面图片布局偏移
+<<<<<<< HEAD
 - Full 模式长歌词行换行而非使用 MarqueeText 单行滚动显示
+- Full 模式远处歌词行的翻译缺少 blur 模糊效果
 
 ### Added
 
