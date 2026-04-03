@@ -70,6 +70,10 @@ Use the offset adjustment from the menu bar icon (`[` / `]` keys, ±0.5 seconds 
 **Q: Does it support Apple Music?**
 Currently only Spotify is supported.
 
+## Credits
+
+- [Lyricify Lyrics Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) — Musixmatch lyrics API reference
+
 ## License
 
 All rights reserved.

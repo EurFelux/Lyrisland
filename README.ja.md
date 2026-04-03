@@ -70,6 +70,10 @@ Lyrisland は、画面上部にダイナミックアイランド（Dynamic Islan
 **Q: Apple Music には対応していますか？**
 現在は Spotify のみ対応しています。
 
+## Credits
+
+- [Lyricify Lyrics Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) — Musixmatch 歌詞 API リファレンス
+
 ## License
 
 All rights reserved.
