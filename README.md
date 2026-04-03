@@ -17,6 +17,10 @@
   <img src="https://img.shields.io/badge/Spotify-Desktop-1DB954?logo=spotify&logoColor=white" alt="Spotify">
 </p>
 
+<p align="center">
+  <strong>简体中文</strong> | <a href="README.en.md">English</a>
+</p>
+
 ---
 
 ## What is Lyrisland?
