@@ -16,11 +16,14 @@ struct IslandContentView: View {
         ZStack(alignment: isAttached ? .bottom : .topLeading) {
             // Background: attached mode has inverse top corners, detached has full rounded corners
             if isAttached {
-                AttachedIslandShape(
-                    bottomRadius: cornerRadius,
-                    inverseRadius: Self.earRadius
+                IslandBackgroundView(
+                    style: appState.backgroundStyle,
+                    shape: AnyShape(AttachedIslandShape(bottomRadius: cornerRadius, inverseRadius: Self.earRadius)),
+                    trackId: syncEngine.currentTrackId,
+                    artworkURL: syncEngine.artworkURL,
+                    isPlaying: syncEngine.isPlaying,
+                    solidColor: appState.solidColor
                 )
-                .fill(Color(white: 0.08))
                 .overlay(
                     AttachedIslandShape(
                         bottomRadius: cornerRadius,
@@ -29,12 +32,17 @@ struct IslandContentView: View {
                     .stroke(.white.opacity(0.15), lineWidth: 0.5)
                 )
             } else {
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(Color(white: 0.08))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: cornerRadius)
-                            .strokeBorder(.white.opacity(0.15), lineWidth: 0.5)
-                    )
+                IslandBackgroundView(
+                    style: appState.backgroundStyle,
+                    shape: AnyShape(RoundedRectangle(cornerRadius: cornerRadius)),
+                    trackId: syncEngine.currentTrackId,
+                    artworkURL: syncEngine.artworkURL,
+                    isPlaying: syncEngine.isPlaying
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .strokeBorder(.white.opacity(0.15), lineWidth: 0.5)
+                )
             }
 
             // In attached mode, content is aligned to the bottom so it appears below the menu bar

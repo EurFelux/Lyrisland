@@ -332,6 +332,54 @@
         "zh-Hans": { "stringUnit": { "state": "translated", "value": "自由拖拽" } }
       }
     },
+    "settings.appearance.background_section": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Background" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "背景" } }
+      }
+    },
+    "settings.appearance.background_style": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Background Style" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "背景样式" } }
+      }
+    },
+    "settings.appearance.bg.solid": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Solid" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "纯色" } }
+      }
+    },
+    "settings.appearance.bg.album_gradient": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Album Gradient" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "专辑渐变" } }
+      }
+    },
+    "settings.appearance.bg.vibrancy": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Vibrancy" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "毛玻璃" } }
+      }
+    },
+    "settings.appearance.bg.animated_gradient": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Animated Gradient" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "动态渐变" } }
+      }
+    },
+    "settings.appearance.solid_color": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Color" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "颜色" } }
+      }
+    },
+    "settings.appearance.solid_color_reset": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Reset" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "重置" } }
+      }
+    },
     "settings.appearance.display_section": {
       "localizations": {
         "en": { "stringUnit": { "state": "translated", "value": "Display" } },
