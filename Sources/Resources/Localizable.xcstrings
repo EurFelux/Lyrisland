@@ -218,6 +218,12 @@
         "zh-Hans": { "stringUnit": { "state": "translated", "value": "双行歌词模式" } }
       }
     },
+    "menu.show_artwork": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Album Artwork" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示专辑封面" } }
+      }
+    },
     "menu.quit": {
       "localizations": {
         "en": { "stringUnit": { "state": "translated", "value": "Quit" } },

@@ -9,6 +9,7 @@ struct SpotifyPlaybackState {
     let durationMs: Int
     let position: TimeInterval // seconds
     let isPlaying: Bool
+    let artworkURL: String?
 }
 
 /// Reads Spotify playback state using AppleScript (low-latency, no auth needed).
@@ -23,7 +24,8 @@ final class SpotifyAppleScriptService {
             set trackDuration to duration of current track
             set playerPos to player position
             set playerState to player state as string
-            return trackId & "||" & trackName & "||" & trackArtist & "||" & trackAlbum & "||" & (trackDuration as string) & "||" & (playerPos as string) & "||" & playerState
+            set artURL to artwork url of current track
+            return trackId & "||" & trackName & "||" & trackArtist & "||" & trackAlbum & "||" & (trackDuration as string) & "||" & (playerPos as string) & "||" & playerState & "||" & artURL
         end tell
     else
         return "NOT_RUNNING"
@@ -41,11 +43,12 @@ final class SpotifyAppleScriptService {
         }
 
         let parts = raw.components(separatedBy: "||")
-        guard parts.count == 7 else { return nil }
+        guard parts.count >= 7 else { return nil }
 
         let position = Double(parts[5]) ?? 0
         let durationMs = Int(parts[4]) ?? 0
         let isPlaying = parts[6] == "playing"
+        let artworkURL = parts.count > 7 ? parts[7] : nil
 
         return SpotifyPlaybackState(
             trackId: parts[0],
@@ -54,7 +57,8 @@ final class SpotifyAppleScriptService {
             album: parts[3],
             durationMs: durationMs,
             position: position,
-            isPlaying: isPlaying
+            isPlaying: isPlaying,
+            artworkURL: artworkURL
         )
     }
 }

@@ -21,7 +21,7 @@ struct IslandContentView: View {
             case .expanded:
                 ExpandedIslandView(syncEngine: syncEngine, lyricsManager: lyricsManager, appState: appState)
             case .full:
-                FullIslandView(syncEngine: syncEngine, lyricsManager: lyricsManager)
+                FullIslandView(syncEngine: syncEngine, lyricsManager: lyricsManager, appState: appState)
             }
         }
         .frame(width: widthForState, height: heightForState)
@@ -36,21 +36,25 @@ struct IslandContentView: View {
         .onChange(of: appState.dualLineMode) { _, _ in
             resizePanel(for: islandState)
         }
+        .onChange(of: appState.showArtwork) { _, _ in
+            resizePanel(for: islandState)
+        }
+        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: appState.showArtwork)
     }
 
     private var widthForState: CGFloat {
-        Self.size(for: islandState, dualLine: appState.dualLineMode).width
+        Self.size(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork).width
     }
 
     private var heightForState: CGFloat {
-        Self.size(for: islandState, dualLine: appState.dualLineMode).height
+        Self.size(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork).height
     }
 
-    static func size(for state: IslandState, dualLine: Bool = false) -> NSSize {
+    static func size(for state: IslandState, dualLine: Bool = false, artwork: Bool = true) -> NSSize {
         switch state {
-        case .compact: NSSize(width: 350, height: dualLine ? 58 : 38)
-        case .expanded: NSSize(width: 380, height: 120)
-        case .full: NSSize(width: 400, height: 300)
+        case .compact: NSSize(width: 350, height: dualLine ? 62 : artwork ? 48 : 38)
+        case .expanded: NSSize(width: artwork ? 450 : 380, height: artwork ? 160 : 120)
+        case .full: NSSize(width: artwork ? 540 : 400, height: artwork ? 340 : 300)
         }
     }
 
@@ -64,6 +68,6 @@ struct IslandContentView: View {
 
     private func resizePanel(for state: IslandState) {
         guard let window = NSApp.windows.first(where: { $0 is DynamicIslandPanel }) as? DynamicIslandPanel else { return }
-        window.animateResize(to: Self.size(for: state, dualLine: appState.dualLineMode))
+        window.animateResize(to: Self.size(for: state, dualLine: appState.dualLineMode, artwork: appState.showArtwork))
     }
 }

@@ -9,6 +9,11 @@ struct CompactIslandView: View {
 
     var body: some View {
         HStack(spacing: 10) {
+            // Album artwork thumbnail
+            if appState.showArtwork {
+                ArtworkView(syncEngine: syncEngine, size: 36)
+            }
+
             // Playing indicator bars
             if syncEngine.isPlaying {
                 PlayingIndicator()

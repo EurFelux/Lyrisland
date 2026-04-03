@@ -65,6 +65,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var trackMenuItem: NSMenuItem?
     private var sourceMenuItem: NSMenuItem?
     private var dualLineMenuItem: NSMenuItem?
+    private var showArtworkMenuItem: NSMenuItem?
     private var offsetMenuItem: NSMenuItem?
 
     private func setupMenuBar() {
@@ -92,6 +93,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         dualLineMenuItem = NSMenuItem(title: String(localized: "menu.dual_line"), action: #selector(toggleDualLine), keyEquivalent: "d")
         dualLineMenuItem?.state = appState.dualLineMode ? .on : .off
         menu.addItem(dualLineMenuItem!)
+
+        showArtworkMenuItem = NSMenuItem(
+            title: String(localized: "menu.show_artwork"),
+            action: #selector(toggleArtwork),
+            keyEquivalent: "a"
+        )
+        showArtworkMenuItem?.state = appState.showArtwork ? .on : .off
+        menu.addItem(showArtworkMenuItem!)
 
         menu.addItem(.separator())
 
@@ -180,6 +189,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         syncEngine.calibrate(position: state.position, isPlaying: state.isPlaying)
+        syncEngine.setTrackId(state.trackId)
+        syncEngine.setArtworkURL(state.artworkURL)
         setPollRate(state.isPlaying ? .playing : .paused)
 
         // Track changed → fetch new lyrics
@@ -212,6 +223,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func toggleDualLine() {
         appState.dualLineMode.toggle()
         dualLineMenuItem?.state = appState.dualLineMode ? .on : .off
+    }
+
+    @objc private func toggleArtwork() {
+        appState.showArtwork.toggle()
+        showArtworkMenuItem?.state = appState.showArtwork ? .on : .off
     }
 
     @objc private func toggleIsland() {

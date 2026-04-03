@@ -11,6 +11,7 @@ import QuartzCore
 final class PlaybackSyncEngine: ObservableObject {
     @Published private(set) var isPlaying: Bool = false
     @Published private(set) var currentTrackId: String?
+    @Published private(set) var artworkURL: URL?
 
     /// Monotonically incrementing tick that drives SwiftUI redraws.
     /// Views read `position` inside a body that depends on `tick`.
@@ -53,7 +54,16 @@ final class PlaybackSyncEngine: ObservableObject {
     }
 
     func setTrackId(_ id: String?) {
-        currentTrackId = id
+        if id != currentTrackId {
+            currentTrackId = id
+        }
+    }
+
+    func setArtworkURL(_ urlString: String?) {
+        let url = urlString.flatMap { URL(string: $0) }
+        if url != artworkURL {
+            artworkURL = url
+        }
     }
 
     /// Linearly interpolated position.
