@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- GitHub Actions release workflow：push tag 自动构建并发布 DMG + zip 到 GitHub Releases
+- DMG 安装包：浅色渐变背景 + 拖拽到 Applications 引导箭头
+
 ## 0.4.0 — 2026-04-04
 
 ### Added

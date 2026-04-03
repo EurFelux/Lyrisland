@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-release:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: brew install xcodegen create-dmg
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build Release
+        run: |
+          xcodebuild -project Lyrisland.xcodeproj \
+            -scheme Lyrisland \
+            -configuration Release \
+            -destination 'platform=macOS' \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Generate DMG background
+        run: swift Scripts/generate-dmg-background.swift /tmp/dmg-background.png 660 400
+
+      - name: Package DMG
+        run: |
+          APP_PATH="build/Build/Products/Release/Lyrisland.app"
+          # create-dmg returns exit code 2 when signing is skipped — that's expected
+          create-dmg \
+            --volname "Lyrisland" \
+            --background /tmp/dmg-background.png \
+            --window-pos 200 120 \
+            --window-size 660 400 \
+            --icon-size 80 \
+            --icon "Lyrisland.app" 170 190 \
+            --app-drop-link 490 190 \
+            --hide-extension "Lyrisland.app" \
+            --no-internet-enable \
+            "Lyrisland-${{ steps.version.outputs.version }}.dmg" \
+            "$APP_PATH" \
+          || test $? -eq 2
+
+      - name: Package zip (for Homebrew)
+        run: |
+          APP_PATH="build/Build/Products/Release/Lyrisland.app"
+          ditto -c -k --keepParent "$APP_PATH" "Lyrisland-${{ steps.version.outputs.version }}.zip"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # v2.3.2
+        with:
+          draft: false
+          generate_release_notes: true
+          files: |
+            Lyrisland-${{ steps.version.outputs.version }}.dmg
+            Lyrisland-${{ steps.version.outputs.version }}.zip
