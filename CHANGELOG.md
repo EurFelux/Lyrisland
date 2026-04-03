@@ -2,6 +2,10 @@
 
 ## 0.2.0 — 2026-04-04
 
+### Fixed
+
+- Detached + Expanded 模式下灵动岛圆角显示不完全、内容溢出裁剪区域的问题，通过将 vertical padding 纳入 detached 面板高度计算并约束 SwiftUI frame 与 NSPanel 尺寸对齐 (#61)
+
 ### Added
 
 - 设置 → 歌词标签页支持拖拽排序歌词源优先级，可启用/禁用单个歌词源；顺序持久化到 UserDefaults，重置按钮恢复默认顺序 (#55)
