@@ -433,6 +433,126 @@
         "en": { "stringUnit": { "state": "translated", "value": "Report Issue" } },
         "zh-Hans": { "stringUnit": { "state": "translated", "value": "反馈问题" } }
       }
+    },
+    "menu.help": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Help" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "帮助" } }
+      }
+    },
+    "help.title": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lyrisland Help" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Lyrisland 帮助" } }
+      }
+    },
+    "help.section.interactions": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Island Interactions" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "灵动岛交互" } }
+      }
+    },
+    "help.interactions.click": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Click the island to cycle through states: Compact → Expanded → Full → Compact." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "点击灵动岛切换状态：紧凑 → 展开 → 完整 → 紧凑。" } }
+      }
+    },
+    "help.interactions.longpress": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Long-press (hold for 0.5s) the island to detach it from the menu bar and unlock dragging." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "长按灵动岛（按住 0.5 秒）可将其从菜单栏脱离，解锁拖拽功能。" } }
+      }
+    },
+    "help.interactions.drag": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Once detached, drag the island to reposition it anywhere on screen." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "脱离后可拖拽灵动岛至屏幕任意位置。" } }
+      }
+    },
+    "help.interactions.snap": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Drag the island back near the top of the screen to snap it back to the menu bar." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "将灵动岛拖拽至屏幕顶部附近即可自动吸附回菜单栏。" } }
+      }
+    },
+    "help.section.settings": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Settings" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "设置说明" } }
+      }
+    },
+    "help.settings.position": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Position Mode — switch between Attached (pinned to menu bar) and Detached (free-floating) modes." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "位置模式 — 在吸附（固定于菜单栏）和自由（浮动拖拽）模式之间切换。" } }
+      }
+    },
+    "help.settings.artwork": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Show Artwork — display album cover art alongside lyrics in the island." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示专辑封面 — 在灵动岛中展示当前播放歌曲的封面图片。" } }
+      }
+    },
+    "help.settings.dualline": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Dual-Line Mode — show the current lyric line and the next line together." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "双行模式 — 同时显示当前歌词和下一行歌词。" } }
+      }
+    },
+    "help.settings.alignment": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Alignment — choose left, center, or right alignment for lyrics text." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词对齐 — 选择歌词文本的对齐方式：左对齐、居中或右对齐。" } }
+      }
+    },
+    "help.settings.offset": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Offset — adjust timing offset when lyrics are out of sync. Use ±0.5s buttons or ⌘[ / ⌘] shortcuts." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词偏移 — 当歌词不同步时调整时间偏移。可使用 ±0.5 秒按钮或 ⌘[ / ⌘] 快捷键。" } }
+      }
+    },
+    "help.section.shortcuts": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Keyboard Shortcuts" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "键盘快捷键" } }
+      }
+    },
+    "help.shortcuts.toggle": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "⌘L — Show or hide the lyrics island." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "⌘L — 显示或隐藏歌词灵动岛。" } }
+      }
+    },
+    "help.shortcuts.settings": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "⌘, — Open the Settings window." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "⌘, — 打开设置窗口。" } }
+      }
+    },
+    "help.shortcuts.help": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "⌘? — Open this Help window." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "⌘? — 打开此帮助窗口。" } }
+      }
+    },
+    "help.shortcuts.quit": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "⌘Q — Quit Lyrisland." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "⌘Q — 退出 Lyrisland。" } }
+      }
+    },
+    "help.section.providers": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Providers" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词来源" } }
+      }
+    },
+    "help.providers.chain": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lyrics are fetched from multiple sources in order: LRCLIB → Musixmatch → Soda Music → Netease. The first source that returns synced lyrics wins." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词按优先级依次从多个来源获取：LRCLIB → Musixmatch → 汽水音乐 → 网易云。首个返回同步歌词的来源将被采用。" } }
+      }
     }
   }
 }
