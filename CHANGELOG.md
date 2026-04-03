@@ -2,16 +2,19 @@
 
 ## Unreleased
 
+## 0.5.0 — 2026-04-04
+
 ### Fixed
 
-- Full 模式歌词加载过程中封面图片布局偏移
-- Full 模式长歌词行换行而非使用 MarqueeText 单行滚动显示
+- Full 模式歌词加载过程中封面图片布局偏移 (#75)
+- Full 模式长歌词行换行而非使用 MarqueeText 单行滚动显示 (#78, #79)
 
 ### Added
 
-- rem-based 字体缩放机制：所有歌词相关字体大小基于可配置的根字体大小按比例缩放，可在设置窗口外观标签页中调节
+- rem-based 字体缩放机制：所有歌词相关字体大小基于可配置的根字体大小按比例缩放，可在设置窗口外观标签页中调节 (#77)
 - GitHub Actions release workflow：push tag 自动构建并发布 DMG + zip 到 GitHub Releases
 - DMG 安装包：浅色渐变背景 + 拖拽到 Applications 引导箭头
+- Homebrew Cask 安装支持 (#72)
 
 ## 0.4.0 — 2026-04-04
 
