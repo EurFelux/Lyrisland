@@ -8,3 +8,4 @@
 --maxwidth 140
 --semicolons never
 --exclude .build
+--disable wrapMultilineStatementBraces

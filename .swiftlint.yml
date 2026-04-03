@@ -30,6 +30,7 @@ line_length:
   error: 250
   ignores_urls: true
   ignores_comments: true
+  ignores_interpolated_strings: true
 
 type_body_length:
   warning: 300

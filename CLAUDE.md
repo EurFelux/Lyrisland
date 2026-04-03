@@ -26,7 +26,9 @@ swiftlint --fix Sources    # auto-fix lint issues
 swiftlint Sources          # check remaining warnings/errors
 ```
 
-Both run automatically as Xcode pre-build scripts. Config: `.swiftlint.yml` and `.swiftformat`.
+Both run automatically as Xcode pre-build scripts and as pre-commit hooks via [prek](https://github.com/j178/prek). Config: `.swiftlint.yml`, `.swiftformat`, `prek.toml`.
+
+After cloning, run `prek install` to set up the git pre-commit hook.
 
 **Caveat:** SwiftLint auto-fix changes `let _ =` to `_ =`, which breaks `@ViewBuilder` contexts. The `let _ = syncEngine.tick` pattern in `IslandContentView` uses an inline `swiftlint:disable` for this reason.
 
@@ -46,7 +48,7 @@ AppleScript poll (adaptive: 200ms/1s/3s)
     → PlaybackSyncEngine.calibrate() → anchor point
     → 30fps tick timer → interpolated position
     → SwiftUI views read syncEngine.position driven by syncEngine.tick
-    
+
 Track change → LyricsManager.loadLyrics()
     → Provider fallback chain (LRCLIB → Musixmatch → SodaMusic)
     → SyncedLyrics cached by track ID
