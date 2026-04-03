@@ -10,6 +10,9 @@ options:
 localizations:
   - en
   - zh-Hans
+  - zh-Hant
+  - ja
+  - ko
 
 settings:
   base:
