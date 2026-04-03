@@ -76,9 +76,21 @@ private struct LyricLineRow: View, Equatable {
             }
 
             if let translation {
-                Text(translation)
-                    .font(.system(size: 11))
-                    .foregroundStyle(isCurrent ? .white.opacity(0.7) : .white.opacity(0.2))
+                if isCurrent {
+                    MarqueeText(
+                        text: translation,
+                        font: .system(size: 11),
+                        color: .white.opacity(0.7),
+                        loops: false,
+                        lineDuration: lineDuration
+                    )
+                } else {
+                    Text(translation)
+                        .font(.system(size: 11))
+                        .foregroundStyle(.white.opacity(0.2))
+                        .lineLimit(1)
+                        .blur(radius: blurAmount)
+                }
             }
         }
         .animation(.smooth(duration: 0.35), value: isCurrent)
