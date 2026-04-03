@@ -29,20 +29,36 @@ Lyrisland displays real-time Spotify lyrics at the top of your screen in a Dynam
 
 ## Features
 
-- **Dynamic Island Modes** — Compact, Expanded, and Full modes with smooth animated transitions on click
+- **Dynamic Island Modes** — Compact, Expanded, and Full modes with smooth animated transitions; Expanded shows track info, Full includes playback controls (prev/play-pause/next)
 - **Real-time Sync** — Line-by-line lyrics highlighting, precisely aligned with playback progress
-- **Multiple Lyrics Sources** — Automatically searches multiple providers with intelligent fallback
-- **No Login Required** — Reads playback state directly from the local Spotify client, no account authorization needed
+- **Album Artwork** — Displays album art in all three modes — thumbnail in Compact, medium cover in Expanded, large cover in Full
+- **Dual-line Lyrics** — Karaoke-style display showing current and next line simultaneously (toggle with ⌘D)
+- **Multiple Lyrics Sources** — Fallback chain across 4 providers: LRCLIB → Musixmatch → SodaMusic → Netease, with drag-to-reorder priority and per-source enable/disable in Settings
+- **Flexible Positioning** — Snap to menu bar (attached) or free-drag anywhere on screen (detached), with position persisted across launches
+- **Background Styles** — Choose from solid color, album gradient, frosted glass, or dynamic gradient backgrounds
+- **Customizable Shortcuts** — View, rebind, or disable all keyboard shortcuts in Settings, with conflict detection and one-click reset
+- **RTL Support** — Automatic text direction detection for right-to-left languages (e.g. Arabic), with adaptive marquee scroll and alignment
+- **Multilingual UI** — Localized in English, 简体中文, 繁體中文, 日本語, 한국어
+- **No Login Required** — Reads playback state directly from the local Spotify client via AppleScript, no account authorization needed
 - **Lightweight & Resident** — Runs in the menu bar only, no Dock icon, minimal resource usage
-- **Manual Fine-tuning** — Lyrics offset adjustment (±0.5s) to accommodate timing differences across sources
 
 ## Preview
 
-<!-- Add screenshots or GIFs here -->
-
 | Compact | Expanded | Full |
 |:---:|:---:|:---:|
-| Single line | Context preview | Full lyrics list |
+| ![Compact](Assets/screenshots/attached.png) | ![Expanded](Assets/screenshots/expanded.png) | ![Full](Assets/screenshots/full.png) |
+
+### Background Styles
+
+| Solid | Album Gradient | Frosted Glass | Dynamic Gradient |
+|:---:|:---:|:---:|:---:|
+| ![Solid](Assets/screenshots/bg-solid.png) | ![Gradient](Assets/screenshots/bg-album-gradient.png) | ![Glass](Assets/screenshots/bg-glass.png) | ![Dynamic](Assets/screenshots/bg-dynamic-gradient.png) |
+
+### Position Modes
+
+| Attached to Menu Bar | Free Floating |
+|:---:|:---:|
+| ![Attached](Assets/screenshots/attached.png) | ![Detached](Assets/screenshots/detached-compact.png) |
 
 ## Getting Started
 
@@ -76,4 +92,4 @@ Currently only Spotify is supported.
 
 ## License
 
-All rights reserved.
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
