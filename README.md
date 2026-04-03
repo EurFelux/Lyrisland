@@ -42,6 +42,19 @@ Lyrisland displays real-time Spotify lyrics at the top of your screen in a Dynam
 - **No Login Required** — Reads playback state directly from the local Spotify client via AppleScript, no account authorization needed
 - **Lightweight & Resident** — Runs in the menu bar only, no Dock icon, minimal resource usage
 
+## Installation
+
+### Homebrew (recommended)
+
+```bash
+brew tap EurFelux/lyrisland
+brew install --cask lyrisland
+```
+
+### Manual Download
+
+Download the latest `.dmg` from [GitHub Releases](https://github.com/EurFelux/Lyrisland/releases), open it, and drag Lyrisland to Applications.
+
 ## Preview
 
 #### Compact
@@ -74,19 +87,6 @@ Lyrisland displays real-time Spotify lyrics at the top of your screen in a Dynam
 
 #### Free Floating
 ![Detached](Assets/screenshots/detached-compact.png)
-
-## Installation
-
-### Homebrew (recommended)
-
-```bash
-brew tap EurFelux/lyrisland
-brew install --cask lyrisland
-```
-
-### Manual Download
-
-Download the latest `.dmg` from [GitHub Releases](https://github.com/EurFelux/Lyrisland/releases), open it, and drag Lyrisland to Applications.
 
 ## Getting Started
 
