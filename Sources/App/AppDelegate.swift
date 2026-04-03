@@ -1,4 +1,5 @@
 import AppKit
+import KeyboardShortcuts
 import SwiftUI
 
 @MainActor
@@ -74,6 +75,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var trackMenuItem: NSMenuItem?
     private var sourceMenuItem: NSMenuItem?
 
+    private var toggleMenuItem: NSMenuItem?
+    private var settingsMenuItem: NSMenuItem?
+    private var helpMenuItem: NSMenuItem?
+    private var quitMenuItem: NSMenuItem?
+
     private func setupMenuBar() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let button = statusItem?.button {
@@ -81,6 +87,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         let menu = NSMenu()
+        menu.delegate = self
 
         // Now playing info (disabled, just for display)
         trackMenuItem = NSMenuItem(title: String(localized: "menu.no_track"), action: nil, keyEquivalent: "")
@@ -94,14 +101,43 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         menu.addItem(.separator())
 
-        menu.addItem(NSMenuItem(title: String(localized: "menu.show_hide"), action: #selector(toggleIsland), keyEquivalent: "l"))
+        toggleMenuItem = NSMenuItem(title: String(localized: "menu.show_hide"), action: #selector(toggleIsland), keyEquivalent: "")
+        menu.addItem(toggleMenuItem!)
 
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: String(localized: "menu.settings"), action: #selector(openSettings), keyEquivalent: ","))
-        menu.addItem(NSMenuItem(title: String(localized: "menu.help"), action: #selector(openHelp), keyEquivalent: "?"))
-        menu.addItem(NSMenuItem(title: String(localized: "menu.quit"), action: #selector(quitApp), keyEquivalent: "q"))
+        settingsMenuItem = NSMenuItem(title: String(localized: "menu.settings"), action: #selector(openSettings), keyEquivalent: "")
+        menu.addItem(settingsMenuItem!)
+        helpMenuItem = NSMenuItem(title: String(localized: "menu.help"), action: #selector(openHelp), keyEquivalent: "")
+        menu.addItem(helpMenuItem!)
+        quitMenuItem = NSMenuItem(title: String(localized: "menu.quit"), action: #selector(quitApp), keyEquivalent: "")
+        menu.addItem(quitMenuItem!)
 
         statusItem?.menu = menu
+
+        syncMenuItemShortcuts()
+        setupGlobalShortcuts()
+    }
+
+    private func syncMenuItemShortcuts() {
+        toggleMenuItem?.setShortcut(for: .toggleLyrics)
+        settingsMenuItem?.setShortcut(for: .openSettings)
+        helpMenuItem?.setShortcut(for: .openHelp)
+        quitMenuItem?.setShortcut(for: .quitApp)
+    }
+
+    private func setupGlobalShortcuts() {
+        KeyboardShortcuts.onKeyUp(for: .toggleLyrics) { [weak self] in
+            self?.toggleIsland()
+        }
+        KeyboardShortcuts.onKeyUp(for: .openSettings) { [weak self] in
+            self?.openSettings()
+        }
+        KeyboardShortcuts.onKeyUp(for: .openHelp) { [weak self] in
+            self?.openHelp()
+        }
+        KeyboardShortcuts.onKeyUp(for: .quitApp) { [weak self] in
+            self?.quitApp()
+        }
     }
 
     private func updateMenuInfo(state: SpotifyPlaybackState? = nil) {
@@ -293,5 +329,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func quitApp() {
         NSApp.terminate(nil)
+    }
+}
+
+// MARK: - NSMenuDelegate
+
+extension AppDelegate: NSMenuDelegate {
+    func menuWillOpen(_: NSMenu) {
+        KeyboardShortcuts.disable(KeyboardShortcuts.Name.allCases)
+    }
+
+    func menuDidClose(_: NSMenu) {
+        KeyboardShortcuts.enable(KeyboardShortcuts.Name.allCases)
     }
 }

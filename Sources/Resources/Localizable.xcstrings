@@ -488,6 +488,48 @@
         "zh-Hans": { "stringUnit": { "state": "translated", "value": "帮助" } }
       }
     },
+    "settings.tab.shortcuts": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Shortcuts" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "快捷键" } }
+      }
+    },
+    "settings.shortcuts.section": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Keyboard Shortcuts" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "键盘快捷键" } }
+      }
+    },
+    "settings.shortcuts.toggle_lyrics": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Show/Hide Lyrics" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示/隐藏歌词" } }
+      }
+    },
+    "settings.shortcuts.open_settings": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Open Settings" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "打开设置" } }
+      }
+    },
+    "settings.shortcuts.open_help": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Open Help" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "打开帮助" } }
+      }
+    },
+    "settings.shortcuts.quit_app": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Quit App" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "退出应用" } }
+      }
+    },
+    "settings.shortcuts.reset_all": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Reset All to Defaults" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "全部恢复默认" } }
+      }
+    },
     "help.title": {
       "localizations": {
         "en": { "stringUnit": { "state": "translated", "value": "Lyrisland Help" } },
