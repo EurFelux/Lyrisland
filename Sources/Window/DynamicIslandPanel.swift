@@ -152,7 +152,7 @@ final class DynamicIslandPanel: NSPanel {
     private var isInSnapZone = false
 
     /// How long the user must hold before dragging is allowed.
-    private static let longPressDuration: TimeInterval = 0.5
+    private static let longPressDuration: TimeInterval = 0.3
 
     override func mouseDown(with _: NSEvent) {
         mouseDownOrigin = NSEvent.mouseLocation
