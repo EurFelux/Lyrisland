@@ -7,15 +7,21 @@ struct IslandContentView: View {
     @ObservedObject var appState: AppState
     @State private var islandState: IslandState = .compact
     @State private var isAttached: Bool = UserDefaults.standard.islandPositionMode == .attached
+    @State private var isInSnapZone = false
 
     private var cornerRadius: CGFloat {
         islandState == .compact ? 20 : 24
     }
 
+    /// Whether the island should use attached visual appearance (actual attached or snap zone preview).
+    private var showAttachedAppearance: Bool {
+        isAttached || isInSnapZone
+    }
+
     var body: some View {
-        ZStack(alignment: isAttached ? .bottom : .topLeading) {
-            // Background: attached mode has inverse top corners, detached has full rounded corners
-            if isAttached {
+        ZStack(alignment: showAttachedAppearance ? .bottom : .topLeading) {
+            // Background: attached mode (or snap zone preview) has inverse top corners, detached has full rounded corners
+            if showAttachedAppearance {
                 IslandBackgroundView(
                     style: appState.backgroundStyle,
                     shape: AnyShape(AttachedIslandShape(bottomRadius: cornerRadius, inverseRadius: Self.earRadius)),
@@ -29,7 +35,7 @@ struct IslandContentView: View {
                         bottomRadius: cornerRadius,
                         inverseRadius: Self.earRadius
                     )
-                    .stroke(.white.opacity(0.15), lineWidth: 0.5)
+                    .stroke(.white.opacity(isInSnapZone ? 0.4 : 0.15), lineWidth: isInSnapZone ? 1.0 : 0.5)
                 )
             } else {
                 IslandBackgroundView(
@@ -61,20 +67,21 @@ struct IslandContentView: View {
                 }
             }
             .frame(
-                maxHeight: isAttached
+                maxHeight: showAttachedAppearance
                     ? Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
                     : .infinity
             )
-            .padding(.horizontal, isAttached ? Self.earRadius : 0)
+            .padding(.horizontal, showAttachedAppearance ? Self.earRadius : 0)
             .padding(contentPadding)
         }
         // No explicit size — fill the panel, let NSPanel drive sizing
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: isAttached ? .bottom : .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: showAttachedAppearance ? .bottom : .topLeading)
         .clipShape(
-            isAttached
+            showAttachedAppearance
                 ? AnyShape(AttachedIslandShape(bottomRadius: cornerRadius, inverseRadius: Self.earRadius))
                 : AnyShape(RoundedRectangle(cornerRadius: cornerRadius))
         )
+        .shadow(color: .white.opacity(isInSnapZone ? 0.3 : 0), radius: 8)
         .onReceive(NotificationCenter.default.publisher(for: .islandTapped)) { _ in
             cycleState()
         }
@@ -84,6 +91,13 @@ struct IslandContentView: View {
                     isAttached = mode == .attached
                 }
                 resizePanel(for: islandState)
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .islandSnapZoneChanged)) { notification in
+            if let inZone = notification.object as? Bool {
+                withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
+                    isInSnapZone = inZone
+                }
             }
         }
         .onChange(of: islandState) { _, newState in
@@ -155,7 +169,7 @@ struct IslandContentView: View {
         case .expanded:
             // In attached mode, move bottom padding to top so the content clears the notch.
             // The bottom padding otherwise pushes the bottom-aligned content up into the menu bar area.
-            if isAttached {
+            if showAttachedAppearance {
                 EdgeInsets(top: 24, leading: 10, bottom: 0, trailing: 10)
             } else {
                 EdgeInsets(top: 12, leading: 10, bottom: 12, trailing: 10)
