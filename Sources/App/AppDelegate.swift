@@ -5,6 +5,7 @@ import SwiftUI
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var islandPanel: DynamicIslandPanel?
     private var onboardingWindow: NSWindow?
+    private var settingsWindow: NSWindow?
     private var statusItem: NSStatusItem?
     private let spotifyService = SpotifyAppleScriptService()
     private let lyricsManager = LyricsManager()
@@ -245,13 +246,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func openSettings() {
-        // LSUIElement apps must activate before sending the action,
-        // otherwise the Settings window may fail to appear.
-        NSApp.activate()
-        if !NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil) {
-            // Fallback for older macOS versions where the selector was different
-            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+        if let window = settingsWindow {
+            window.makeKeyAndOrderFront(nil)
+        } else {
+            let window = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 420, height: 280),
+                styleMask: [.titled, .closable],
+                backing: .buffered,
+                defer: false
+            )
+            window.center()
+            window.title = String(localized: "menu.settings")
+            window.contentView = NSHostingView(rootView: SettingsView())
+            window.isReleasedWhenClosed = false
+            settingsWindow = window
+            window.makeKeyAndOrderFront(nil)
         }
+        NSApp.activate()
     }
 
     @objc private func quitApp() {
