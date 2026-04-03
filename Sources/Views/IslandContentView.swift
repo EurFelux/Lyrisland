@@ -11,7 +11,11 @@ struct IslandContentView: View {
         ZStack {
             // Background capsule
             RoundedRectangle(cornerRadius: islandState == .compact ? 20 : 24)
-                .fill(.black)
+                .fill(Color(white: 0.08))
+                .overlay(
+                    RoundedRectangle(cornerRadius: islandState == .compact ? 20 : 24)
+                        .strokeBorder(.white.opacity(0.15), lineWidth: 0.5)
+                )
 
             // Content based on state — `tick` dependency ensures periodic redraws
             let _ = syncEngine.tick // swiftlint:disable:this redundant_discardable_let
