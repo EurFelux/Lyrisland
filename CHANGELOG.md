@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- 国际化支持（i18n），使用 String Catalog（.xcstrings）
+- 简体中文翻译（Onboarding、菜单栏、歌词状态提示）
+
 ### Fixed
 
 - 歌词第一句出现前不再误显示 "No lyrics available"，改为显示 ♪ 占位符 (#1)

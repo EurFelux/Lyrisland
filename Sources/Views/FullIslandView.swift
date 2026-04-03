@@ -32,7 +32,7 @@ struct FullIslandView: View {
                 Spacer()
             } else {
                 Spacer()
-                Text("No synced lyrics found")
+                Text("lyrics.no_synced")
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.4))
                 Spacer()

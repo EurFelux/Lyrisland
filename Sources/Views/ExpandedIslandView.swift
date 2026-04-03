@@ -23,7 +23,7 @@ struct ExpandedIslandView: View {
                         .blur(radius: isCurrent ? 0 : 0.5)
                 }
             } else {
-                Text("No lyrics available")
+                Text("lyrics.no_lyrics")
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.4))
             }

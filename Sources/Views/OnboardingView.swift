@@ -14,10 +14,10 @@ struct OnboardingView: View {
                 Image(systemName: "music.note.list")
                     .font(.system(size: 48))
                     .foregroundStyle(.white)
-                Text("Lyrisland")
+                Text("onboarding.title")
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.white)
-                Text("Desktop lyrics in a Dynamic Island")
+                Text("onboarding.subtitle")
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.6))
             }
@@ -45,13 +45,13 @@ struct OnboardingView: View {
             // Navigation
             HStack {
                 if currentStep > 0 {
-                    Button("Back") { currentStep -= 1 }
+                    Button(String(localized: "onboarding.back")) { currentStep -= 1 }
                         .buttonStyle(.plain)
                         .foregroundStyle(.white.opacity(0.5))
                 }
                 Spacer()
                 Button(action: advance) {
-                    Text(currentStep >= 3 ? "Get Started" : "Continue")
+                    Text(currentStep >= 3 ? "onboarding.get_started" : "onboarding.continue")
                         .fontWeight(.medium)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 24)
@@ -73,19 +73,19 @@ struct OnboardingView: View {
 
     private var welcomeStep: some View {
         VStack(alignment: .leading, spacing: 12) {
-            stepTitle("How it works")
+            stepTitle(String(localized: "onboarding.how_it_works"))
             stepItem(
                 icon: "desktopcomputer",
-                text: "Reads playback info from the Spotify desktop app via macOS Automation — no account login needed."
+                text: String(localized: "onboarding.step.automation")
             )
-            stepItem(icon: "text.quote", text: "Fetches synced lyrics from open sources (LRCLIB, Musixmatch, Soda Music).")
-            stepItem(icon: "sparkles.rectangle.stack", text: "Displays lyrics in a floating Dynamic Island at the top of your screen.")
+            stepItem(icon: "text.quote", text: String(localized: "onboarding.step.lyrics"))
+            stepItem(icon: "sparkles.rectangle.stack", text: String(localized: "onboarding.step.display"))
         }
     }
 
     private var spotifyCheckStep: some View {
         VStack(alignment: .leading, spacing: 12) {
-            stepTitle("Spotify Desktop App")
+            stepTitle(String(localized: "onboarding.spotify_check"))
 
             let status = appState.spotifyStatus
             HStack(spacing: 12) {
@@ -106,7 +106,7 @@ struct OnboardingView: View {
             .background(RoundedRectangle(cornerRadius: 10).fill(.white.opacity(0.06)))
 
             if status == .notRunning || status == .notInstalled {
-                Button("Open Spotify") {
+                Button(String(localized: "onboarding.open_spotify")) {
                     NSWorkspace.shared.open(URL(string: "spotify:")!)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         appState.refresh()
@@ -116,7 +116,7 @@ struct OnboardingView: View {
                 .foregroundStyle(.green)
             }
 
-            Button("Refresh") { appState.refresh() }
+            Button(String(localized: "onboarding.refresh")) { appState.refresh() }
                 .buttonStyle(.plain)
                 .foregroundStyle(.white.opacity(0.5))
                 .font(.system(size: 12))
@@ -126,15 +126,14 @@ struct OnboardingView: View {
 
     private var permissionStep: some View {
         VStack(alignment: .leading, spacing: 12) {
-            stepTitle("Automation Permission")
+            stepTitle(String(localized: "onboarding.permission"))
             stepItem(
                 icon: "lock.shield",
-                text: "macOS requires your approval to let this app communicate with Spotify."
+                text: String(localized: "onboarding.permission.desc")
             )
             stepItem(
                 icon: "hand.tap",
-                // swiftlint:disable:next line_length
-                text: "When prompted, click \"OK\" to grant Automation access. You can also enable it in System Settings → Privacy & Security → Automation."
+                text: String(localized: "onboarding.permission.guide")
             )
 
             HStack(spacing: 8) {
@@ -142,8 +141,8 @@ struct OnboardingView: View {
                     .fill(appState.permissionStatus == .granted ? .green : .orange)
                     .frame(width: 8, height: 8)
                 Text(appState.permissionStatus == .granted
-                    ? "Permission granted"
-                    : "Permission will be requested when Spotify is accessed")
+                    ? String(localized: "onboarding.permission.granted")
+                    : String(localized: "onboarding.permission.pending"))
                     .font(.system(size: 12))
                     .foregroundStyle(.white.opacity(0.6))
             }
@@ -156,13 +155,13 @@ struct OnboardingView: View {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 48))
                 .foregroundStyle(.green)
-            Text("You're all set!")
+            Text("onboarding.ready")
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundStyle(.white)
             VStack(alignment: .leading, spacing: 8) {
-                tipItem("Click the island to expand/collapse lyrics")
-                tipItem("Use menu bar ♪ icon for settings")
-                tipItem("Press [ ] to adjust lyrics timing offset")
+                tipItem(String(localized: "onboarding.tip.click"))
+                tipItem(String(localized: "onboarding.tip.menu"))
+                tipItem(String(localized: "onboarding.tip.offset"))
             }
         }
     }
@@ -224,17 +223,17 @@ struct OnboardingView: View {
 
     private func statusTitle(for status: AppState.SpotifyStatus) -> String {
         switch status {
-        case .notInstalled: "Spotify not found"
-        case .notRunning: "Spotify is not running"
-        case .running: "Spotify is running"
+        case .notInstalled: String(localized: "onboarding.spotify.not_found")
+        case .notRunning: String(localized: "onboarding.spotify.not_running")
+        case .running: String(localized: "onboarding.spotify.running")
         }
     }
 
     private func statusSubtitle(for status: AppState.SpotifyStatus) -> String {
         switch status {
-        case .notInstalled: "Please install the Spotify desktop app first."
-        case .notRunning: "Launch Spotify and play a song to get started."
-        case .running: "Ready to display lyrics!"
+        case .notInstalled: String(localized: "onboarding.spotify.install_hint")
+        case .notRunning: String(localized: "onboarding.spotify.launch_hint")
+        case .running: String(localized: "onboarding.spotify.ready_hint")
         }
     }
 }

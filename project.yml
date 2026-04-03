@@ -4,7 +4,12 @@ options:
   deploymentTarget:
     macOS: "14.0"
   xcodeVersion: "16.0"
-  minimumXcodeGenVersion: "2.35"
+  minimumXcodeGenVersion: "2.39"
+  defaultConfig: Release
+
+localizations:
+  - en
+  - zh-Hans
 
 settings:
   base:

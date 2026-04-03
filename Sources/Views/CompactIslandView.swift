@@ -54,21 +54,21 @@ struct CompactIslandView: View {
 
         // Loading lyrics
         if lyricsManager.isLoading {
-            return "Loading lyrics…"
+            return String(localized: "lyrics.loading")
         }
 
         // Playing but no lyrics found
         if syncEngine.isPlaying {
-            return "No lyrics available for this track"
+            return String(localized: "lyrics.not_available")
         }
 
         // Paused with a known position (Spotify running but paused)
         if syncEngine.position > 0 {
-            return "Paused"
+            return String(localized: "lyrics.paused")
         }
 
         // Spotify not running or no track
-        return "Play a song in Spotify to start"
+        return String(localized: "lyrics.play_to_start")
     }
 
     private var displayTextOpacity: Color {

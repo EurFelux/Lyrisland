@@ -1,0 +1,258 @@
+{
+  "sourceLanguage": "en",
+  "version": "1.0",
+  "strings": {
+    "onboarding.title": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lyrisland" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Lyrisland" } }
+      }
+    },
+    "onboarding.subtitle": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Desktop lyrics in a Dynamic Island" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "灵动岛桌面歌词" } }
+      }
+    },
+    "onboarding.back": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Back" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "返回" } }
+      }
+    },
+    "onboarding.continue": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Continue" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "继续" } }
+      }
+    },
+    "onboarding.get_started": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Get Started" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "开始使用" } }
+      }
+    },
+    "onboarding.how_it_works": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "How it works" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "工作原理" } }
+      }
+    },
+    "onboarding.step.automation": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Reads playback info from the Spotify desktop app via macOS Automation — no account login needed." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "通过 macOS 自动化功能读取 Spotify 桌面客户端的播放信息，无需登录账号。" } }
+      }
+    },
+    "onboarding.step.lyrics": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Fetches synced lyrics from open sources (LRCLIB, Musixmatch, Soda Music)." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "从开放歌词源（LRCLIB、Musixmatch、汽水音乐）获取同步歌词。" } }
+      }
+    },
+    "onboarding.step.display": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Displays lyrics in a floating Dynamic Island at the top of your screen." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "在屏幕顶部以灵动岛的形式展示歌词。" } }
+      }
+    },
+    "onboarding.spotify_check": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Spotify Desktop App" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Spotify 桌面客户端" } }
+      }
+    },
+    "onboarding.open_spotify": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Open Spotify" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "打开 Spotify" } }
+      }
+    },
+    "onboarding.refresh": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Refresh" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "刷新" } }
+      }
+    },
+    "onboarding.permission": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Automation Permission" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "自动化权限" } }
+      }
+    },
+    "onboarding.permission.desc": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "macOS requires your approval to let this app communicate with Spotify." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "macOS 需要你的授权，以便本应用与 Spotify 通信。" } }
+      }
+    },
+    "onboarding.permission.guide": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "When prompted, click \"OK\" to grant Automation access. You can also enable it in System Settings → Privacy & Security → Automation." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "出现提示时，点击「好」授予自动化权限。你也可以在系统设置 → 隐私与安全性 → 自动化中手动开启。" } }
+      }
+    },
+    "onboarding.permission.granted": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Permission granted" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "权限已授予" } }
+      }
+    },
+    "onboarding.permission.pending": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Permission will be requested when Spotify is accessed" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "访问 Spotify 时将请求权限" } }
+      }
+    },
+    "onboarding.ready": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "You're all set!" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "一切就绪！" } }
+      }
+    },
+    "onboarding.tip.click": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Click the island to expand/collapse lyrics" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "点击灵动岛展开/收起歌词" } }
+      }
+    },
+    "onboarding.tip.menu": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Use menu bar ♪ icon for settings" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "通过菜单栏 ♪ 图标进行设置" } }
+      }
+    },
+    "onboarding.tip.offset": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Press [ ] to adjust lyrics timing offset" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "按 [ ] 键微调歌词时间偏移" } }
+      }
+    },
+    "onboarding.spotify.not_found": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Spotify not found" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "未找到 Spotify" } }
+      }
+    },
+    "onboarding.spotify.not_running": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Spotify is not running" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Spotify 未在运行" } }
+      }
+    },
+    "onboarding.spotify.running": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Spotify is running" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Spotify 运行中" } }
+      }
+    },
+    "onboarding.spotify.install_hint": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Please install the Spotify desktop app first." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "请先安装 Spotify 桌面客户端。" } }
+      }
+    },
+    "onboarding.spotify.launch_hint": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Launch Spotify and play a song to get started." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "启动 Spotify 并播放一首歌曲即可开始。" } }
+      }
+    },
+    "onboarding.spotify.ready_hint": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Ready to display lyrics!" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "已准备好显示歌词！" } }
+      }
+    },
+    "menu.welcome": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Welcome to Lyrisland" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "欢迎使用 Lyrisland" } }
+      }
+    },
+    "menu.no_track": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No track playing" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "未在播放" } }
+      }
+    },
+    "menu.show_hide": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Show/Hide Lyrics" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示/隐藏歌词" } }
+      }
+    },
+    "menu.offset": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Offset" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词偏移" } }
+      }
+    },
+    "menu.offset.value": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Offset: %1$.1fs" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "偏移：%1$.1f秒" } }
+      }
+    },
+    "menu.offset.earlier": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Earlier (-0.5s)" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "提前（-0.5秒）" } }
+      }
+    },
+    "menu.offset.later": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Later (+0.5s)" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "延后（+0.5秒）" } }
+      }
+    },
+    "menu.offset.reset": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Reset Offset" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "重置偏移" } }
+      }
+    },
+    "menu.quit": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Quit" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "退出" } }
+      }
+    },
+    "lyrics.loading": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Loading lyrics…" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "正在加载歌词…" } }
+      }
+    },
+    "lyrics.not_available": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No lyrics available for this track" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "暂无歌词" } }
+      }
+    },
+    "lyrics.no_synced": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No synced lyrics found" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "未找到同步歌词" } }
+      }
+    },
+    "lyrics.no_lyrics": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No lyrics available" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "暂无歌词" } }
+      }
+    },
+    "lyrics.paused": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Paused" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "已暂停" } }
+      }
+    },
+    "lyrics.play_to_start": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Play a song in Spotify to start" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "在 Spotify 播放歌曲即可开始" } }
+      }
+    }
+  }
+}

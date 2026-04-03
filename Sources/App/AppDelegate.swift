@@ -41,7 +41,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             defer: false
         )
         window.center()
-        window.title = "Welcome to Lyrisland"
+        window.title = String(localized: "menu.welcome")
         window.contentView = NSHostingView(rootView: onboardingView)
         window.isReleasedWhenClosed = false
         window.titlebarAppearsTransparent = true
@@ -74,7 +74,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let menu = NSMenu()
 
         // Now playing info (disabled, just for display)
-        trackMenuItem = NSMenuItem(title: "No track playing", action: nil, keyEquivalent: "")
+        trackMenuItem = NSMenuItem(title: String(localized: "menu.no_track"), action: nil, keyEquivalent: "")
         trackMenuItem?.isEnabled = false
         menu.addItem(trackMenuItem!)
 
@@ -85,25 +85,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         menu.addItem(.separator())
 
-        menu.addItem(NSMenuItem(title: "Show/Hide Lyrics", action: #selector(toggleIsland), keyEquivalent: "l"))
+        menu.addItem(NSMenuItem(title: String(localized: "menu.show_hide"), action: #selector(toggleIsland), keyEquivalent: "l"))
 
         menu.addItem(.separator())
 
         // Offset controls
-        let offsetHeader = NSMenuItem(title: "Lyrics Offset", action: nil, keyEquivalent: "")
+        let offsetHeader = NSMenuItem(title: String(localized: "menu.offset"), action: nil, keyEquivalent: "")
         offsetHeader.isEnabled = false
         menu.addItem(offsetHeader)
 
-        offsetMenuItem = NSMenuItem(title: "Offset: 0.0s", action: nil, keyEquivalent: "")
+        offsetMenuItem = NSMenuItem(title: String(format: String(localized: "menu.offset.value"), 0.0), action: nil, keyEquivalent: "")
         offsetMenuItem?.isEnabled = false
         menu.addItem(offsetMenuItem!)
 
-        menu.addItem(NSMenuItem(title: "Earlier (-0.5s)", action: #selector(offsetEarlier), keyEquivalent: "["))
-        menu.addItem(NSMenuItem(title: "Later (+0.5s)", action: #selector(offsetLater), keyEquivalent: "]"))
-        menu.addItem(NSMenuItem(title: "Reset Offset", action: #selector(offsetReset), keyEquivalent: "0"))
+        menu.addItem(NSMenuItem(title: String(localized: "menu.offset.earlier"), action: #selector(offsetEarlier), keyEquivalent: "["))
+        menu.addItem(NSMenuItem(title: String(localized: "menu.offset.later"), action: #selector(offsetLater), keyEquivalent: "]"))
+        menu.addItem(NSMenuItem(title: String(localized: "menu.offset.reset"), action: #selector(offsetReset), keyEquivalent: "0"))
 
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: String(localized: "menu.quit"), action: #selector(quitApp), keyEquivalent: "q"))
 
         statusItem?.menu = menu
     }
@@ -112,7 +112,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let state = spotifyService.fetchPlaybackState() {
             trackMenuItem?.title = "\(state.title) — \(state.artist)"
         } else {
-            trackMenuItem?.title = "No track playing"
+            trackMenuItem?.title = String(localized: "menu.no_track")
         }
 
         if let source = lyricsManager.currentLyrics?.source {
@@ -123,7 +123,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         let offset = lyricsManager.userOffset
-        offsetMenuItem?.title = String(format: "Offset: %+.1fs", offset)
+        offsetMenuItem?.title = String(format: String(localized: "menu.offset.value"), offset)
     }
 
     // MARK: - Island Panel
