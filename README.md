@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="README.zh-CN.md">简体中文</a> | <strong>English</strong>
+  <a href="README.zh-CN.md">简体中文</a> | <a href="README.zh-TW.md">繁體中文</a> | <strong>English</strong> | <a href="README.ja.md">日本語</a> | <a href="README.ko.md">한국어</a>
 </p>
 
 ---
@@ -69,6 +69,10 @@ Use the offset adjustment from the menu bar icon (`[` / `]` keys, ±0.5 seconds 
 
 **Q: Does it support Apple Music?**
 Currently only Spotify is supported.
+
+## Credits
+
+- [Lyricify Lyrics Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) — Musixmatch & Netease lyrics API reference
 
 ## License
 

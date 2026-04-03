@@ -4,644 +4,3640 @@
   "strings": {
     "onboarding.title": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Lyrisland" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Lyrisland" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland"
+          }
+        }
       }
     },
     "onboarding.subtitle": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Desktop lyrics in a Dynamic Island" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "灵动岛桌面歌词" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desktop lyrics in a Dynamic Island"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "灵动岛桌面歌词"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "靈動島桌面歌詞"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ダイナミックアイランドでデスクトップ歌詞を表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "다이나믹 아일랜드 데스크톱 가사"
+          }
+        }
       }
     },
     "onboarding.back": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Back" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "返回" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "返回"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "返回"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "戻る"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "뒤로"
+          }
+        }
       }
     },
     "onboarding.continue": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Continue" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "继续" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "继续"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "繼續"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "続ける"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "계속"
+          }
+        }
       }
     },
     "onboarding.get_started": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Get Started" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "开始使用" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Started"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始使用"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開始使用"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめる"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "시작하기"
+          }
+        }
       }
     },
     "onboarding.how_it_works": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "How it works" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "工作原理" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How it works"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工作原理"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "運作方式"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仕組み"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "작동 방식"
+          }
+        }
       }
     },
     "onboarding.step.automation": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Reads playback info from the Spotify desktop app via macOS Automation — no account login needed." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "通过 macOS 自动化功能读取 Spotify 桌面客户端的播放信息，无需登录账号。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reads playback info from the Spotify desktop app via macOS Automation — no account login needed."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过 macOS 自动化功能读取 Spotify 桌面客户端的播放信息，无需登录账号。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "透過 macOS 自動化功能讀取 Spotify 桌面客戶端的播放資訊，無需登入帳號。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS オートメーションを通じて Spotify デスクトップアプリから再生情報を取得します。アカウントログインは不要です。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 자동화를 통해 Spotify 데스크톱 앱에서 재생 정보를 읽습니다. 계정 로그인이 필요 없습니다."
+          }
+        }
       }
     },
     "onboarding.step.lyrics": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Fetches synced lyrics from open sources (LRCLIB, Musixmatch, Soda Music)." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "从开放歌词源（LRCLIB、Musixmatch、汽水音乐）获取同步歌词。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fetches synced lyrics from open sources (LRCLIB, Musixmatch, Soda Music)."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从开放歌词源（LRCLIB、Musixmatch、汽水音乐）获取同步歌词。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "從開放歌詞源（LRCLIB、Musixmatch、汽水音樂）取得同步歌詞。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オープンソース（LRCLIB、Musixmatch、Soda Music）から同期歌詞を取得します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오픈 소스(LRCLIB, Musixmatch, Soda Music)에서 싱크 가사를 가져옵니다."
+          }
+        }
       }
     },
     "onboarding.step.display": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Displays lyrics in a floating Dynamic Island at the top of your screen." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "在屏幕顶部以灵动岛的形式展示歌词。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Displays lyrics in a floating Dynamic Island at the top of your screen."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在屏幕顶部以灵动岛的形式展示歌词。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在螢幕頂部以靈動島的形式顯示歌詞。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画面上部のフローティングダイナミックアイランドに歌詞を表示します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "화면 상단의 플로팅 다이나믹 아일랜드에 가사를 표시합니다."
+          }
+        }
       }
     },
     "onboarding.spotify_check": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Spotify Desktop App" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Spotify 桌面客户端" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify Desktop App"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 桌面客户端"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 桌面客戶端"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify デスクトップアプリ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 데스크톱 앱"
+          }
+        }
       }
     },
     "onboarding.open_spotify": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Open Spotify" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "打开 Spotify" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Spotify"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开 Spotify"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開啟 Spotify"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify を開く"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 열기"
+          }
+        }
       }
     },
     "onboarding.refresh": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Refresh" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "刷新" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刷新"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重新整理"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更新"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "새로고침"
+          }
+        }
       }
     },
     "onboarding.permission": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Automation Permission" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "自动化权限" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automation Permission"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动化权限"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自動化權限"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オートメーション権限"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "자동화 권한"
+          }
+        }
       }
     },
     "onboarding.permission.desc": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "macOS requires your approval to let this app communicate with Spotify." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "macOS 需要你的授权，以便本应用与 Spotify 通信。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS requires your approval to let this app communicate with Spotify."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 需要你的授权，以便本应用与 Spotify 通信。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 需要您的授權，以便本應用程式與 Spotify 通訊。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このアプリが Spotify と通信するには、macOS の許可が必要です。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이 앱이 Spotify와 통신하려면 macOS 승인이 필요합니다."
+          }
+        }
       }
     },
     "onboarding.permission.guide": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "When prompted, click \"OK\" to grant Automation access. You can also enable it in System Settings → Privacy & Security → Automation." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "出现提示时，点击「好」授予自动化权限。你也可以在系统设置 → 隐私与安全性 → 自动化中手动开启。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When prompted, click \"OK\" to grant Automation access. You can also enable it in System Settings → Privacy & Security → Automation."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "出现提示时，点击「好」授予自动化权限。你也可以在系统设置 → 隐私与安全性 → 自动化中手动开启。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "出現提示時，點按「好」授予自動化權限。您也可以在系統設定 → 隱私權與安全性 → 自動化中手動開啟。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロンプトが表示されたら「OK」をクリックしてオートメーションアクセスを許可してください。システム設定 → プライバシーとセキュリティ → オートメーションからも有効にできます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "메시지가 표시되면 \"확인\"을 클릭하여 자동화 접근 권한을 부여하세요. 시스템 설정 → 개인정보 보호 및 보안 → 자동화에서도 활성화할 수 있습니다."
+          }
+        }
       }
     },
     "onboarding.permission.granted": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Permission granted" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "权限已授予" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permission granted"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "权限已授予"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "權限已授予"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "権限が許可されました"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "권한이 부여되었습니다"
+          }
+        }
       }
     },
     "onboarding.permission.pending": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Permission will be requested when Spotify is accessed" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "访问 Spotify 时将请求权限" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permission will be requested when Spotify is accessed"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "访问 Spotify 时将请求权限"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "存取 Spotify 時將請求權限"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify へのアクセス時に権限がリクエストされます"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify에 접근할 때 권한이 요청됩니다"
+          }
+        }
       }
     },
     "onboarding.ready": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "You're all set!" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "一切就绪！" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're all set!"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一切就绪！"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一切就緒！"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "準備完了！"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모든 준비가 완료되었습니다!"
+          }
+        }
       }
     },
     "onboarding.tip.click": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Click the island to expand/collapse lyrics" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "点击灵动岛展开/收起歌词" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click the island to expand/collapse lyrics"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "点击灵动岛展开/收起歌词"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "點按靈動島展開/收起歌詞"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アイランドをクリックして歌詞を展開/折りたたみ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "아일랜드를 클릭하여 가사 펼치기/접기"
+          }
+        }
       }
     },
     "onboarding.tip.menu": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Use menu bar ♪ icon for settings" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "通过菜单栏 ♪ 图标进行设置" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use menu bar ♪ icon for settings"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过菜单栏 ♪ 图标进行设置"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "透過選單列 ♪ 圖示進行設定"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メニューバーの ♪ アイコンから設定"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "메뉴 막대 ♪ 아이콘으로 설정"
+          }
+        }
       }
     },
     "onboarding.tip.offset": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Press [ ] to adjust lyrics timing offset" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "按 [ ] 键微调歌词时间偏移" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press [ ] to adjust lyrics timing offset"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按 [ ] 键微调歌词时间偏移"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按 [ ] 鍵微調歌詞時間偏移"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "[ ] キーで歌詞のタイミングオフセットを調整"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "[ ] 키로 가사 타이밍 오프셋 조정"
+          }
+        }
       }
     },
     "onboarding.spotify.not_found": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Spotify not found" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "未找到 Spotify" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify not found"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未找到 Spotify"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "找不到 Spotify"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify が見つかりません"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify를 찾을 수 없습니다"
+          }
+        }
       }
     },
     "onboarding.spotify.not_running": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Spotify is not running" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Spotify 未在运行" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify is not running"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 未在运行"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 未在執行"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify が起動していません"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify가 실행 중이 아닙니다"
+          }
+        }
       }
     },
     "onboarding.spotify.running": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Spotify is running" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Spotify 运行中" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify is running"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 运行中"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 執行中"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 起動中"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify 실행 중"
+          }
+        }
       }
     },
     "onboarding.spotify.install_hint": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Please install the Spotify desktop app first." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "请先安装 Spotify 桌面客户端。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please install the Spotify desktop app first."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请先安装 Spotify 桌面客户端。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "請先安裝 Spotify 桌面客戶端。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "先に Spotify デスクトップアプリをインストールしてください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "먼저 Spotify 데스크톱 앱을 설치해 주세요."
+          }
+        }
       }
     },
     "onboarding.spotify.launch_hint": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Launch Spotify and play a song to get started." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "启动 Spotify 并播放一首歌曲即可开始。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Launch Spotify and play a song to get started."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "启动 Spotify 并播放一首歌曲即可开始。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "啟動 Spotify 並播放一首歌曲即可開始。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify を起動して曲を再生すると開始できます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify를 실행하고 노래를 재생하면 시작됩니다."
+          }
+        }
       }
     },
     "onboarding.spotify.ready_hint": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Ready to display lyrics!" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "已准备好显示歌词！" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready to display lyrics!"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已准备好显示歌词！"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已準備好顯示歌詞！"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞を表示する準備ができました！"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사를 표시할 준비가 되었습니다!"
+          }
+        }
       }
     },
     "menu.welcome": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Welcome to Lyrisland" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "欢迎使用 Lyrisland" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to Lyrisland"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "欢迎使用 Lyrisland"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歡迎使用 Lyrisland"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland へようこそ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland에 오신 것을 환영합니다"
+          }
+        }
       }
     },
     "menu.no_track": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "No track playing" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "未在播放" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No track playing"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未在播放"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未在播放"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再生中のトラックなし"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "재생 중인 트랙 없음"
+          }
+        }
       }
     },
     "menu.show_hide": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Show/Hide Lyrics" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示/隐藏歌词" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show/Hide Lyrics"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示/隐藏歌词"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示/隱藏歌詞"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞を表示/非表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사 표시/숨기기"
+          }
+        }
       }
     },
     "menu.offset": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Offset" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词偏移" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrics Offset"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌词偏移"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞偏移"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞オフセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사 오프셋"
+          }
+        }
       }
     },
     "menu.offset.value": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Offset: %1$.1fs" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "偏移：%1$.1f秒" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offset: %1$.1fs"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "偏移：%1$.1f秒"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "偏移：%1$.1f秒"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフセット：%1$.1f秒"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오프셋: %1$.1f초"
+          }
+        }
       }
     },
     "menu.offset.earlier": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Earlier (-0.5s)" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "提前（-0.5秒）" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Earlier (-0.5s)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提前（-0.5秒）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提前（-0.5秒）"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "早める（-0.5秒）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "앞으로 (-0.5초)"
+          }
+        }
       }
     },
     "menu.offset.later": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Later (+0.5s)" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "延后（+0.5秒）" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Later (+0.5s)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "延后（+0.5秒）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "延後（+0.5秒）"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "遅らせる（+0.5秒）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "뒤로 (+0.5초)"
+          }
+        }
       }
     },
     "menu.offset.reset": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Reset Offset" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "重置偏移" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset Offset"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置偏移"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重設偏移"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフセットをリセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오프셋 초기화"
+          }
+        }
       }
     },
     "menu.dual_line": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Dual-Line Mode" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "双行歌词模式" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dual-Line Mode"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "双行歌词模式"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "雙行歌詞模式"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2行表示モード"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2줄 모드"
+          }
+        }
       }
     },
     "menu.show_artwork": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Album Artwork" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示专辑封面" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Album Artwork"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示专辑封面"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示專輯封面"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アルバムアートワーク"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "앨범 아트워크"
+          }
+        }
       }
     },
     "menu.settings": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Settings…" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "设置…" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设置…"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定⋯"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定…"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정…"
+          }
+        }
       }
     },
     "menu.quit": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Quit" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "退出" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "退出"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "結束"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "終了"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "종료"
+          }
+        }
       }
     },
     "menu.position.attach": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Attach to Menu Bar" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "吸附到菜单栏" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attach to Menu Bar"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "吸附到菜单栏"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "吸附到選單列"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メニューバーに固定"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "메뉴 막대에 부착"
+          }
+        }
       }
     },
     "menu.position.detach": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Detach from Menu Bar" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "脱离菜单栏" } }
-      }
-    },
-    "lyrics.loading": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Loading lyrics…" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "正在加载歌词…" } }
-      }
-    },
-    "lyrics.not_available": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "No lyrics available for this track" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "暂无歌词" } }
-      }
-    },
-    "lyrics.no_synced": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "No synced lyrics found" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "未找到同步歌词" } }
-      }
-    },
-    "lyrics.no_lyrics": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "No lyrics available" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "暂无歌词" } }
-      }
-    },
-    "lyrics.paused": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Paused" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "已暂停" } }
-      }
-    },
-    "lyrics.play_to_start": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Play a song in Spotify to start" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "在 Spotify 播放歌曲即可开始" } }
-      }
-    },
-    "settings.tab.general": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "General" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "通用" } }
-      }
-    },
-    "settings.tab.appearance": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Appearance" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "外观" } }
-      }
-    },
-    "settings.tab.lyrics": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Lyrics" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词" } }
-      }
-    },
-    "settings.tab.about": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "About" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "关于" } }
-      }
-    },
-    "settings.general.island_section": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Island Position" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "灵动岛位置" } }
-      }
-    },
-    "settings.general.position_mode": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Position Mode" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "位置模式" } }
-      }
-    },
-    "settings.general.position.attached": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Attached" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "吸附菜单栏" } }
-      }
-    },
-    "settings.general.position.detached": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Detached" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "自由拖拽" } }
-      }
-    },
-    "settings.appearance.background_section": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Background" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "背景" } }
-      }
-    },
-    "settings.appearance.background_style": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Background Style" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "背景样式" } }
-      }
-    },
-    "settings.appearance.bg.solid": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Solid" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "纯色" } }
-      }
-    },
-    "settings.appearance.bg.album_gradient": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Album Gradient" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "专辑渐变" } }
-      }
-    },
-    "settings.appearance.bg.vibrancy": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Vibrancy" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "毛玻璃" } }
-      }
-    },
-    "settings.appearance.bg.animated_gradient": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Animated Gradient" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "动态渐变" } }
-      }
-    },
-    "settings.appearance.solid_color": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Color" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "颜色" } }
-      }
-    },
-    "settings.appearance.solid_color_reset": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Reset" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "重置" } }
-      }
-    },
-    "settings.appearance.display_section": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Display" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示" } }
-      }
-    },
-    "settings.appearance.show_artwork": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Show Album Artwork" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示专辑封面" } }
-      }
-    },
-    "settings.appearance.dual_line": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Dual-Line Lyrics Mode" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "双行歌词模式" } }
-      }
-    },
-    "settings.appearance.lyrics_alignment": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Alignment" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词对齐方式" } }
-      }
-    },
-    "settings.appearance.alignment.left": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Left" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "左对齐" } }
-      }
-    },
-    "settings.appearance.alignment.center": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Center" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "居中" } }
-      }
-    },
-    "settings.appearance.alignment.right": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Right" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "右对齐" } }
-      }
-    },
-    "settings.lyrics.offset_section": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Offset" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "偏移" } }
-      }
-    },
-    "settings.lyrics.current_offset": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Current Offset" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "当前偏移" } }
-      }
-    },
-    "settings.lyrics.offset.earlier": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "−0.5s" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "−0.5秒" } }
-      }
-    },
-    "settings.lyrics.offset.later": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "+0.5s" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "+0.5秒" } }
-      }
-    },
-    "settings.lyrics.offset.reset": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Reset" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "重置" } }
-      }
-    },
-    "settings.lyrics.offset_hint": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Also adjustable with ⌘[ / ⌘] / ⌘0" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "也可使用 ⌘[ / ⌘] / ⌘0 调整" } }
-      }
-    },
-    "settings.lyrics.providers_section": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Provider Priority" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词源优先级" } }
-      }
-    },
-    "settings.about.tagline": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Desktop lyrics in a Dynamic Island" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "灵动岛桌面歌词" } }
-      }
-    },
-    "settings.about.github": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "GitHub" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "GitHub" } }
-      }
-    },
-    "settings.about.issues": {
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Report Issue" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "反馈问题" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detach from Menu Bar"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "脱离菜单栏"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "脫離選單列"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メニューバーから切り離す"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "메뉴 막대에서 분리"
+          }
+        }
       }
     },
     "menu.help": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Help" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "帮助" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Help"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "帮助"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "輔助說明"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ヘルプ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "도움말"
+          }
+        }
+      }
+    },
+    "lyrics.loading": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading lyrics…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在加载歌词…"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在載入歌詞…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞を読み込み中…"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사 로딩 중…"
+          }
+        }
+      }
+    },
+    "lyrics.not_available": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No lyrics available for this track"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂无歌词"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暫無歌詞"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このトラックの歌詞はありません"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이 트랙의 가사를 사용할 수 없습니다"
+          }
+        }
+      }
+    },
+    "lyrics.no_synced": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No synced lyrics found"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未找到同步歌词"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未找到同步歌詞"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同期歌詞が見つかりません"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "싱크 가사를 찾을 수 없습니다"
+          }
+        }
+      }
+    },
+    "lyrics.no_lyrics": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No lyrics available"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂无歌词"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暫無歌詞"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞がありません"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사 없음"
+          }
+        }
+      }
+    },
+    "lyrics.paused": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已暂停"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已暫停"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一時停止中"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "일시정지됨"
+          }
+        }
+      }
+    },
+    "lyrics.play_to_start": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play a song in Spotify to start"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 Spotify 播放歌曲即可开始"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 Spotify 播放歌曲即可開始"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify で曲を再生して開始"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotify에서 노래를 재생하여 시작하세요"
+          }
+        }
+      }
+    },
+    "settings.tab.general": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通用"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一般"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一般"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "일반"
+          }
+        }
+      }
+    },
+    "settings.tab.appearance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appearance"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "外观"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "外觀"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "外観"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모양"
+          }
+        }
+      }
+    },
+    "settings.tab.lyrics": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrics"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌词"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사"
+          }
+        }
+      }
+    },
+    "settings.tab.about": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关于"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "關於"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このアプリについて"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "정보"
+          }
+        }
+      }
+    },
+    "settings.general.island_section": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Island Position"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "灵动岛位置"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "靈動島位置"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アイランドの位置"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "아일랜드 위치"
+          }
+        }
+      }
+    },
+    "settings.general.position_mode": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Position Mode"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置模式"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置模式"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置モード"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "위치 모드"
+          }
+        }
+      }
+    },
+    "settings.general.position.attached": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attached"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "吸附菜单栏"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "吸附選單列"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "固定"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "부착"
+          }
+        }
+      }
+    },
+    "settings.general.position.detached": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detached"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自由拖拽"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自由拖曳"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フリー"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "분리"
+          }
+        }
+      }
+    },
+    "settings.appearance.background_section": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "背景"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "背景"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "背景"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "배경"
+          }
+        }
+      }
+    },
+    "settings.appearance.background_style": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background Style"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "背景样式"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "背景樣式"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "背景スタイル"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "배경 스타일"
+          }
+        }
+      }
+    },
+    "settings.appearance.bg.solid": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solid"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "纯色"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "純色"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "単色"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "단색"
+          }
+        }
+      }
+    },
+    "settings.appearance.bg.album_gradient": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Album Gradient"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "专辑渐变"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "專輯漸層"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アルバムグラデーション"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "앨범 그라데이션"
+          }
+        }
+      }
+    },
+    "settings.appearance.bg.vibrancy": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vibrancy"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毛玻璃"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毛玻璃"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すりガラス"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "반투명"
+          }
+        }
+      }
+    },
+    "settings.appearance.bg.animated_gradient": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animated Gradient"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "动态渐变"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動態漸層"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アニメーショングラデーション"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "애니메이션 그라데이션"
+          }
+        }
+      }
+    },
+    "settings.appearance.solid_color": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "颜色"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顏色"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カラー"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "색상"
+          }
+        }
+      }
+    },
+    "settings.appearance.solid_color_reset": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重設"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "초기화"
+          }
+        }
+      }
+    },
+    "settings.appearance.display_section": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Display"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "디스플레이"
+          }
+        }
+      }
+    },
+    "settings.appearance.show_artwork": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Album Artwork"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示专辑封面"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示專輯封面"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アルバムアートワークを表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "앨범 아트워크 표시"
+          }
+        }
+      }
+    },
+    "settings.appearance.dual_line": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dual-Line Lyrics Mode"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "双行歌词模式"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "雙行歌詞模式"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2行歌詞モード"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2줄 가사 모드"
+          }
+        }
+      }
+    },
+    "settings.appearance.lyrics_alignment": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrics Alignment"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌词对齐方式"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞對齊方式"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞の配置"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사 정렬"
+          }
+        }
+      }
+    },
+    "settings.appearance.alignment.left": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "左对齐"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "靠左"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "左揃え"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "왼쪽"
+          }
+        }
+      }
+    },
+    "settings.appearance.alignment.center": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Center"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "居中"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "置中"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "中央揃え"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가운데"
+          }
+        }
+      }
+    },
+    "settings.appearance.alignment.right": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "右对齐"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "靠右"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "右揃え"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오른쪽"
+          }
+        }
+      }
+    },
+    "settings.lyrics.offset_section": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offset"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "偏移"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "偏移"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오프셋"
+          }
+        }
+      }
+    },
+    "settings.lyrics.current_offset": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current Offset"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当前偏移"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "目前偏移"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "現在のオフセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "현재 오프셋"
+          }
+        }
+      }
+    },
+    "settings.lyrics.offset.earlier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "−0.5s"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "−0.5秒"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "−0.5秒"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "−0.5秒"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "−0.5초"
+          }
+        }
+      }
+    },
+    "settings.lyrics.offset.later": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+0.5s"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+0.5秒"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+0.5秒"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+0.5秒"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+0.5초"
+          }
+        }
+      }
+    },
+    "settings.lyrics.offset.reset": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重設"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "초기화"
+          }
+        }
+      }
+    },
+    "settings.lyrics.offset_hint": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also adjustable with ⌘[ / ⌘] / ⌘0"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "也可使用 ⌘[ / ⌘] / ⌘0 调整"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "也可使用 ⌘[ / ⌘] / ⌘0 調整"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘[ / ⌘] / ⌘0 でも調整可能"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘[ / ⌘] / ⌘0으로도 조정 가능"
+          }
+        }
+      }
+    },
+    "settings.lyrics.providers_section": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Provider Priority"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌词源优先级"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞源優先順序"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロバイダーの優先順位"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "제공자 우선순위"
+          }
+        }
+      }
+    },
+    "settings.about.tagline": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desktop lyrics in a Dynamic Island"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "灵动岛桌面歌词"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "靈動島桌面歌詞"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ダイナミックアイランドでデスクトップ歌詞を表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "다이나믹 아일랜드 데스크톱 가사"
+          }
+        }
+      }
+    },
+    "settings.about.github": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub"
+          }
+        }
+      }
+    },
+    "settings.about.issues": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report Issue"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "反馈问题"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回報問題"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "問題を報告"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "문제 신고"
+          }
+        }
       }
     },
     "settings.tab.shortcuts": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Shortcuts" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "快捷键" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "快捷键"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "快速鍵"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ショートカット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "단축키"
+          }
+        }
       }
     },
     "settings.shortcuts.section": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Keyboard Shortcuts" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "键盘快捷键" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard Shortcuts"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "键盘快捷键"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "鍵盤快速鍵"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キーボードショートカット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "키보드 단축키"
+          }
+        }
       }
     },
     "settings.shortcuts.toggle_lyrics": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Show/Hide Lyrics" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示/隐藏歌词" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show/Hide Lyrics"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示/隐藏歌词"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示/隱藏歌詞"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞を表示/非表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사 표시/숨기기"
+          }
+        }
       }
     },
     "settings.shortcuts.open_settings": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Open Settings" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "打开设置" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开设置"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開啟設定"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を開く"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정 열기"
+          }
+        }
       }
     },
     "settings.shortcuts.open_help": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Open Help" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "打开帮助" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Help"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开帮助"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開啟輔助說明"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ヘルプを開く"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "도움말 열기"
+          }
+        }
       }
     },
     "settings.shortcuts.quit_app": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Quit App" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "退出应用" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit App"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "退出应用"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "結束應用程式"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アプリを終了"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "앱 종료"
+          }
+        }
       }
     },
     "settings.shortcuts.reset_all": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Reset All to Defaults" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "全部恢复默认" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset All to Defaults"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全部恢复默认"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全部恢復預設值"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべてデフォルトにリセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모두 기본값으로 초기화"
+          }
+        }
       }
     },
     "help.title": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Lyrisland Help" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "Lyrisland 帮助" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland Help"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland 帮助"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland 輔助說明"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland ヘルプ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrisland 도움말"
+          }
+        }
       }
     },
     "help.section.interactions": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Island Interactions" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "灵动岛交互" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Island Interactions"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "灵动岛交互"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "靈動島互動"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アイランドの操作"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "아일랜드 상호작용"
+          }
+        }
       }
     },
     "help.interactions.click": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Click the island to cycle through states: Compact → Expanded → Full → Compact." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "点击灵动岛切换状态：紧凑 → 展开 → 完整 → 紧凑。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click the island to cycle through states: Compact → Expanded → Full → Compact."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "点击灵动岛切换状态：紧凑 → 展开 → 完整 → 紧凑。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "點按靈動島切換狀態：緊湊 → 展開 → 完整 → 緊湊。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アイランドをクリックして状態を切り替え：コンパクト → 展開 → フル → コンパクト。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "아일랜드를 클릭하여 상태 전환: 컴팩트 → 확장 → 전체 → 컴팩트."
+          }
+        }
       }
     },
     "help.interactions.longpress": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Long-press (hold for 0.5s) the island to detach it from the menu bar and unlock dragging." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "长按灵动岛（按住 0.5 秒）可将其从菜单栏脱离，解锁拖拽功能。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long-press (hold for 0.5s) the island to detach it from the menu bar and unlock dragging."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "长按灵动岛（按住 0.5 秒）可将其从菜单栏脱离，解锁拖拽功能。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "長按靈動島（按住 0.5 秒）可將其從選單列脫離，解鎖拖曳功能。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アイランドを長押し（0.5秒）するとメニューバーから切り離し、ドラッグが可能になります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "아일랜드를 길게 누르면(0.5초) 메뉴 막대에서 분리되어 드래그할 수 있습니다."
+          }
+        }
       }
     },
     "help.interactions.drag": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Once detached, drag the island to reposition it anywhere on screen." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "脱离后可拖拽灵动岛至屏幕任意位置。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Once detached, drag the island to reposition it anywhere on screen."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "脱离后可拖拽灵动岛至屏幕任意位置。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "脫離後可拖曳靈動島至螢幕任意位置。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "切り離した後、アイランドをドラッグして画面上の任意の位置に移動できます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "분리 후 아일랜드를 드래그하여 화면 어디든 위치를 변경할 수 있습니다."
+          }
+        }
       }
     },
     "help.interactions.snap": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Drag the island back near the top of the screen to snap it back to the menu bar." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "将灵动岛拖拽至屏幕顶部附近即可自动吸附回菜单栏。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag the island back near the top of the screen to snap it back to the menu bar."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将灵动岛拖拽至屏幕顶部附近即可自动吸附回菜单栏。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "將靈動島拖曳至螢幕頂部附近即可自動吸附回選單列。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アイランドを画面上部付近にドラッグすると、メニューバーに再び固定されます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "아일랜드를 화면 상단 근처로 드래그하면 메뉴 막대에 다시 부착됩니다."
+          }
+        }
       }
     },
     "help.section.settings": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Settings" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "设置说明" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设置说明"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定說明"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정"
+          }
+        }
       }
     },
     "help.settings.position": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Position Mode — switch between Attached (pinned to menu bar) and Detached (free-floating) modes." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "位置模式 — 在吸附（固定于菜单栏）和自由（浮动拖拽）模式之间切换。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Position Mode — switch between Attached (pinned to menu bar) and Detached (free-floating) modes."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置模式 — 在吸附（固定于菜单栏）和自由（浮动拖拽）模式之间切换。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置模式 — 在吸附（固定於選單列）和自由（浮動拖曳）模式之間切換。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置モード — 固定（メニューバーに固定）とフリー（自由移動）モードを切り替えます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "위치 모드 — 부착(메뉴 막대에 고정)과 분리(자유 이동) 모드를 전환합니다."
+          }
+        }
       }
     },
     "help.settings.artwork": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Show Artwork — display album cover art alongside lyrics in the island." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示专辑封面 — 在灵动岛中展示当前播放歌曲的封面图片。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Artwork — display album cover art alongside lyrics in the island."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示专辑封面 — 在灵动岛中展示当前播放歌曲的封面图片。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示專輯封面 — 在靈動島中展示當前播放歌曲的封面圖片。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アートワーク表示 — アイランドに歌詞と一緒にアルバムカバーを表示します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "아트워크 표시 — 아일랜드에 가사와 함께 앨범 커버를 표시합니다."
+          }
+        }
       }
     },
     "help.settings.dualline": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Dual-Line Mode — show the current lyric line and the next line together." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "双行模式 — 同时显示当前歌词和下一行歌词。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dual-Line Mode — show the current lyric line and the next line together."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "双行模式 — 同时显示当前歌词和下一行歌词。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "雙行模式 — 同時顯示當前歌詞和下一行歌詞。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2行モード — 現在の歌詞行と次の行を同時に表示します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2줄 모드 — 현재 가사와 다음 줄을 함께 표시합니다."
+          }
+        }
       }
     },
     "help.settings.alignment": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Alignment — choose left, center, or right alignment for lyrics text." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词对齐 — 选择歌词文本的对齐方式：左对齐、居中或右对齐。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrics Alignment — choose left, center, or right alignment for lyrics text."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌词对齐 — 选择歌词文本的对齐方式：左对齐、居中或右对齐。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞對齊 — 選擇歌詞文字的對齊方式：靠左、置中或靠右。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞の配置 — 歌詞テキストの左揃え、中央揃え、右揃えを選択します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사 정렬 — 가사 텍스트의 왼쪽, 가운데, 오른쪽 정렬을 선택합니다."
+          }
+        }
       }
     },
     "help.settings.offset": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Offset — adjust timing offset when lyrics are out of sync. Use ±0.5s buttons or ⌘[ / ⌘] shortcuts." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词偏移 — 当歌词不同步时调整时间偏移。可使用 ±0.5 秒按钮或 ⌘[ / ⌘] 快捷键。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrics Offset — adjust timing offset when lyrics are out of sync. Use ±0.5s buttons or ⌘[ / ⌘] shortcuts."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌词偏移 — 当歌词不同步时调整时间偏移。可使用 ±0.5 秒按钮或 ⌘[ / ⌘] 快捷键。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞偏移 — 當歌詞不同步時調整時間偏移。可使用 ±0.5 秒按鈕或 ⌘[ / ⌘] 快捷鍵。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞オフセット — 歌詞がずれている場合にタイミングを調整します。±0.5秒ボタンまたは ⌘[ / ⌘] ショートカットを使用。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사 오프셋 — 가사가 맞지 않을 때 타이밍을 조정합니다. ±0.5초 버튼 또는 ⌘[ / ⌘] 단축키를 사용하세요."
+          }
+        }
       }
     },
     "help.section.shortcuts": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Keyboard Shortcuts" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "键盘快捷键" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard Shortcuts"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "键盘快捷键"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "鍵盤快速鍵"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キーボードショートカット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "키보드 단축키"
+          }
+        }
       }
     },
     "help.shortcuts.toggle": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "⌘L — Show or hide the lyrics island." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "⌘L — 显示或隐藏歌词灵动岛。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘L — Show or hide the lyrics island."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘L — 显示或隐藏歌词灵动岛。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘L — 顯示或隱藏歌詞靈動島。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘L — 歌詞アイランドの表示/非表示を切り替え。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘L — 가사 아일랜드 표시/숨기기."
+          }
+        }
       }
     },
     "help.shortcuts.settings": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "⌘, — Open the Settings window." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "⌘, — 打开设置窗口。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘, — Open the Settings window."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘, — 打开设置窗口。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘, — 開啟設定視窗。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘, — 設定ウィンドウを開く。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘, — 설정 창 열기."
+          }
+        }
       }
     },
     "help.shortcuts.help": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "⌘? — Open this Help window." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "⌘? — 打开此帮助窗口。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘? — Open this Help window."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘? — 打开此帮助窗口。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘? — 開啟此輔助說明視窗。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘? — このヘルプウィンドウを開く。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘? — 이 도움말 창 열기."
+          }
+        }
       }
     },
     "help.shortcuts.quit": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "⌘Q — Quit Lyrisland." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "⌘Q — 退出 Lyrisland。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘Q — Quit Lyrisland."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘Q — 退出 Lyrisland。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘Q — 結束 Lyrisland。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘Q — Lyrisland を終了。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⌘Q — Lyrisland 종료."
+          }
+        }
       }
     },
     "help.section.providers": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Providers" } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词来源" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrics Providers"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌词来源"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞來源"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞プロバイダー"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사 제공자"
+          }
+        }
       }
     },
     "help.providers.chain": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Lyrics are fetched from multiple sources in order: LRCLIB → Musixmatch → Soda Music → Netease. The first source that returns synced lyrics wins." } },
-        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词按优先级依次从多个来源获取：LRCLIB → Musixmatch → 汽水音乐 → 网易云。首个返回同步歌词的来源将被采用。" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyrics are fetched from multiple sources in order: LRCLIB → Musixmatch → Soda Music → Netease. The first source that returns synced lyrics wins."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌词按优先级依次从多个来源获取：LRCLIB → Musixmatch → 汽水音乐 → 网易云。首个返回同步歌词的来源将被采用。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞依優先順序從多個來源取得：LRCLIB → Musixmatch → 汽水音樂 → 網易雲。首個回傳同步歌詞的來源將被採用。"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歌詞は複数のソースから順番に取得されます：LRCLIB → Musixmatch → Soda Music → Netease。最初に同期歌詞を返したソースが使用されます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가사는 여러 소스에서 순서대로 가져옵니다: LRCLIB → Musixmatch → Soda Music → Netease. 싱크 가사를 먼저 반환하는 소스가 사용됩니다."
+          }
+        }
       }
     }
   }
