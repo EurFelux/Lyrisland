@@ -3,9 +3,14 @@ import SwiftUI
 
 /// A borderless, always-on-top floating panel that mimics the iOS Dynamic Island.
 final class DynamicIslandPanel: NSPanel {
+    private(set) var positionMode: IslandPositionMode
+
     init(contentView: some View) {
+        positionMode = UserDefaults.standard.islandPositionMode
+        let initialSize = IslandContentView.size(for: .compact, attached: positionMode == .attached)
+
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: 350, height: 38),
+            contentRect: NSRect(origin: .zero, size: initialSize),
             styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
@@ -17,7 +22,7 @@ final class DynamicIslandPanel: NSPanel {
         hasShadow = false
         hidesOnDeactivate = false
         collectionBehavior = [.canJoinAllSpaces, .stationary, .fullScreenAuxiliary]
-        isMovableByWindowBackground = true
+        isMovableByWindowBackground = false
         animationBehavior = .utilityWindow
 
         let hostingView = NSHostingView(rootView: contentView)
@@ -30,7 +35,7 @@ final class DynamicIslandPanel: NSPanel {
         }
 
         // Use a plain transparent container to ensure no AppKit background leaks
-        let container = NSView(frame: NSRect(x: 0, y: 0, width: 350, height: 38))
+        let container = NSView(frame: NSRect(origin: .zero, size: initialSize))
         container.wantsLayer = true
         container.layer?.backgroundColor = .clear
         hostingView.translatesAutoresizingMaskIntoConstraints = false
@@ -44,16 +49,86 @@ final class DynamicIslandPanel: NSPanel {
 
         self.contentView = container
 
-        positionAtTopCenter()
+        applyPosition()
     }
+
+    // MARK: - Position Mode
+
+    /// Switch between attached and detached modes.
+    func setPositionMode(_ mode: IslandPositionMode) {
+        if positionMode == .detached {
+            saveDetachedPosition()
+        }
+
+        positionMode = mode
+        UserDefaults.standard.islandPositionMode = mode
+        applyPosition()
+
+        NotificationCenter.default.post(name: .islandPositionModeChanged, object: mode)
+    }
+
+    /// Position the panel according to the current mode.
+    private func applyPosition() {
+        switch positionMode {
+        case .attached:
+            positionAttachedToMenuBar()
+        case .detached:
+            if let saved = UserDefaults.standard.islandDetachedPosition {
+                setFrameOrigin(saved)
+            } else {
+                positionBelowMenuBar()
+            }
+        }
+    }
+
+    /// Center the panel horizontally, flush with the top of the screen (no gap).
+    private func positionAttachedToMenuBar() {
+        guard let screen = NSScreen.main else { return }
+        let x = screen.frame.midX - frame.width / 2
+        let y = screen.frame.maxY - frame.height
+        setFrameOrigin(NSPoint(x: x, y: y))
+    }
+
+    /// Position below the menu bar (default detached fallback).
+    private func positionBelowMenuBar() {
+        guard let screen = NSScreen.main else { return }
+        let screenFrame = screen.visibleFrame
+        let x = screenFrame.midX - frame.width / 2
+        let y = screenFrame.maxY - frame.height - 12
+        setFrameOrigin(NSPoint(x: x, y: y))
+    }
+
+    private func saveDetachedPosition() {
+        UserDefaults.standard.islandDetachedPosition = frame.origin
+    }
+
+    /// Whether the current position is close enough to snap back to attached mode.
+    private func isNearAttachedPosition() -> Bool {
+        guard let screen = NSScreen.main else { return false }
+        // Check if the top edge is near the top of the screen
+        let distanceFromTop = screen.frame.maxY - frame.maxY
+        return distanceFromTop < 20
+    }
+
+    // MARK: - Resize
 
     /// Animate the panel to a new size, keeping the top-center anchor point.
     func animateResize(to newSize: NSSize, duration: TimeInterval = 0.35) {
         let currentFrame = frame
 
-        // Keep the top-center pinned
-        let newX = currentFrame.midX - newSize.width / 2
-        let newY = currentFrame.maxY - newSize.height
+        let newX: CGFloat
+        let newY: CGFloat
+
+        if positionMode == .attached, let screen = NSScreen.main {
+            // In attached mode, always center horizontally on screen and pin to top
+            newX = screen.frame.midX - newSize.width / 2
+            newY = screen.frame.maxY - newSize.height
+        } else {
+            // In detached mode, keep the top-center pinned
+            newX = currentFrame.midX - newSize.width / 2
+            newY = currentFrame.maxY - newSize.height
+        }
+
         let newFrame = NSRect(origin: NSPoint(x: newX, y: newY), size: newSize)
 
         NSAnimationContext.runAnimationGroup { context in
@@ -63,33 +138,68 @@ final class DynamicIslandPanel: NSPanel {
         }
     }
 
-    /// Center the panel horizontally at the top of the main screen.
-    private func positionAtTopCenter() {
-        guard let screen = NSScreen.main else { return }
-        let screenFrame = screen.visibleFrame
-        let x = screenFrame.midX - frame.width / 2
-        let y = screenFrame.maxY - frame.height - 12
-        setFrameOrigin(NSPoint(x: x, y: y))
-    }
+    // MARK: - Mouse Handling
 
-    /// Track mouse movement to distinguish clicks from drags
     private var mouseDownOrigin: NSPoint?
+    private var windowOriginOnMouseDown: NSPoint?
+    private var isDragUnlocked = false
+    private var longPressTimer: Timer?
 
-    override func mouseDown(with event: NSEvent) {
+    /// How long the user must hold before dragging is allowed.
+    private static let longPressDuration: TimeInterval = 0.5
+
+    override func mouseDown(with _: NSEvent) {
         mouseDownOrigin = NSEvent.mouseLocation
-        super.mouseDown(with: event)
+        windowOriginOnMouseDown = frame.origin
+        isDragUnlocked = false
+
+        // Start long-press timer — when it fires, haptic feedback signals drag is ready
+        longPressTimer = Timer.scheduledTimer(withTimeInterval: Self.longPressDuration, repeats: false) { [weak self] _ in
+            guard let self else { return }
+            isDragUnlocked = true
+            NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .now)
+
+            // Immediately switch to detached visual state
+            if positionMode == .attached {
+                positionMode = .detached
+                UserDefaults.standard.islandPositionMode = .detached
+                NotificationCenter.default.post(name: .islandPositionModeChanged, object: IslandPositionMode.detached)
+            }
+        }
     }
 
-    override func mouseUp(with event: NSEvent) {
+    override func mouseDragged(with _: NSEvent) {
+        guard isDragUnlocked, let origin = mouseDownOrigin, let windowOrigin = windowOriginOnMouseDown else { return }
+
+        let current = NSEvent.mouseLocation
+        let newX = windowOrigin.x + (current.x - origin.x)
+        let newY = windowOrigin.y + (current.y - origin.y)
+        setFrameOrigin(NSPoint(x: newX, y: newY))
+    }
+
+    override func mouseUp(with _: NSEvent) {
+        longPressTimer?.invalidate()
+        longPressTimer = nil
+
         if let origin = mouseDownOrigin {
             let end = NSEvent.mouseLocation
             let distance = hypot(end.x - origin.x, end.y - origin.y)
+
             if distance < 5 {
+                // Click — toggle island state
                 NotificationCenter.default.post(name: .islandTapped, object: nil)
+            } else if isDragUnlocked {
+                // Drag ended — snap back to attached if near top, otherwise save detached position
+                if isNearAttachedPosition() {
+                    setPositionMode(.attached)
+                } else {
+                    saveDetachedPosition()
+                }
             }
         }
         mouseDownOrigin = nil
-        super.mouseUp(with: event)
+        windowOriginOnMouseDown = nil
+        isDragUnlocked = false
     }
 
     override var canBecomeKey: Bool {
@@ -103,4 +213,5 @@ final class DynamicIslandPanel: NSPanel {
 
 extension Notification.Name {
     static let islandTapped = Notification.Name("islandTapped")
+    static let islandPositionModeChanged = Notification.Name("islandPositionModeChanged")
 }

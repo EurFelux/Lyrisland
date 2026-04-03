@@ -75,6 +75,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var dualLineMenuItem: NSMenuItem?
     private var showArtworkMenuItem: NSMenuItem?
     private var offsetMenuItem: NSMenuItem?
+    private var positionModeMenuItem: NSMenuItem?
 
     private func setupMenuBar() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -109,6 +110,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         )
         showArtworkMenuItem?.state = appState.showArtwork ? .on : .off
         menu.addItem(showArtworkMenuItem!)
+
+        let isAttached = UserDefaults.standard.islandPositionMode == .attached
+        positionModeMenuItem = NSMenuItem(
+            title: isAttached ? String(localized: "menu.position.detach") : String(localized: "menu.position.attach"),
+            action: #selector(togglePositionMode),
+            keyEquivalent: "p"
+        )
+        positionModeMenuItem?.target = self
+        menu.addItem(positionModeMenuItem!)
 
         menu.addItem(.separator())
 
@@ -159,6 +169,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         )
         islandPanel = DynamicIslandPanel(contentView: contentView)
         islandPanel?.orderFrontRegardless()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(positionModeDidChange),
+            name: .islandPositionModeChanged,
+            object: nil
+        )
+    }
+
+    @objc private func positionModeDidChange() {
+        updatePositionModeMenuItem()
     }
 
     // MARK: - Playback Monitoring
@@ -237,6 +258,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func toggleArtwork() {
         appState.showArtwork.toggle()
         showArtworkMenuItem?.state = appState.showArtwork ? .on : .off
+    }
+
+    @objc private func togglePositionMode() {
+        guard let panel = islandPanel else { return }
+        let newMode: IslandPositionMode = panel.positionMode == .attached ? .detached : .attached
+        panel.setPositionMode(newMode)
+        updatePositionModeMenuItem()
+    }
+
+    private func updatePositionModeMenuItem() {
+        guard let panel = islandPanel else { return }
+        positionModeMenuItem?.title = panel.positionMode == .attached
+            ? String(localized: "menu.position.detach")
+            : String(localized: "menu.position.attach")
     }
 
     @objc private func toggleIsland() {

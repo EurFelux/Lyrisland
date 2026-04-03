@@ -230,6 +230,18 @@
         "zh-Hans": { "stringUnit": { "state": "translated", "value": "退出" } }
       }
     },
+    "menu.position.attach": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Attach to Menu Bar" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "吸附到菜单栏" } }
+      }
+    },
+    "menu.position.detach": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Detach from Menu Bar" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "脱离菜单栏" } }
+      }
+    },
     "lyrics.loading": {
       "localizations": {
         "en": { "stringUnit": { "state": "translated", "value": "Loading lyrics…" } },
