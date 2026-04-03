@@ -70,6 +70,9 @@ struct MarqueeText: View {
                 }
                 .clipped()
                 .mask(fadeMask)
+                // Isolate internal layout from external RTL layoutDirection.
+                // Scroll direction is handled by our own textIsRTL logic.
+                .environment(\.layoutDirection, .leftToRight)
             }
             .task(id: animationPhase) {
                 await runAnimationPhase()
@@ -122,6 +125,10 @@ struct MarqueeText: View {
 
         case .start:
             guard needsScroll else { return }
+            // Ensure correct initial offset now that measurements are available.
+            // The .idle phase or onChange(of: textWidth) may reach .start before
+            // the RTL offset was applied, so set it here unconditionally.
+            offset = textIsRTL ? -overflow : 0
             try? await Task.sleep(for: .seconds(startDelay))
             guard !Task.isCancelled else { return }
             animationPhase = .scrolling
