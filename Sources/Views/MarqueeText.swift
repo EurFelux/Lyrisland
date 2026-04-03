@@ -13,6 +13,7 @@ struct MarqueeText: View {
     var startDelay: Double = 1.5
     var endDelay: Double = 1.5
     var fadeWidth: CGFloat = 16
+    var lineDuration: Double?
 
     @State private var textWidth: CGFloat = 0
     @State private var containerWidth: CGFloat = 0
@@ -29,6 +30,18 @@ struct MarqueeText: View {
 
     private var textIsRTL: Bool {
         text.isRTL
+    }
+
+    /// How long the scroll animation should take.
+    /// When `lineDuration` is set, fits the scroll to finish 0.5s before the line ends.
+    /// Falls back to the constant `speed` (points per second).
+    private var scrollDuration: Double {
+        if let lineDuration {
+            // Time budget = line duration - pause before scroll - 0.5s buffer
+            let budget = lineDuration - startDelay - 0.5
+            if budget > 0.3 { return budget }
+        }
+        return overflow / speed
     }
 
     var body: some View {
@@ -105,7 +118,7 @@ struct MarqueeText: View {
     }
 
     private func resetAnimation() {
-        offset = textIsRTL ? -overflow : 0
+        offset = 0
         animationPhase = .idle
     }
 
@@ -125,16 +138,15 @@ struct MarqueeText: View {
 
         case .start:
             guard needsScroll else { return }
-            // Ensure correct initial offset now that measurements are available.
-            // The .idle phase or onChange(of: textWidth) may reach .start before
-            // the RTL offset was applied, so set it here unconditionally.
-            offset = textIsRTL ? -overflow : 0
+            // RTL text must start showing the right portion (beginning).
+            // Set the offset here where measurements are guaranteed available.
+            if textIsRTL { offset = -overflow }
             try? await Task.sleep(for: .seconds(startDelay))
             guard !Task.isCancelled else { return }
             animationPhase = .scrolling
 
         case .scrolling:
-            let duration = overflow / speed
+            let duration = scrollDuration
             withAnimation(.linear(duration: duration)) {
                 offset = textIsRTL ? 0 : -overflow
             }

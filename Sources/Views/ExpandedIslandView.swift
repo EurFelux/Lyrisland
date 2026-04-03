@@ -45,7 +45,8 @@ struct ExpandedIslandView: View {
                             text: line.text,
                             font: .system(size: 15, weight: .bold),
                             color: .white,
-                            loops: false
+                            loops: false,
+                            lineDuration: lineDuration(for: currentIdx, in: lyrics)
                         )
                         .frame(height: 20)
                         .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
@@ -98,5 +99,10 @@ struct ExpandedIslandView: View {
         case 2: 0.3
         default: 0.8
         }
+    }
+
+    private func lineDuration(for index: Int, in lyrics: SyncedLyrics) -> Double? {
+        guard index + 1 < lyrics.lines.count else { return nil }
+        return lyrics.lines[index + 1].time - lyrics.lines[index].time
     }
 }
