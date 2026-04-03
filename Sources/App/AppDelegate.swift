@@ -139,6 +139,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem(title: String(localized: "menu.quit"), action: #selector(quitApp), keyEquivalent: "q"))
 
         statusItem?.menu = menu
+
+        // Sync menu item states when AppState changes (e.g. from Settings window)
+        appState.$dualLineMode
+            .receive(on: RunLoop.main)
+            .sink { [weak self] value in
+                self?.dualLineMenuItem?.state = value ? .on : .off
+            }
+            .store(in: &cancellables)
+
+        appState.$showArtwork
+            .receive(on: RunLoop.main)
+            .sink { [weak self] value in
+                self?.showArtworkMenuItem?.state = value ? .on : .off
+            }
+            .store(in: &cancellables)
     }
 
     private func updateMenuInfo(state: SpotifyPlaybackState? = nil) {
@@ -176,10 +191,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             name: .islandPositionModeChanged,
             object: nil
         )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(positionModeSettingsChanged(_:)),
+            name: .islandPositionModeSettingsChanged,
+            object: nil
+        )
     }
 
     @objc private func positionModeDidChange() {
         updatePositionModeMenuItem()
+    }
+
+    @objc private func positionModeSettingsChanged(_ notification: Notification) {
+        guard let mode = notification.object as? IslandPositionMode else { return }
+        islandPanel?.setPositionMode(mode)
     }
 
     // MARK: - Playback Monitoring

@@ -56,6 +56,7 @@ final class DynamicIslandPanel: NSPanel {
 
     /// Switch between attached and detached modes.
     func setPositionMode(_ mode: IslandPositionMode) {
+        guard mode != positionMode else { return }
         if positionMode == .detached {
             saveDetachedPosition()
         }
@@ -221,4 +222,5 @@ final class DynamicIslandPanel: NSPanel {
 extension Notification.Name {
     static let islandTapped = Notification.Name("islandTapped")
     static let islandPositionModeChanged = Notification.Name("islandPositionModeChanged")
+    static let islandPositionModeSettingsChanged = Notification.Name("islandPositionModeSettingsChanged")
 }

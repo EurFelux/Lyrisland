@@ -277,6 +277,108 @@
         "en": { "stringUnit": { "state": "translated", "value": "Play a song in Spotify to start" } },
         "zh-Hans": { "stringUnit": { "state": "translated", "value": "在 Spotify 播放歌曲即可开始" } }
       }
+    },
+    "settings.tab.general": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "General" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "通用" } }
+      }
+    },
+    "settings.tab.appearance": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Appearance" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "外观" } }
+      }
+    },
+    "settings.tab.lyrics": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lyrics" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词" } }
+      }
+    },
+    "settings.tab.about": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "About" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "关于" } }
+      }
+    },
+    "settings.general.island_section": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Island Position" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "灵动岛位置" } }
+      }
+    },
+    "settings.general.position_mode": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Position Mode" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "位置模式" } }
+      }
+    },
+    "settings.general.position.attached": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Attached" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "吸附菜单栏" } }
+      }
+    },
+    "settings.general.position.detached": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Detached" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "自由拖拽" } }
+      }
+    },
+    "settings.appearance.display_section": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Display" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示" } }
+      }
+    },
+    "settings.appearance.show_artwork": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Show Album Artwork" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "显示专辑封面" } }
+      }
+    },
+    "settings.appearance.dual_line": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Dual-Line Lyrics Mode" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "双行歌词模式" } }
+      }
+    },
+    "settings.lyrics.offset_section": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Offset" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "偏移" } }
+      }
+    },
+    "settings.lyrics.offset_hint": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Use ⌘[ and ⌘] to adjust lyrics timing offset while playing. Press ⌘0 to reset." } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "播放时使用 ⌘[ 和 ⌘] 调整歌词时间偏移，按 ⌘0 重置。" } }
+      }
+    },
+    "settings.lyrics.providers_section": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Provider Priority" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词源优先级" } }
+      }
+    },
+    "settings.about.tagline": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Desktop lyrics in a Dynamic Island" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "灵动岛桌面歌词" } }
+      }
+    },
+    "settings.about.github": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "GitHub" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "GitHub" } }
+      }
+    },
+    "settings.about.issues": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Report Issue" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "反馈问题" } }
+      }
     }
   }
 }

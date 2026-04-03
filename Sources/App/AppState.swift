@@ -1,4 +1,5 @@
 import AppKit
+import Combine
 import Foundation
 
 /// Tracks the overall app readiness state for onboarding and status display.
@@ -30,13 +31,29 @@ final class AppState: ObservableObject {
         didSet { UserDefaults.standard.set(showArtwork, forKey: "showArtwork") }
     }
 
+    private var defaultsObserver: AnyCancellable?
+
     init() {
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
         dualLineMode = UserDefaults.standard.bool(forKey: "dualLineMode")
         // Default to true for new installs (key absent returns false, so use register)
         UserDefaults.standard.register(defaults: ["showArtwork": true])
         showArtwork = UserDefaults.standard.bool(forKey: "showArtwork")
+
+        // Sync changes from @AppStorage (Settings window) back to @Published properties
+        defaultsObserver = NotificationCenter.default
+            .publisher(for: UserDefaults.didChangeNotification)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                let newDualLine = UserDefaults.standard.bool(forKey: "dualLineMode")
+                let newShowArtwork = UserDefaults.standard.bool(forKey: "showArtwork")
+                if dualLineMode != newDualLine { dualLineMode = newDualLine }
+                if showArtwork != newShowArtwork { showArtwork = newShowArtwork }
+            }
     }
+
+    // MARK: - Spotify Checks
 
     /// Check if Spotify.app is installed.
     func checkSpotifyInstalled() -> Bool {
