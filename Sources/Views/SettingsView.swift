@@ -2,6 +2,8 @@ import KeyboardShortcuts
 import SwiftUI
 
 struct SettingsView: View {
+    @ObservedObject var lyricsManager: LyricsManager
+
     var body: some View {
         TabView {
             GeneralTab()
@@ -14,7 +16,7 @@ struct SettingsView: View {
                     Label(String(localized: "settings.tab.appearance"), systemImage: "paintbrush")
                 }
 
-            LyricsTab()
+            LyricsTab(lyricsManager: lyricsManager)
                 .tabItem {
                     Label(String(localized: "settings.tab.lyrics"), systemImage: "music.note.list")
                 }
@@ -126,56 +128,101 @@ private struct AppearanceTab: View {
 // MARK: - Lyrics
 
 private struct LyricsTab: View {
+    @ObservedObject var lyricsManager: LyricsManager
     @AppStorage("currentLyricsOffset") private var currentOffset: Double = 0
 
     var body: some View {
-        Form {
-            Section {
-                HStack {
-                    Text(String(localized: "settings.lyrics.current_offset"))
-                    Spacer()
-                    Text(String(format: "%+.1fs", currentOffset))
-                        .monospacedDigit()
-                        .foregroundStyle(.secondary)
-                }
+        VStack(spacing: 0) {
+            Form {
+                Section {
+                    HStack {
+                        Text(String(localized: "settings.lyrics.current_offset"))
+                        Spacer()
+                        Text(String(format: "%+.1fs", currentOffset))
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                    }
 
-                HStack(spacing: 12) {
-                    Button(String(localized: "settings.lyrics.offset.earlier")) {
-                        NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: -0.5)
+                    HStack(spacing: 12) {
+                        Button(String(localized: "settings.lyrics.offset.earlier")) {
+                            NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: -0.5)
+                        }
+                        Button(String(localized: "settings.lyrics.offset.later")) {
+                            NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: 0.5)
+                        }
+                        Spacer()
+                        Button(String(localized: "settings.lyrics.offset.reset")) {
+                            NotificationCenter.default.post(name: .lyricsOffsetReset, object: nil)
+                        }
                     }
-                    Button(String(localized: "settings.lyrics.offset.later")) {
-                        NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: 0.5)
-                    }
-                    Spacer()
-                    Button(String(localized: "settings.lyrics.offset.reset")) {
-                        NotificationCenter.default.post(name: .lyricsOffsetReset, object: nil)
-                    }
-                }
-                .controlSize(.small)
+                    .controlSize(.small)
 
-                Text(String(localized: "settings.lyrics.offset_hint"))
-                    .foregroundStyle(.tertiary)
-                    .font(.caption)
-            } header: {
-                Text(String(localized: "settings.lyrics.offset_section"))
+                    Text(String(localized: "settings.lyrics.offset_hint"))
+                        .foregroundStyle(.tertiary)
+                        .font(.caption)
+                } header: {
+                    Text(String(localized: "settings.lyrics.offset_section"))
+                }
             }
+            .formStyle(.grouped)
 
-            Section {
-                VStack(alignment: .leading, spacing: 4) {
-                    ForEach(providerOrder, id: \.self) { name in
-                        Text(name)
-                    }
-                }
-            } header: {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "settings.lyrics.providers_section"))
+                    .font(.system(size: 11))
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                    .padding(.leading, 24)
+
+                List {
+                    ForEach($lyricsManager.providerSettings.entries) { $entry in
+                        HStack {
+                            Image(systemName: "line.3.horizontal")
+                                .foregroundStyle(.tertiary)
+                            Text(Self.displayName(for: entry.id))
+                            Spacer()
+                            Toggle("", isOn: $entry.isEnabled)
+                                .labelsHidden()
+                                .toggleStyle(.switch)
+                                .controlSize(.small)
+                        }
+                    }
+                    .onMove { from, to in
+                        lyricsManager.providerSettings.entries.move(fromOffsets: from, toOffset: to)
+                    }
+                }
+                .listStyle(.inset)
+                .frame(height: 120)
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+                .padding(.horizontal, 20)
+
+                HStack {
+                    Text(String(localized: "settings.lyrics.providers_hint"))
+                        .foregroundStyle(.tertiary)
+                        .font(.caption)
+                    Spacer()
+                    Button(String(localized: "settings.lyrics.providers_reset")) {
+                        lyricsManager.updateProviderSettings(.default)
+                    }
+                    .controlSize(.small)
+                }
+                .padding(.horizontal, 24)
             }
+            .padding(.bottom, 12)
         }
-        .formStyle(.grouped)
+        .onChange(of: lyricsManager.providerSettings) { _, newValue in
+            newValue.save()
+        }
     }
 
-    /// Keep in sync with LyricsManager.providers
-    private var providerOrder: [String] {
-        ["LRCLIB", "Musixmatch", "Soda Music", "Netease"]
+    private static let displayNames: [String: String] = [
+        "lrclib": "LRCLIB",
+        "musixmatch": "Musixmatch",
+        "sodamusic": "Soda Music",
+        "netease": "Netease",
+    ]
+
+    private static func displayName(for id: String) -> String {
+        displayNames[id] ?? id
     }
 }
 
