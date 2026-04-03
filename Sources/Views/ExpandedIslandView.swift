@@ -6,6 +6,7 @@ struct ExpandedIslandView: View {
     @ObservedObject var syncEngine: PlaybackSyncEngine
     @ObservedObject var lyricsManager: LyricsManager
     @ObservedObject var appState: AppState
+    @Environment(\.rootFontSize) private var rootFontSize
 
     private let visibleLineCount = 5
 
@@ -15,15 +16,15 @@ struct ExpandedIslandView: View {
             if let title = syncEngine.trackTitle {
                 HStack(spacing: 4) {
                     Text(title)
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(.system(size: .rem(0.6875, root: rootFontSize), weight: .semibold))
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                     if let artist = syncEngine.trackArtist {
                         Text("—")
-                            .font(.system(size: 11))
+                            .font(.system(size: .rem(0.6875, root: rootFontSize)))
                             .foregroundStyle(.white.opacity(0.3))
                         Text(artist)
-                            .font(.system(size: 11))
+                            .font(.system(size: .rem(0.6875, root: rootFontSize)))
                             .foregroundStyle(.white.opacity(0.4))
                             .lineLimit(1)
                     }
@@ -46,7 +47,7 @@ struct ExpandedIslandView: View {
                     if isCurrent {
                         MarqueeText(
                             text: line.text,
-                            font: .system(size: 15, weight: .bold),
+                            font: .system(size: .rem(0.9375, root: rootFontSize), weight: .bold),
                             color: .white,
                             loops: false,
                             lineDuration: lineDuration(for: currentIdx, in: lyrics)
@@ -58,7 +59,7 @@ struct ExpandedIslandView: View {
                     } else {
                         Text(line.text)
                             .font(.system(
-                                size: distance == 1 ? 13 : 12,
+                                size: .rem(distance == 1 ? 0.8125 : 0.75, root: rootFontSize),
                                 weight: distance == 1 ? .medium : .regular
                             ))
                             .foregroundStyle(.white.opacity(opacityFor(distance: distance)))
@@ -73,7 +74,7 @@ struct ExpandedIslandView: View {
                 .id(currentIdx)
             } else {
                 Text("lyrics.no_lyrics")
-                    .font(.system(size: 13))
+                    .font(.system(size: .rem(0.8125, root: rootFontSize)))
                     .foregroundStyle(.white.opacity(0.4))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }

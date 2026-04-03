@@ -6,6 +6,7 @@ struct LyricsScrollView: View {
     let lyrics: SyncedLyrics
     let currentLineIndex: Int
     var alignment: Alignment = .leading
+    @Environment(\.rootFontSize) private var rootFontSize
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -19,7 +20,8 @@ struct LyricsScrollView: View {
                             translation: line.translation,
                             isCurrent: line.id == currentLineIndex,
                             distance: abs(line.id - currentLineIndex),
-                            lineDuration: lineDuration(for: line.id)
+                            lineDuration: lineDuration(for: line.id),
+                            rootFontSize: rootFontSize
                         )
                         .frame(maxWidth: .infinity, alignment: alignment)
                         .environment(\.layoutDirection, line.text.isRTL ? .rightToLeft : .leftToRight)
@@ -55,20 +57,21 @@ private struct LyricLineRow: View, Equatable {
     let isCurrent: Bool
     let distance: Int
     let lineDuration: Double?
+    let rootFontSize: CGFloat
 
     var body: some View {
         VStack(spacing: 2) {
             if isCurrent {
                 MarqueeText(
                     text: text,
-                    font: .system(size: 15, weight: .bold),
+                    font: .system(size: .rem(0.9375, root: rootFontSize), weight: .bold),
                     color: .white,
                     loops: false,
                     lineDuration: lineDuration
                 )
             } else {
                 Text(text)
-                    .font(.system(size: 12))
+                    .font(.system(size: .rem(0.75, root: rootFontSize)))
                     .foregroundStyle(.white.opacity(0.35))
                     .lineLimit(1)
                     .blur(radius: blurAmount)
@@ -79,14 +82,14 @@ private struct LyricLineRow: View, Equatable {
                 if isCurrent {
                     MarqueeText(
                         text: translation,
-                        font: .system(size: 11),
+                        font: .system(size: .rem(0.6875, root: rootFontSize)),
                         color: .white.opacity(0.7),
                         loops: false,
                         lineDuration: lineDuration
                     )
                 } else {
                     Text(translation)
-                        .font(.system(size: 11))
+                        .font(.system(size: .rem(0.6875, root: rootFontSize)))
                         .foregroundStyle(.white.opacity(0.2))
                         .lineLimit(1)
                         .blur(radius: blurAmount)

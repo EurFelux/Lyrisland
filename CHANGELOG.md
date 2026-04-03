@@ -9,6 +9,7 @@
 
 ### Added
 
+- rem-based 字体缩放机制：所有歌词相关字体大小基于可配置的根字体大小按比例缩放，可在设置窗口外观标签页中调节
 - GitHub Actions release workflow：push tag 自动构建并发布 DMG + zip 到 GitHub Releases
 - DMG 安装包：浅色渐变背景 + 拖拽到 Applications 引导箭头
 

@@ -5,6 +5,7 @@ struct FullIslandView: View {
     @ObservedObject var syncEngine: PlaybackSyncEngine
     @ObservedObject var lyricsManager: LyricsManager
     @ObservedObject var appState: AppState
+    @Environment(\.rootFontSize) private var rootFontSize
 
     var body: some View {
         // Lyrics — artwork is handled by parent IslandContentView
@@ -15,13 +16,13 @@ struct FullIslandView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         if let title = syncEngine.trackTitle {
                             Text(title)
-                                .font(.system(size: 13, weight: .semibold))
+                                .font(.system(size: .rem(0.8125, root: rootFontSize), weight: .semibold))
                                 .foregroundStyle(.white.opacity(0.8))
                                 .lineLimit(1)
                         }
                         if let artist = syncEngine.trackArtist {
                             Text(artist)
-                                .font(.system(size: 11))
+                                .font(.system(size: .rem(0.6875, root: rootFontSize)))
                                 .foregroundStyle(.white.opacity(0.5))
                                 .lineLimit(1)
                         }
@@ -51,7 +52,7 @@ struct FullIslandView: View {
                 .padding(.horizontal, 20)
             } else {
                 Text("lyrics.no_synced")
-                    .font(.system(size: 13))
+                    .font(.system(size: .rem(0.8125, root: rootFontSize)))
                     .foregroundStyle(.white.opacity(0.4))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.horizontal, 20)

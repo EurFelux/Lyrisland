@@ -68,6 +68,7 @@ private struct AppearanceTab: View {
     @AppStorage("lyricsAlignment") private var lyricsAlignment = "center"
     @AppStorage("backgroundStyle") private var backgroundStyle = "solid"
     @AppStorage("solidColorHex") private var solidColorHex = "#141414"
+    @AppStorage("rootFontSize") private var rootFontSize: Double = 16
 
     private static let defaultSolidHex = "#141414"
 
@@ -106,6 +107,28 @@ private struct AppearanceTab: View {
                 }
             } header: {
                 Text(String(localized: "settings.appearance.background_section"))
+            }
+
+            Section {
+                HStack {
+                    Text(String(localized: "settings.appearance.font_size"))
+                    Spacer()
+                    Text(String(format: "%.0fpt", rootFontSize))
+                        .monospacedDigit()
+                        .foregroundStyle(.secondary)
+                }
+                Slider(value: $rootFontSize, in: 12 ... 24, step: 1)
+                if rootFontSize != 16 {
+                    HStack {
+                        Spacer()
+                        Button(String(localized: "settings.appearance.font_size_reset")) {
+                            rootFontSize = 16
+                        }
+                        .controlSize(.small)
+                    }
+                }
+            } header: {
+                Text(String(localized: "settings.appearance.font_size_section"))
             }
 
             Section {

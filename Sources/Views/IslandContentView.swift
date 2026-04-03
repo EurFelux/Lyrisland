@@ -74,6 +74,7 @@ struct IslandContentView: View {
             .padding(.horizontal, showAttachedAppearance ? Self.earRadius : 0)
             .padding(contentPadding)
         }
+        .environment(\.rootFontSize, appState.rootFontSize)
         // Fill the panel. In detached mode, cap to the exact panel height so
         // the clipShape aligns with the NSPanel edges (prevents corner overflow).
         .frame(
@@ -121,6 +122,10 @@ struct IslandContentView: View {
 
     // MARK: - Artwork (single persistent instance)
 
+    private var rootFontSize: CGFloat {
+        appState.rootFontSize
+    }
+
     private var artworkColumn: some View {
         VStack(spacing: 0) {
             ArtworkView(trackId: syncEngine.currentTrackId, artworkURL: syncEngine.artworkURL, size: artworkSize)
@@ -129,7 +134,7 @@ struct IslandContentView: View {
             if islandState == .full {
                 if let source = lyricsManager.currentLyrics?.source {
                     Text(source)
-                        .font(.system(size: 9, weight: .medium))
+                        .font(.system(size: .rem(0.5625, root: rootFontSize), weight: .medium))
                         .foregroundStyle(.white.opacity(0.3))
                         .padding(.horizontal, 8)
                         .padding(.vertical, 2)
@@ -141,13 +146,13 @@ struct IslandContentView: View {
                 VStack(spacing: 2) {
                     if let title = syncEngine.trackTitle {
                         Text(title)
-                            .font(.system(size: 12, weight: .semibold))
+                            .font(.system(size: .rem(0.75, root: rootFontSize), weight: .semibold))
                             .foregroundStyle(.white.opacity(0.8))
                             .lineLimit(1)
                     }
                     if let artist = syncEngine.trackArtist {
                         Text(artist)
-                            .font(.system(size: 11))
+                            .font(.system(size: .rem(0.6875, root: rootFontSize)))
                             .foregroundStyle(.white.opacity(0.5))
                             .lineLimit(1)
                     }

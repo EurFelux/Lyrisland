@@ -6,6 +6,7 @@ struct CompactIslandView: View {
     @ObservedObject var syncEngine: PlaybackSyncEngine
     @ObservedObject var lyricsManager: LyricsManager
     @ObservedObject var appState: AppState
+    @Environment(\.rootFontSize) private var rootFontSize
 
     var body: some View {
         HStack(spacing: 10) {
@@ -15,7 +16,7 @@ struct CompactIslandView: View {
                     .frame(width: 16, height: 16)
             } else {
                 Image(systemName: statusIcon)
-                    .font(.system(size: 10))
+                    .font(.system(size: .rem(0.625, root: rootFontSize)))
                     .foregroundStyle(.white.opacity(0.6))
             }
 
@@ -29,7 +30,8 @@ struct CompactIslandView: View {
                         DualLineRow(
                             text: lyrics.lines[lineIdx].text,
                             isCurrent: lineIdx == idx,
-                            lineDuration: lineDuration(for: lineIdx, in: lyrics)
+                            lineDuration: lineDuration(for: lineIdx, in: lyrics),
+                            rootFontSize: rootFontSize
                         )
                         .environment(\.layoutDirection, lyrics.lines[lineIdx].text.isRTL ? .rightToLeft : .leftToRight)
                         .transition(.push(from: .bottom).combined(with: .opacity))
@@ -41,7 +43,7 @@ struct CompactIslandView: View {
                 // Single-line mode: original MarqueeText behavior
                 MarqueeText(
                     text: displayText,
-                    font: .system(size: 13, weight: .medium),
+                    font: .system(size: .rem(0.8125, root: rootFontSize), weight: .medium),
                     color: displayTextOpacity,
                     loops: false,
                     lineDuration: currentLineDuration
@@ -119,11 +121,14 @@ private struct DualLineRow: View, Equatable {
     let text: String
     let isCurrent: Bool
     var lineDuration: Double?
+    let rootFontSize: CGFloat
 
     var body: some View {
         MarqueeText(
             text: text,
-            font: isCurrent ? .system(size: 13, weight: .medium) : .system(size: 11),
+            font: isCurrent
+                ? .system(size: .rem(0.8125, root: rootFontSize), weight: .medium)
+                : .system(size: .rem(0.6875, root: rootFontSize)),
             color: isCurrent ? .white : .white.opacity(0.4),
             scrollEnabled: isCurrent,
             loops: false,
