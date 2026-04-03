@@ -10,58 +10,49 @@ struct ExpandedIslandView: View {
     private let visibleLineCount = 5
 
     var body: some View {
-        HStack(spacing: 10) {
-            // Album artwork
-            if appState.showArtwork {
-                ArtworkView(trackId: syncEngine.currentTrackId, artworkURL: syncEngine.artworkURL, size: 128)
-                    .padding(.leading, 10)
-            }
+        // Lyrics — artwork is handled by parent IslandContentView
+        VStack(spacing: 4) {
+            if let lyrics = lyricsManager.currentLyrics {
+                let currentIdx = syncEngine.currentLineIndex ?? 0
+                let range = contextRange(around: currentIdx, total: lyrics.lines.count)
 
-            // Lyrics
-            VStack(spacing: 4) {
-                if let lyrics = lyricsManager.currentLyrics {
-                    let currentIdx = syncEngine.currentLineIndex ?? 0
-                    let range = contextRange(around: currentIdx, total: lyrics.lines.count)
-
-                    ForEach(lyrics.lines[range]) { line in
-                        let isCurrent = line.id == lyrics.lines[currentIdx].id
-                        let isNext = appState.dualLineMode && line.id == currentIdx + 1
-                        if isCurrent {
-                            MarqueeText(
-                                text: line.text,
-                                font: .system(size: 15, weight: .bold),
-                                color: .white,
-                                loops: false
-                            )
-                            .frame(height: 20)
+                ForEach(lyrics.lines[range]) { line in
+                    let isCurrent = line.id == lyrics.lines[currentIdx].id
+                    let isNext = appState.dualLineMode && line.id == currentIdx + 1
+                    if isCurrent {
+                        MarqueeText(
+                            text: line.text,
+                            font: .system(size: 15, weight: .bold),
+                            color: .white,
+                            loops: false
+                        )
+                        .frame(height: 20)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .transition(.opacity.combined(with: .scale(scale: 0.9)))
+                    } else if isNext {
+                        Text(line.text)
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(.white.opacity(0.7))
+                            .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .transition(.opacity.combined(with: .scale(scale: 0.9)))
-                        } else if isNext {
-                            Text(line.text)
-                                .font(.system(size: 13, weight: .semibold))
-                                .foregroundStyle(.white.opacity(0.7))
-                                .lineLimit(1)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .transition(.opacity.combined(with: .scale(scale: 0.95)))
-                        } else {
-                            Text(line.text)
-                                .font(.system(size: 12))
-                                .foregroundStyle(.white.opacity(0.35))
-                                .lineLimit(1)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .blur(radius: 0.5)
-                                .transition(.opacity.combined(with: .scale(scale: 1.05)))
-                        }
+                            .transition(.opacity.combined(with: .scale(scale: 0.95)))
+                    } else {
+                        Text(line.text)
+                            .font(.system(size: 12))
+                            .foregroundStyle(.white.opacity(0.35))
+                            .lineLimit(1)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .blur(radius: 0.5)
+                            .transition(.opacity.combined(with: .scale(scale: 1.05)))
                     }
-                } else {
-                    Text("lyrics.no_lyrics")
-                        .font(.system(size: 13))
-                        .foregroundStyle(.white.opacity(0.4))
                 }
+            } else {
+                Text("lyrics.no_lyrics")
+                    .font(.system(size: 13))
+                    .foregroundStyle(.white.opacity(0.4))
             }
-            .padding(.trailing, 10)
         }
-        .padding(.vertical, 12)
+        // padding handled by parent IslandContentView
         .animation(.smooth(duration: 0.35), value: syncEngine.currentLineIndex)
     }
 

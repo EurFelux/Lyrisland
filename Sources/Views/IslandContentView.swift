@@ -2,39 +2,47 @@ import SwiftUI
 
 /// The root view hosted inside the DynamicIslandPanel.
 struct IslandContentView: View {
-    var syncEngine: PlaybackSyncEngine
+    @ObservedObject var syncEngine: PlaybackSyncEngine
     var lyricsManager: LyricsManager
     @ObservedObject var appState: AppState
     @State private var islandState: IslandState = .compact
     @State private var isAttached: Bool = UserDefaults.standard.islandPositionMode == .attached
 
+    private var cornerRadius: CGFloat {
+        islandState == .compact ? 20 : 24
+    }
+
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack(alignment: isAttached ? .bottom : .topLeading) {
             // Background: attached mode has inverse top corners, detached has full rounded corners
             if isAttached {
                 AttachedIslandShape(
-                    bottomRadius: islandState == .compact ? 20 : 24,
+                    bottomRadius: cornerRadius,
                     inverseRadius: Self.earRadius
                 )
                 .fill(Color(white: 0.08))
                 .overlay(
                     AttachedIslandShape(
-                        bottomRadius: islandState == .compact ? 20 : 24,
+                        bottomRadius: cornerRadius,
                         inverseRadius: Self.earRadius
                     )
                     .stroke(.white.opacity(0.15), lineWidth: 0.5)
                 )
             } else {
-                RoundedRectangle(cornerRadius: islandState == .compact ? 20 : 24)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(Color(white: 0.08))
                     .overlay(
-                        RoundedRectangle(cornerRadius: islandState == .compact ? 20 : 24)
+                        RoundedRectangle(cornerRadius: cornerRadius)
                             .strokeBorder(.white.opacity(0.15), lineWidth: 0.5)
                     )
             }
 
             // In attached mode, content is aligned to the bottom so it appears below the menu bar
-            Group {
+            HStack(spacing: 10) {
+                if appState.showArtwork {
+                    artworkColumn
+                }
+
                 switch islandState {
                 case .compact:
                     CompactIslandView(syncEngine: syncEngine, lyricsManager: lyricsManager, appState: appState)
@@ -44,13 +52,21 @@ struct IslandContentView: View {
                     FullIslandView(syncEngine: syncEngine, lyricsManager: lyricsManager, appState: appState)
                 }
             }
-            .frame(height: Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork))
+            .frame(
+                maxHeight: isAttached
+                    ? Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
+                    : .infinity
+            )
             .padding(.horizontal, isAttached ? Self.earRadius : 0)
+            .padding(contentPadding)
         }
-        .frame(width: widthForState, height: heightForState)
-        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: islandState)
-        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: appState.dualLineMode)
-        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: appState.showArtwork)
+        // No explicit size — fill the panel, let NSPanel drive sizing
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: isAttached ? .bottom : .topLeading)
+        .clipShape(
+            isAttached
+                ? AnyShape(AttachedIslandShape(bottomRadius: cornerRadius, inverseRadius: Self.earRadius))
+                : AnyShape(RoundedRectangle(cornerRadius: cornerRadius))
+        )
         .onReceive(NotificationCenter.default.publisher(for: .islandTapped)) { _ in
             cycleState()
         }
@@ -73,22 +89,54 @@ struct IslandContentView: View {
         }
     }
 
+    // MARK: - Artwork (single persistent instance)
+
+    private var artworkColumn: some View {
+        VStack(spacing: 0) {
+            ArtworkView(trackId: syncEngine.currentTrackId, artworkURL: syncEngine.artworkURL, size: artworkSize)
+                .padding(.top, islandState == .full ? 8 : 0)
+
+            if islandState == .full, let source = lyricsManager.currentLyrics?.source {
+                Text(source)
+                    .font(.system(size: 9, weight: .medium))
+                    .foregroundStyle(.white.opacity(0.3))
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(Capsule().fill(.white.opacity(0.08)))
+                    .padding(.top, 4)
+            }
+
+            if islandState == .full {
+                Spacer(minLength: 0)
+            }
+        }
+    }
+
+    private var artworkSize: CGFloat {
+        switch islandState {
+        case .compact: 36
+        case .expanded: 128
+        case .full: 200
+        }
+    }
+
+    private var contentPadding: EdgeInsets {
+        switch islandState {
+        case .compact:
+            EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        case .expanded:
+            EdgeInsets(top: 12, leading: 10, bottom: 12, trailing: 10)
+        case .full:
+            EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0)
+        }
+    }
+
+    // MARK: - Sizing
+
     /// Height of the menu bar area (the part hidden behind the notch/menu bar).
     static var menuBarHeight: CGFloat {
         guard let screen = NSScreen.main else { return 25 }
         return screen.frame.maxY - screen.visibleFrame.maxY
-    }
-
-    private var widthForState: CGFloat {
-        size(for: islandState).width
-    }
-
-    private var heightForState: CGFloat {
-        size(for: islandState).height
-    }
-
-    func size(for state: IslandState) -> NSSize {
-        Self.size(for: state, attached: isAttached, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
     }
 
     /// The content-only height (without menu bar extension).
@@ -117,10 +165,12 @@ struct IslandContentView: View {
     }
 
     private func cycleState() {
-        switch islandState {
-        case .compact: islandState = .expanded
-        case .expanded: islandState = .full
-        case .full: islandState = .compact
+        withAnimation(.easeOut(duration: 0.35)) {
+            switch islandState {
+            case .compact: islandState = .expanded
+            case .expanded: islandState = .full
+            case .full: islandState = .compact
+            }
         }
     }
 

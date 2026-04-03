@@ -105,14 +105,15 @@ final class DynamicIslandPanel: NSPanel {
     /// Whether the current position is close enough to snap back to attached mode.
     private func isNearAttachedPosition() -> Bool {
         guard let screen = NSScreen.main else { return false }
-        // Check if the top edge is near the top of the screen
         let distanceFromTop = screen.frame.maxY - frame.maxY
         return distanceFromTop < 20
     }
 
     // MARK: - Resize
 
-    /// Animate the panel to a new size, keeping the top-center anchor point.
+    /// Animate the panel to a new size, keeping the anchor point fixed.
+    /// Attached mode: center horizontally on screen, pin to screen top.
+    /// Detached mode: keep top-left pinned.
     func animateResize(to newSize: NSSize, duration: TimeInterval = 0.35) {
         let currentFrame = frame
 
@@ -120,12 +121,11 @@ final class DynamicIslandPanel: NSPanel {
         let newY: CGFloat
 
         if positionMode == .attached, let screen = NSScreen.main {
-            // In attached mode, always center horizontally on screen and pin to top
             newX = screen.frame.midX - newSize.width / 2
             newY = screen.frame.maxY - newSize.height
         } else {
-            // In detached mode, keep the top-center pinned
-            newX = currentFrame.midX - newSize.width / 2
+            // Detached: keep top-left pinned
+            newX = currentFrame.minX
             newY = currentFrame.maxY - newSize.height
         }
 
@@ -133,7 +133,8 @@ final class DynamicIslandPanel: NSPanel {
 
         NSAnimationContext.runAnimationGroup { context in
             context.duration = duration
-            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            context.timingFunction = CAMediaTimingFunction(name: .easeOut)
+            context.allowsImplicitAnimation = true
             self.animator().setFrame(newFrame, display: true)
         }
     }
