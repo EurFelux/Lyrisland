@@ -4,6 +4,7 @@
 
 ### Added
 
+- 通用两层缓存抽象 `Cache<Key, Value>`：支持内存 + 磁盘双层缓存、LRU 淘汰、可配置容量限制、并发请求合并；`ArtworkCache` 和 `LyricsManager` 已迁移至该通用缓存，歌词现支持磁盘持久化 (#17)
 - 灵动岛支持"吸附菜单栏"和"自由拖拽"两种位置模式，可通过菜单栏切换，位置偏好跨启动持久化 (#7)
 - 测试框架：添加 `LyrislandTests` 测试 target（Swift Testing），包含 LRCParser、TrackMatcher、SyncedLyrics 的单元测试（共 19 个） (#11)
 - 统一日志系统：支持 debug/info/warning/error 级别，按日轮转写入 `~/Library/Logs/Lyrisland/`，启动时自动清理 30 天前日志，同时转发至 os.Logger（Console.app 可查看）(#9)

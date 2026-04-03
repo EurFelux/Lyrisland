@@ -1,7 +1,7 @@
 import Foundation
 
 /// A single time-stamped lyric line.
-struct LyricLine: Identifiable {
+struct LyricLine: Identifiable, Codable {
     let id: Int // index in the lyrics array
     let time: TimeInterval
     let text: String
@@ -9,7 +9,7 @@ struct LyricLine: Identifiable {
 }
 
 /// Parsed synced lyrics with source attribution.
-struct SyncedLyrics {
+struct SyncedLyrics: Codable {
     let lines: [LyricLine]
     let source: String // e.g. "lrclib"
     let globalOffset: TimeInterval // user-adjustable offset (seconds)

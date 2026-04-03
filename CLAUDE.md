@@ -78,6 +78,10 @@ Track change → LyricsManager.loadLyrics()
 - **Views/** — `IslandContentView` is the root; delegates to Compact/Expanded/Full sub-views. `LyricsScrollView` handles auto-scroll. State changes call `DynamicIslandPanel.animateResize()` to sync NSPanel frame.
 - **Utils/** — `LRCParser` (shared `[mm:ss.xx]` parser used by LRCLIB and Musixmatch), `TrackMatcher` (weighted name/artist/album/duration scoring for search result ranking).
 
+### Caching
+
+The project uses a generic two-tier cache (`Cache<Key, Value>`) for all persistent data. When adding or modifying caching behavior, **read [`docs/cache-spec.md`](docs/cache-spec.md) first** for architecture, API, serializer protocol, and integration guide.
+
 ### Adding a New Lyrics Provider
 
 1. Create `Sources/Lyrics/Providers/YourProvider.swift` implementing `LyricsProvider` protocol (name, priority, fetchLyrics).
