@@ -152,19 +152,25 @@ final class DynamicIslandPanel: NSPanel {
     override func mouseDown(with _: NSEvent) {
         mouseDownOrigin = NSEvent.mouseLocation
         windowOriginOnMouseDown = frame.origin
-        isDragUnlocked = false
 
-        // Start long-press timer — when it fires, haptic feedback signals drag is ready
-        longPressTimer = Timer.scheduledTimer(withTimeInterval: Self.longPressDuration, repeats: false) { [weak self] _ in
-            guard let self else { return }
+        if positionMode == .detached {
+            // Already free-floating — allow immediate dragging
             isDragUnlocked = true
-            NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .now)
+        } else {
+            isDragUnlocked = false
 
-            // Immediately switch to detached visual state
-            if positionMode == .attached {
-                positionMode = .detached
-                UserDefaults.standard.islandPositionMode = .detached
-                NotificationCenter.default.post(name: .islandPositionModeChanged, object: IslandPositionMode.detached)
+            // Start long-press timer — when it fires, haptic feedback signals drag is ready
+            longPressTimer = Timer.scheduledTimer(withTimeInterval: Self.longPressDuration, repeats: false) { [weak self] _ in
+                guard let self else { return }
+                isDragUnlocked = true
+                NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .now)
+
+                // Immediately switch to detached visual state
+                if positionMode == .attached {
+                    positionMode = .detached
+                    UserDefaults.standard.islandPositionMode = .detached
+                    NotificationCenter.default.post(name: .islandPositionModeChanged, object: IslandPositionMode.detached)
+                }
             }
         }
     }
