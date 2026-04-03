@@ -42,9 +42,9 @@ final class AppState: ObservableObject {
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
         dualLineMode = UserDefaults.standard.bool(forKey: "dualLineMode")
         // Default to true for new installs (key absent returns false, so use register)
-        UserDefaults.standard.register(defaults: ["showArtwork": true, "lyricsAlignment": "left"])
+        UserDefaults.standard.register(defaults: ["showArtwork": true, "lyricsAlignment": "center"])
         showArtwork = UserDefaults.standard.bool(forKey: "showArtwork")
-        lyricsAlignment = UserDefaults.standard.string(forKey: "lyricsAlignment") ?? "left"
+        lyricsAlignment = UserDefaults.standard.string(forKey: "lyricsAlignment") ?? "center"
 
         // Sync changes from @AppStorage (Settings window) back to @Published properties
         defaultsObserver = NotificationCenter.default
@@ -62,11 +62,19 @@ final class AppState: ObservableObject {
     }
 
     var resolvedLyricsAlignment: Alignment {
-        lyricsAlignment == "center" ? .center : .leading
+        switch lyricsAlignment {
+        case "center": .center
+        case "right": .trailing
+        default: .leading
+        }
     }
 
     var resolvedHorizontalAlignment: HorizontalAlignment {
-        lyricsAlignment == "center" ? .center : .leading
+        switch lyricsAlignment {
+        case "center": .center
+        case "right": .trailing
+        default: .leading
+        }
     }
 
     // MARK: - Spotify Checks
