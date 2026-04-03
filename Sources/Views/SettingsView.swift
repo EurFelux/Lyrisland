@@ -57,12 +57,18 @@ private struct GeneralTab: View {
 private struct AppearanceTab: View {
     @AppStorage("showArtwork") private var showArtwork = true
     @AppStorage("dualLineMode") private var dualLineMode = false
+    @AppStorage("lyricsAlignment") private var lyricsAlignment = "left"
 
     var body: some View {
         Form {
             Section {
                 Toggle(String(localized: "settings.appearance.show_artwork"), isOn: $showArtwork)
                 Toggle(String(localized: "settings.appearance.dual_line"), isOn: $dualLineMode)
+                Picker(String(localized: "settings.appearance.lyrics_alignment"), selection: $lyricsAlignment) {
+                    Text(String(localized: "settings.appearance.alignment.left")).tag("left")
+                    Text(String(localized: "settings.appearance.alignment.center")).tag("center")
+                }
+                .pickerStyle(.segmented)
             } header: {
                 Text(String(localized: "settings.appearance.display_section"))
             }

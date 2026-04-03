@@ -24,14 +24,14 @@ struct CompactIslandView: View {
                 // Dual-line mode: ForEach keyed by line index so SwiftUI tracks
                 // the next line sliding up to become the current line
                 let indices = idx + 1 < lyrics.lines.count ? [idx, idx + 1] : [idx]
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: appState.resolvedHorizontalAlignment, spacing: 2) {
                     ForEach(indices, id: \.self) { lineIdx in
                         DualLineRow(text: lyrics.lines[lineIdx].text, isCurrent: lineIdx == idx)
                             .transition(.push(from: .bottom).combined(with: .opacity))
                     }
                 }
                 .animation(.smooth(duration: 0.35), value: idx)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
             } else {
                 // Single-line mode: original MarqueeText behavior
                 MarqueeText(
@@ -43,7 +43,7 @@ struct CompactIslandView: View {
                 .transition(.push(from: .bottom).combined(with: .opacity))
                 .id(currentLineIndex ?? -1)
                 .animation(.smooth(duration: 0.35), value: currentLineIndex)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
             }
         }
         // padding handled by parent IslandContentView

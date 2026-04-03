@@ -27,21 +27,21 @@ struct ExpandedIslandView: View {
                             loops: false
                         )
                         .frame(height: 20)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
                         .transition(.opacity.combined(with: .scale(scale: 0.9)))
                     } else if isNext {
                         Text(line.text)
                             .font(.system(size: 13, weight: .semibold))
                             .foregroundStyle(.white.opacity(0.7))
                             .lineLimit(1)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
                             .transition(.opacity.combined(with: .scale(scale: 0.95)))
                     } else {
                         Text(line.text)
                             .font(.system(size: 12))
                             .foregroundStyle(.white.opacity(0.35))
                             .lineLimit(1)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
                             .blur(radius: 0.5)
                             .transition(.opacity.combined(with: .scale(scale: 1.05)))
                     }

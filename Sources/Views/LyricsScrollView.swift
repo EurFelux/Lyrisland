@@ -5,6 +5,7 @@ import SwiftUI
 struct LyricsScrollView: View {
     let lyrics: SyncedLyrics
     let currentLineIndex: Int
+    var alignment: Alignment = .leading
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -19,6 +20,7 @@ struct LyricsScrollView: View {
                             isCurrent: line.id == currentLineIndex,
                             distance: abs(line.id - currentLineIndex)
                         )
+                        .frame(maxWidth: .infinity, alignment: alignment)
                         .id(line.id)
                     }
 
@@ -57,7 +59,6 @@ private struct LyricLineRow: View, Equatable {
                     .foregroundStyle(isCurrent ? .white.opacity(0.7) : .white.opacity(0.2))
             }
         }
-        .frame(maxWidth: .infinity, alignment: .center)
         .animation(.smooth(duration: 0.35), value: isCurrent)
     }
 

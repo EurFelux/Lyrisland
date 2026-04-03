@@ -10,7 +10,11 @@ struct FullIslandView: View {
         // Lyrics — artwork is handled by parent IslandContentView
         VStack(spacing: 0) {
             if let lyrics = lyricsManager.currentLyrics {
-                LyricsScrollView(lyrics: lyrics, currentLineIndex: syncEngine.currentLineIndex ?? 0)
+                LyricsScrollView(
+                    lyrics: lyrics,
+                    currentLineIndex: syncEngine.currentLineIndex ?? 0,
+                    alignment: appState.resolvedLyricsAlignment
+                )
             } else if lyricsManager.isLoading {
                 Spacer()
                 ProgressView()

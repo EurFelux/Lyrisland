@@ -1,6 +1,7 @@
 import AppKit
 import Combine
 import Foundation
+import SwiftUI
 
 /// Tracks the overall app readiness state for onboarding and status display.
 @MainActor
@@ -31,14 +32,19 @@ final class AppState: ObservableObject {
         didSet { UserDefaults.standard.set(showArtwork, forKey: "showArtwork") }
     }
 
+    @Published var lyricsAlignment: String {
+        didSet { UserDefaults.standard.set(lyricsAlignment, forKey: "lyricsAlignment") }
+    }
+
     private var defaultsObserver: AnyCancellable?
 
     init() {
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
         dualLineMode = UserDefaults.standard.bool(forKey: "dualLineMode")
         // Default to true for new installs (key absent returns false, so use register)
-        UserDefaults.standard.register(defaults: ["showArtwork": true])
+        UserDefaults.standard.register(defaults: ["showArtwork": true, "lyricsAlignment": "left"])
         showArtwork = UserDefaults.standard.bool(forKey: "showArtwork")
+        lyricsAlignment = UserDefaults.standard.string(forKey: "lyricsAlignment") ?? "left"
 
         // Sync changes from @AppStorage (Settings window) back to @Published properties
         defaultsObserver = NotificationCenter.default
@@ -48,9 +54,19 @@ final class AppState: ObservableObject {
                 guard let self else { return }
                 let newDualLine = UserDefaults.standard.bool(forKey: "dualLineMode")
                 let newShowArtwork = UserDefaults.standard.bool(forKey: "showArtwork")
+                let newAlignment = UserDefaults.standard.string(forKey: "lyricsAlignment") ?? "left"
                 if dualLineMode != newDualLine { dualLineMode = newDualLine }
                 if showArtwork != newShowArtwork { showArtwork = newShowArtwork }
+                if lyricsAlignment != newAlignment { lyricsAlignment = newAlignment }
             }
+    }
+
+    var resolvedLyricsAlignment: Alignment {
+        lyricsAlignment == "center" ? .center : .leading
+    }
+
+    var resolvedHorizontalAlignment: HorizontalAlignment {
+        lyricsAlignment == "center" ? .center : .leading
     }
 
     // MARK: - Spotify Checks

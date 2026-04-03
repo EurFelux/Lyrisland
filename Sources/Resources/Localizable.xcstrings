@@ -350,6 +350,24 @@
         "zh-Hans": { "stringUnit": { "state": "translated", "value": "双行歌词模式" } }
       }
     },
+    "settings.appearance.lyrics_alignment": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Lyrics Alignment" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "歌词对齐方式" } }
+      }
+    },
+    "settings.appearance.alignment.left": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Left" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "左对齐" } }
+      }
+    },
+    "settings.appearance.alignment.center": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Center" } },
+        "zh-Hans": { "stringUnit": { "state": "translated", "value": "居中" } }
+      }
+    },
     "settings.lyrics.offset_section": {
       "localizations": {
         "en": { "stringUnit": { "state": "translated", "value": "Offset" } },
