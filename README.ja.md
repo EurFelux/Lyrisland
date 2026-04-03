@@ -42,6 +42,19 @@ Lyrisland は、画面上部にダイナミックアイランド（Dynamic Islan
 - **ログイン不要** — AppleScript でローカルの Spotify クライアントから直接再生状態を取得、アカウント認証は不要
 - **軽量常駐** — メニューバーのみで動作、Dock アイコンなし、最小限のリソース使用
 
+## インストール
+
+### Homebrew（推奨）
+
+```bash
+brew tap EurFelux/lyrisland
+brew install --cask lyrisland
+```
+
+### 手動ダウンロード
+
+[GitHub Releases](https://github.com/EurFelux/Lyrisland/releases) から最新の `.dmg` をダウンロードし、開いて Lyrisland をアプリケーションフォルダにドラッグしてください。
+
 ## プレビュー
 
 #### Compact
@@ -74,19 +87,6 @@ Lyrisland は、画面上部にダイナミックアイランド（Dynamic Islan
 
 #### フリーフロート
 ![Detached](Assets/screenshots/detached-compact.png)
-
-## インストール
-
-### Homebrew（推奨）
-
-```bash
-brew tap EurFelux/lyrisland
-brew install --cask lyrisland
-```
-
-### 手動ダウンロード
-
-[GitHub Releases](https://github.com/EurFelux/Lyrisland/releases) から最新の `.dmg` をダウンロードし、開いて Lyrisland をアプリケーションフォルダにドラッグしてください。
 
 ## はじめに
 
