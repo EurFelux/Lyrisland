@@ -22,6 +22,12 @@ struct ArtworkView: View {
         }
         .frame(width: size, height: size)
         .clipShape(RoundedRectangle(cornerRadius: size * 0.15))
+        .onAppear {
+            // Load from memory cache synchronously to avoid flash when view is recreated
+            if image == nil, let trackId {
+                image = ArtworkCache.shared.cachedImage(for: trackId)
+            }
+        }
         .task(id: trackId) {
             await loadImage()
         }

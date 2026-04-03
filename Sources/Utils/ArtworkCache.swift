@@ -30,6 +30,12 @@ actor ArtworkCache {
         session = URLSession(configuration: config)
     }
 
+    /// Synchronous memory-cache lookup (NSCache is thread-safe).
+    /// Returns nil if the image is not in memory — does not check disk or network.
+    nonisolated func cachedImage(for trackId: String) -> NSImage? {
+        memoryCache.object(forKey: trackId as NSString)
+    }
+
     /// Returns a cached image or fetches from the network, caching the result.
     /// Concurrent calls for the same track ID are coalesced into a single fetch.
     func image(for trackId: String, url: URL) async -> NSImage? {

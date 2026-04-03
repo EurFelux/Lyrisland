@@ -9,11 +9,6 @@ struct CompactIslandView: View {
 
     var body: some View {
         HStack(spacing: 10) {
-            // Album artwork thumbnail
-            if appState.showArtwork {
-                ArtworkView(trackId: syncEngine.currentTrackId, artworkURL: syncEngine.artworkURL, size: 36)
-            }
-
             // Playing indicator bars
             if syncEngine.isPlaying {
                 PlayingIndicator()
@@ -51,7 +46,7 @@ struct CompactIslandView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
-        .padding(.horizontal, 16)
+        // padding handled by parent IslandContentView
     }
 
     private var statusIcon: String {
