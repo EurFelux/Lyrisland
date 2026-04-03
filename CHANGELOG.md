@@ -19,6 +19,7 @@
 
 ### Fixed
 
+- Expanded 灵动岛歌词改为逐行平滑滚动（ScrollViewReader + scrollTo），替代原有滑动窗口就地刷新；移除 Expanded 视图中对双行歌词模式的引用，双行模式仅作用于 Compact 状态 (#33)
 - 菜单栏点击"设置"无反应：LSUIElement 应用中私有 selector 不可靠，改为手动管理 Settings 窗口 (#31)
 - 修复长歌词行 MarqueeText 不再自动滚动的问题：`.id()` 导致视图重建时 `@State` 重置，GeometryReader 尚未测量完成动画就已退出 (#28)
 - 自由拖拽模式下拖动灵动岛不再需要长按 0.5 秒，鼠标按下即可直接拖拽 (#25)

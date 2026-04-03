@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Expanded state: shows the current lyric line with surrounding context.
-/// When dual-line mode is on, the next line is styled distinctly from context lines.
+/// Uses push transitions (like Compact mode) for smooth line-by-line scrolling.
 struct ExpandedIslandView: View {
     @ObservedObject var syncEngine: PlaybackSyncEngine
     @ObservedObject var lyricsManager: LyricsManager
@@ -10,15 +10,15 @@ struct ExpandedIslandView: View {
     private let visibleLineCount = 5
 
     var body: some View {
-        // Lyrics — artwork is handled by parent IslandContentView
         VStack(spacing: 4) {
             if let lyrics = lyricsManager.currentLyrics {
                 let currentIdx = syncEngine.currentLineIndex ?? 0
                 let range = contextRange(around: currentIdx, total: lyrics.lines.count)
 
                 ForEach(lyrics.lines[range]) { line in
-                    let isCurrent = line.id == lyrics.lines[currentIdx].id
-                    let isNext = appState.dualLineMode && line.id == currentIdx + 1
+                    let isCurrent = line.id == currentIdx
+                    let distance = abs(line.id - currentIdx)
+
                     if isCurrent {
                         MarqueeText(
                             text: line.text,
@@ -28,31 +28,28 @@ struct ExpandedIslandView: View {
                         )
                         .frame(height: 20)
                         .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
-                        .transition(.opacity.combined(with: .scale(scale: 0.9)))
-                    } else if isNext {
-                        Text(line.text)
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundStyle(.white.opacity(0.7))
-                            .lineLimit(1)
-                            .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
-                            .transition(.opacity.combined(with: .scale(scale: 0.95)))
+                        .transition(.push(from: .bottom))
                     } else {
                         Text(line.text)
-                            .font(.system(size: 12))
-                            .foregroundStyle(.white.opacity(0.35))
+                            .font(.system(
+                                size: distance == 1 ? 13 : 12,
+                                weight: distance == 1 ? .medium : .regular
+                            ))
+                            .foregroundStyle(.white.opacity(opacityFor(distance: distance)))
                             .lineLimit(1)
+                            .blur(radius: blurFor(distance: distance))
+                            .frame(height: 20)
                             .frame(maxWidth: .infinity, alignment: appState.resolvedLyricsAlignment)
-                            .blur(radius: 0.5)
-                            .transition(.opacity.combined(with: .scale(scale: 1.05)))
+                            .transition(.push(from: .bottom))
                     }
                 }
+                .id(currentIdx)
             } else {
                 Text("lyrics.no_lyrics")
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.4))
             }
         }
-        // padding handled by parent IslandContentView
         .animation(.smooth(duration: 0.35), value: syncEngine.currentLineIndex)
     }
 
@@ -62,5 +59,21 @@ struct ExpandedIslandView: View {
         let end = min(total - 1, start + visibleLineCount - 1)
         let adjustedStart = max(0, end - visibleLineCount + 1)
         return adjustedStart ... end
+    }
+
+    private func opacityFor(distance: Int) -> Double {
+        switch distance {
+        case 1: 0.55
+        case 2: 0.3
+        default: 0.15
+        }
+    }
+
+    private func blurFor(distance: Int) -> CGFloat {
+        switch distance {
+        case 1: 0
+        case 2: 0.3
+        default: 0.8
+        }
     }
 }
