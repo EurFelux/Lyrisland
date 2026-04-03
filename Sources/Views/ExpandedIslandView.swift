@@ -12,6 +12,26 @@ struct ExpandedIslandView: View {
     var body: some View {
         // Lyrics — artwork is handled by parent IslandContentView
         VStack(spacing: 4) {
+            // Track info header
+            if let title = syncEngine.trackTitle {
+                HStack(spacing: 4) {
+                    Text(title)
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.5))
+                        .lineLimit(1)
+                    if let artist = syncEngine.trackArtist {
+                        Text("—")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.white.opacity(0.3))
+                        Text(artist)
+                            .font(.system(size: 11))
+                            .foregroundStyle(.white.opacity(0.4))
+                            .lineLimit(1)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+
             if let lyrics = lyricsManager.currentLyrics {
                 let currentIdx = syncEngine.currentLineIndex ?? 0
                 let range = contextRange(around: currentIdx, total: lyrics.lines.count)

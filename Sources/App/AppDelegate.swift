@@ -63,6 +63,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func launchMainUI() {
         syncEngine.lyricsManager = lyricsManager
+        syncEngine.spotifyService = spotifyService
         setupIslandPanel()
         startPlaybackMonitoring()
     }
@@ -209,6 +210,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             syncEngine.calibrate(position: state.position, isPlaying: state.isPlaying)
             syncEngine.setTrackId(state.trackId)
             syncEngine.setArtworkURL(state.artworkURL)
+            syncEngine.setTrackInfo(title: state.title, artist: state.artist)
             setPollRate(state.isPlaying ? .playing : .paused)
 
             // Track changed → fetch new lyrics

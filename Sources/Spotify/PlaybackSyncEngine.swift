@@ -12,6 +12,8 @@ final class PlaybackSyncEngine: ObservableObject {
     @Published private(set) var isPlaying: Bool = false
     @Published private(set) var currentTrackId: String?
     @Published private(set) var artworkURL: URL?
+    @Published private(set) var trackTitle: String?
+    @Published private(set) var trackArtist: String?
 
     /// Monotonically incrementing tick used internally to update position.
     /// NOT @Published — views should depend on `currentLineIndex` or other
@@ -27,6 +29,9 @@ final class PlaybackSyncEngine: ObservableObject {
 
     /// Reference to lyrics for line index caching.
     weak var lyricsManager: LyricsManager?
+
+    /// Reference to Spotify service for playback commands.
+    var spotifyService: SpotifyAppleScriptService?
 
     /// The most recent anchor: (system timestamp, playback position in seconds).
     private var anchor: (date: Date, position: TimeInterval)?
@@ -65,6 +70,25 @@ final class PlaybackSyncEngine: ObservableObject {
         if url != artworkURL {
             artworkURL = url
         }
+    }
+
+    func setTrackInfo(title: String?, artist: String?) {
+        if title != trackTitle { trackTitle = title }
+        if artist != trackArtist { trackArtist = artist }
+    }
+
+    // MARK: - Playback Controls
+
+    func playPause() {
+        Task { await spotifyService?.playPause() }
+    }
+
+    func nextTrack() {
+        Task { await spotifyService?.nextTrack() }
+    }
+
+    func previousTrack() {
+        Task { await spotifyService?.previousTrack() }
     }
 
     /// Linearly interpolated position.

@@ -43,6 +43,40 @@ final class SpotifyAppleScriptService {
         }
     }
 
+    // MARK: - Playback Controls
+
+    func playPause() async {
+        await executeCommand("playpause")
+    }
+
+    func nextTrack() async {
+        await executeCommand("next track")
+    }
+
+    func previousTrack() async {
+        await executeCommand("previous track")
+    }
+
+    private func executeCommand(_ command: String) async {
+        await withCheckedContinuation { continuation in
+            queue.async {
+                let source = """
+                if application "Spotify" is running then
+                    tell application "Spotify" to \(command)
+                end if
+                """
+                guard let script = NSAppleScript(source: source) else {
+                    continuation.resume()
+                    return
+                }
+                var error: NSDictionary?
+                script.executeAndReturnError(&error)
+                if let error { logDebug("AppleScript command failed: \(error)") }
+                continuation.resume()
+            }
+        }
+    }
+
     /// Synchronous execution on the caller's thread — use only from background context.
     private static func executeScript(_ source: String) -> SpotifyPlaybackState? {
         guard let appleScript = NSAppleScript(source: source) else { return nil }

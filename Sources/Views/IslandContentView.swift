@@ -96,17 +96,39 @@ struct IslandContentView: View {
             ArtworkView(trackId: syncEngine.currentTrackId, artworkURL: syncEngine.artworkURL, size: artworkSize)
                 .padding(.top, islandState == .full ? 8 : 0)
 
-            if islandState == .full, let source = lyricsManager.currentLyrics?.source {
-                Text(source)
-                    .font(.system(size: 9, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.3))
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 2)
-                    .background(Capsule().fill(.white.opacity(0.08)))
-                    .padding(.top, 4)
-            }
-
             if islandState == .full {
+                if let source = lyricsManager.currentLyrics?.source {
+                    Text(source)
+                        .font(.system(size: 9, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.3))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 2)
+                        .background(Capsule().fill(.white.opacity(0.08)))
+                        .padding(.top, 4)
+                }
+
+                // Track info
+                VStack(spacing: 2) {
+                    if let title = syncEngine.trackTitle {
+                        Text(title)
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(.white.opacity(0.8))
+                            .lineLimit(1)
+                    }
+                    if let artist = syncEngine.trackArtist {
+                        Text(artist)
+                            .font(.system(size: 11))
+                            .foregroundStyle(.white.opacity(0.5))
+                            .lineLimit(1)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.top, 6)
+
+                // Playback controls
+                PlaybackControlsView(syncEngine: syncEngine)
+                    .padding(.top, 4)
+
                 Spacer(minLength: 0)
             }
         }
@@ -147,7 +169,7 @@ struct IslandContentView: View {
         switch state {
         case .compact: dualLine ? 62 : artwork ? 48 : 38
         case .expanded: artwork ? 160 : 120
-        case .full: artwork ? 340 : 300
+        case .full: artwork ? 340 : 340
         }
     }
 
