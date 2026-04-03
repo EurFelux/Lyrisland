@@ -38,11 +38,12 @@ After cloning, run `prek install` to set up the git pre-commit hook.
 
 ## Workflow
 
+- **Never commit directly to `main`.** The `main` branch is protected. For any fix or feature, create a new branch (e.g. `feat/cache-layer`, `fix/marquee-reset`) from `main`, commit there, and open a PR to merge back.
 - Always update `CHANGELOG.md` under the `Unreleased` section when resolving an issue (bug fix or feature). Include the issue number (e.g. `#1`).
 - When a commit resolves a GitHub issue, the commit message **must** include `Fixes #<number>` (e.g. `Fixes #3`) so GitHub automatically closes the issue on push.
 - Use [Conventional Commits](https://www.conventionalcommits.org/) format: `<type>(<scope>): <description>`. Common types: `feat`, `fix`, `refactor`, `docs`, `chore`, `style`, `perf`, `test`. Example: `fix(lyrics): resolve long line truncation with marquee scrolling`.
 - New features and bug fixes that touch pure logic (parsers, matchers, models) should include unit tests in `Tests/` using **Swift Testing** (`import Testing`, `@Test`, `@Suite`). Run `xcodebuild test` to verify before committing.
-- After completing a coding task, use the **code-reviewer** agent (`pr-review-toolkit:code-reviewer`) to review the changes before committing.
+- After completing a coding task, use the **code-reviewer** agent (`pr-review-toolkit:code-reviewer`) to review the changes. If the review raises issues (critical or important), fix them and re-run the reviewer. **Repeat until the reviewer approves** before committing.
 
 ## Architecture
 
@@ -77,6 +78,10 @@ Track change → LyricsManager.loadLyrics()
 - **Window/** — `DynamicIslandPanel` (NSPanel subclass) and `IslandState` enum (compact/expanded/full).
 - **Views/** — `IslandContentView` is the root; delegates to Compact/Expanded/Full sub-views. `LyricsScrollView` handles auto-scroll. State changes call `DynamicIslandPanel.animateResize()` to sync NSPanel frame.
 - **Utils/** — `LRCParser` (shared `[mm:ss.xx]` parser used by LRCLIB and Musixmatch), `TrackMatcher` (weighted name/artist/album/duration scoring for search result ranking).
+
+### Caching
+
+The project uses a generic two-tier cache (`Cache<Key, Value>`) for all persistent data. When adding or modifying caching behavior, **read [`docs/cache-spec.md`](docs/cache-spec.md) first** for architecture, API, serializer protocol, and integration guide.
 
 ### Adding a New Lyrics Provider
 

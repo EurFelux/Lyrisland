@@ -40,12 +40,17 @@ final class LyricsManager: ObservableObject {
         NeteaseProvider(), // 3 — Netease Cloud Music, strong for Chinese/Asian music
     ]
 
-    /// In-memory cache keyed by track ID.
-    private var cache: [String: SyncedLyrics] = [:]
+    /// Two-tier cache (memory + disk) keyed by track ID.
+    private let cache = Cache<String, SyncedLyrics>(
+        memoryCountLimit: 200,
+        namespace: "Lyrics",
+        diskLimitBytes: 50 * 1024 * 1024,
+        serializer: CodableCacheSerializer<SyncedLyrics>()
+    )
 
     func loadLyrics(for track: TrackInfo) async {
-        // Check cache
-        if let cached = cache[track.id] {
+        // Check cache (memory → disk)
+        if let cached = await cache.get(track.id) {
             logDebug("Lyrics cache hit for: \(track.title) — \(track.artist)")
             currentLyrics = cached
             return
@@ -60,7 +65,7 @@ final class LyricsManager: ObservableObject {
             do {
                 if let lyrics = try await provider.fetchLyrics(for: track) {
                     logInfo("Lyrics found via \(provider.name) for: \(track.title)")
-                    cache[track.id] = lyrics
+                    await cache.set(lyrics, forKey: track.id)
                     currentLyrics = lyrics
                     return
                 }
@@ -75,7 +80,7 @@ final class LyricsManager: ObservableObject {
         currentLyrics = nil
     }
 
-    func clearCache() {
-        cache.removeAll()
+    func clearCache() async {
+        await cache.removeAll()
     }
 }
