@@ -69,6 +69,52 @@ struct LRCLibProvider: LyricsProvider {
         return try parseLRCLibResponse(resultData)
     }
 
+    // MARK: - Multi-result Search
+
+    func searchLyrics(for track: TrackInfo, limit: Int = 5) async throws -> [LyricsSearchResult] {
+        var components = URLComponents(string: "\(baseURL)/search")!
+        components.queryItems = [
+            URLQueryItem(name: "q", value: "\(track.title) \(track.artist)"),
+        ]
+
+        guard let url = components.url else { return [] }
+        let (data, response) = try await URLSession.shared.data(from: url)
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200,
+              let results = try JSONSerialization.jsonObject(with: data) as? [[String: Any]]
+        else {
+            return []
+        }
+
+        return results.prefix(limit).compactMap { item -> LyricsSearchResult? in
+            guard let syncedLyrics = item["syncedLyrics"] as? String else { return nil }
+
+            let lines = LRCParser.parse(syncedLyrics)
+            guard !lines.isEmpty else { return nil }
+
+            let trackName = item["trackName"] as? String ?? ""
+            let artistName = item["artistName"] as? String ?? ""
+            let albumName = item["albumName"] as? String
+            let duration = item["duration"] as? Int
+
+            let candidate = TrackMatcher.Candidate(
+                title: trackName, artist: artistName, album: albumName, durationMs: duration.map { $0 * 1000 }
+            )
+            let (score, confidence) = TrackMatcher.score(target: track, candidate: candidate)
+
+            let lyrics = SyncedLyrics(lines: lines, source: name, globalOffset: 0)
+            return LyricsSearchResult(
+                provider: name,
+                lyrics: lyrics,
+                matchInfo: "\(trackName) \u{2014} \(artistName)",
+                score: score,
+                confidence: confidence
+            )
+        }
+        .sorted { $0.score > $1.score }
+    }
+
     // MARK: - Response Parsing
 
     private func parseLRCLibResponse(_ data: Data) throws -> SyncedLyrics? {

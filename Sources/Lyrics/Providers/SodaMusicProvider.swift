@@ -63,6 +63,86 @@ struct SodaMusicProvider: LyricsProvider {
         return scored?.id
     }
 
+    // MARK: - Multi-result Search
+
+    func searchLyrics(for track: TrackInfo, limit: Int = 5) async throws -> [LyricsSearchResult] {
+        let candidates = try await searchTopCandidates(track, limit: limit)
+        guard !candidates.isEmpty else { return [] }
+
+        return await withTaskGroup(of: LyricsSearchResult?.self, returning: [LyricsSearchResult].self) { group in
+            for candidate in candidates {
+                group.addTask {
+                    guard let lyrics = try? await fetchTrackLyrics(trackId: candidate.id) else { return nil }
+                    return LyricsSearchResult(
+                        provider: name,
+                        lyrics: lyrics,
+                        matchInfo: candidate.matchInfo,
+                        score: candidate.score,
+                        confidence: candidate.confidence
+                    )
+                }
+            }
+            var results: [LyricsSearchResult] = []
+            for await result in group {
+                if let result { results.append(result) }
+            }
+            return results.sorted { $0.score > $1.score }
+        }
+    }
+
+    private struct ScoredCandidate {
+        let id: String
+        let matchInfo: String
+        let score: Double
+        let confidence: TrackMatcher.Confidence
+    }
+
+    private func searchTopCandidates(_ track: TrackInfo, limit: Int) async throws -> [ScoredCandidate] {
+        var components = URLComponents(string: searchURL)!
+        components.queryItems = [
+            URLQueryItem(name: "q", value: "\(track.title) \(track.artist)"),
+            URLQueryItem(name: "src", value: ""),
+            URLQueryItem(name: "cursor", value: "0"),
+            URLQueryItem(name: "count", value: "10"),
+        ]
+
+        guard let url = components.url else { return [] }
+        let (data, response) = try await URLSession.shared.data(from: url)
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200,
+              let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let dataObj = json["data"] as? [String: Any],
+              let tracks = dataObj["track_list"] as? [[String: Any]]
+        else {
+            return []
+        }
+
+        return tracks
+            .compactMap { item -> ScoredCandidate? in
+                guard let id = item["id"] as? Int,
+                      let title = item["title"] as? String,
+                      let artist = item["artist"] as? String else { return nil }
+                let album = item["album_title"] as? String
+                let durationMs = (item["duration"] as? Int).map { $0 * 1000 }
+
+                let candidate = TrackMatcher.Candidate(
+                    title: title, artist: artist, album: album, durationMs: durationMs
+                )
+                let (score, confidence) = TrackMatcher.score(target: track, candidate: candidate)
+                guard confidence >= .low else { return nil }
+                return ScoredCandidate(
+                    id: String(id),
+                    matchInfo: "\(title) \u{2014} \(artist)",
+                    score: score,
+                    confidence: confidence
+                )
+            }
+            .sorted { $0.score > $1.score }
+            .prefix(limit)
+            .map { $0 }
+    }
+
     // MARK: - Lyrics Fetch
 
     private func fetchTrackLyrics(trackId: String) async throws -> SyncedLyrics? {

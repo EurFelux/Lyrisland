@@ -43,4 +43,16 @@ struct ProviderSettings: Codable, Equatable {
             defaults.set(data, forKey: Self.userDefaultsKey)
         }
     }
+
+    /// Human-readable display names for provider IDs.
+    static let displayNames: [String: String] = [
+        "lrclib": "LRCLIB",
+        "musixmatch": "Musixmatch",
+        "sodamusic": "Soda Music",
+        "netease": "Netease",
+    ]
+
+    static func displayName(for id: String) -> String {
+        displayNames[id] ?? id
+    }
 }
