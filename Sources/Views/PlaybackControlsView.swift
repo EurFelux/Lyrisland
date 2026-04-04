@@ -4,6 +4,7 @@ import SwiftUI
 struct PlaybackControlsView: View {
     @ObservedObject var syncEngine: PlaybackSyncEngine
     @Environment(\.rootFontSize) private var rootFontSize
+    @Environment(\.contentColor) private var contentColor
 
     var body: some View {
         HStack(spacing: 20) {
@@ -21,6 +22,6 @@ struct PlaybackControlsView: View {
             }
         }
         .buttonStyle(.plain)
-        .foregroundStyle(.white.opacity(0.7))
+        .foregroundStyle(contentColor.opacity(0.7))
     }
 }

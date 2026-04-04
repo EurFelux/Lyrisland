@@ -1,6 +1,36 @@
+import AppKit
 import SwiftUI
 
+// MARK: - Adaptive Content Color Environment
+
+private struct ContentColorKey: EnvironmentKey {
+    static let defaultValue: Color = .white
+}
+
+extension EnvironmentValues {
+    /// Adaptive text/icon color for the island, set at the root based on background luminance.
+    var contentColor: Color {
+        get { self[ContentColorKey.self] }
+        set { self[ContentColorKey.self] = newValue }
+    }
+}
+
+// MARK: - Color Extensions
+
 extension Color {
+    /// W3C relative luminance per WCAG 2.1 definition.
+    /// Linearizes sRGB gamma before applying `L = 0.2126*R + 0.7152*G + 0.0722*B`.
+    var relativeLuminance: Double {
+        let ns = NSColor(self).usingColorSpace(.sRGB) ?? NSColor(self)
+        func linearize(_ c: Double) -> Double {
+            c <= 0.03928 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4)
+        }
+        let r = linearize(ns.redComponent)
+        let g = linearize(ns.greenComponent)
+        let b = linearize(ns.blueComponent)
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b
+    }
+
     /// Create a Color from a hex string like "#141414" or "141414".
     init?(hex: String) {
         var hex = hex.trimmingCharacters(in: .whitespacesAndNewlines)

@@ -17,7 +17,7 @@ struct CompactIslandView: View {
             } else {
                 Image(systemName: statusIcon)
                     .font(.system(size: .rem(0.625, root: rootFontSize)))
-                    .foregroundStyle(.white.opacity(0.6))
+                    .foregroundStyle(appState.contentColor.opacity(0.6))
             }
 
             // Lyrics display
@@ -31,7 +31,8 @@ struct CompactIslandView: View {
                             text: lyrics.lines[lineIdx].text,
                             isCurrent: lineIdx == idx,
                             lineDuration: lineDuration(for: lineIdx, in: lyrics),
-                            rootFontSize: rootFontSize
+                            rootFontSize: rootFontSize,
+                            contentColor: appState.contentColor
                         )
                         .environment(\.layoutDirection, lyrics.lines[lineIdx].text.isRTL ? .rightToLeft : .leftToRight)
                         .transition(.push(from: .bottom).combined(with: .opacity))
@@ -100,9 +101,9 @@ struct CompactIslandView: View {
 
     private var displayTextOpacity: Color {
         if lyricsManager.currentLyrics != nil, currentLineIndex != nil {
-            return .white
+            return appState.contentColor
         }
-        return .white.opacity(0.5)
+        return appState.contentColor.opacity(0.5)
     }
 
     private var currentLineDuration: Double? {
@@ -122,6 +123,7 @@ private struct DualLineRow: View, Equatable {
     let isCurrent: Bool
     var lineDuration: Double?
     let rootFontSize: CGFloat
+    let contentColor: Color
 
     var body: some View {
         MarqueeText(
@@ -129,7 +131,7 @@ private struct DualLineRow: View, Equatable {
             font: isCurrent
                 ? .system(size: .rem(0.8125, root: rootFontSize), weight: .medium)
                 : .system(size: .rem(0.6875, root: rootFontSize)),
-            color: isCurrent ? .white : .white.opacity(0.4),
+            color: isCurrent ? contentColor : contentColor.opacity(0.4),
             scrollEnabled: isCurrent,
             loops: false,
             lineDuration: lineDuration

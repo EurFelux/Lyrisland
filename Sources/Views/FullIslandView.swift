@@ -17,13 +17,13 @@ struct FullIslandView: View {
                         if let title = syncEngine.trackTitle {
                             Text(title)
                                 .font(.system(size: .rem(0.8125, root: rootFontSize), weight: .semibold))
-                                .foregroundStyle(.white.opacity(0.8))
+                                .foregroundStyle(appState.contentColor.opacity(0.8))
                                 .lineLimit(1)
                         }
                         if let artist = syncEngine.trackArtist {
                             Text(artist)
                                 .font(.system(size: .rem(0.6875, root: rootFontSize)))
-                                .foregroundStyle(.white.opacity(0.5))
+                                .foregroundStyle(appState.contentColor.opacity(0.5))
                                 .lineLimit(1)
                         }
                     }
@@ -45,7 +45,7 @@ struct FullIslandView: View {
                     Spacer()
                     ProgressView()
                         .scaleEffect(0.7)
-                        .tint(.white.opacity(0.5))
+                        .tint(appState.contentColor.opacity(0.5))
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -53,7 +53,7 @@ struct FullIslandView: View {
             } else {
                 Text("lyrics.no_synced")
                     .font(.system(size: .rem(0.8125, root: rootFontSize)))
-                    .foregroundStyle(.white.opacity(0.4))
+                    .foregroundStyle(appState.contentColor.opacity(0.4))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.horizontal, 20)
             }
