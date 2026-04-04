@@ -23,6 +23,8 @@ struct ArtworkView: View {
         }
         .frame(width: size, height: size)
         .clipShape(RoundedRectangle(cornerRadius: size * 0.15))
+        .animation(.easeOut(duration: 0.35), value: size)
+        .geometryGroup()
         .onAppear {
             // Load from memory cache synchronously to avoid flash when view is recreated
             if image == nil, let trackId {
