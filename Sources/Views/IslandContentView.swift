@@ -255,7 +255,11 @@ struct IslandContentView: View {
         case .full: artwork ? 540 : 400
         }
         if attached {
-            return NSSize(width: w, height: h + menuBarHeight(for: screen))
+            // On notch screens menuBarHeight covers the top padding need;
+            // on non-notch screens it is 0 so we must add verticalPadding
+            // explicitly to avoid clipping the expanded content.
+            let topExtra = max(menuBarHeight(for: screen), verticalPadding(for: state))
+            return NSSize(width: w, height: h + topExtra)
         }
         return NSSize(width: w, height: h + verticalPadding(for: state) + transitionOverflowMargin)
     }
