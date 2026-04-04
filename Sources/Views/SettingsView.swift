@@ -237,15 +237,8 @@ private struct LyricsTab: View {
         }
     }
 
-    private static let displayNames: [String: String] = [
-        "lrclib": "LRCLIB",
-        "musixmatch": "Musixmatch",
-        "sodamusic": "Soda Music",
-        "netease": "Netease",
-    ]
-
     private static func displayName(for id: String) -> String {
-        displayNames[id] ?? id
+        ProviderSettings.displayName(for: id)
     }
 }
 

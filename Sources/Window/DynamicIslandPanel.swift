@@ -154,7 +154,22 @@ final class DynamicIslandPanel: NSPanel {
     /// How long the user must hold before dragging is allowed.
     private static let longPressDuration: TimeInterval = 0.3
 
-    override func mouseDown(with _: NSEvent) {
+    /// Whether the current mouse sequence hit a SwiftUI control (Menu, Button, etc.)
+    /// and should be forwarded to the normal responder chain instead of handled as a panel drag/tap.
+    private var isForwardingToControl = false
+
+    override func mouseDown(with event: NSEvent) {
+        // Check if the click landed on an interactive SwiftUI control (e.g. Menu / Button).
+        // If so, let the normal responder chain handle it instead of our custom drag/tap logic.
+        let locationInWindow = event.locationInWindow
+        if let hitView = contentView?.hitTest(locationInWindow),
+           hitView is NSControl || hitView.enclosingMenuItem != nil {
+            isForwardingToControl = true
+            super.mouseDown(with: event)
+            return
+        }
+        isForwardingToControl = false
+
         mouseDownOrigin = NSEvent.mouseLocation
         windowOriginOnMouseDown = frame.origin
 
@@ -180,7 +195,10 @@ final class DynamicIslandPanel: NSPanel {
         }
     }
 
-    override func mouseDragged(with _: NSEvent) {
+    override func mouseDragged(with event: NSEvent) {
+        if isForwardingToControl { super.mouseDragged(with: event)
+            return
+        }
         guard isDragUnlocked, let origin = mouseDownOrigin, let windowOrigin = windowOriginOnMouseDown else { return }
 
         let current = NSEvent.mouseLocation
@@ -199,7 +217,12 @@ final class DynamicIslandPanel: NSPanel {
         }
     }
 
-    override func mouseUp(with _: NSEvent) {
+    override func mouseUp(with event: NSEvent) {
+        if isForwardingToControl { isForwardingToControl = false
+            super.mouseUp(with: event)
+            return
+        }
+
         longPressTimer?.invalidate()
         longPressTimer = nil
 
@@ -259,6 +282,7 @@ extension Notification.Name {
     static let islandSnapZoneChanged = Notification.Name("islandSnapZoneChanged")
     static let lyricsOffsetAdjust = Notification.Name("lyricsOffsetAdjust")
     static let lyricsOffsetReset = Notification.Name("lyricsOffsetReset")
+    static let openLyricsPicker = Notification.Name("openLyricsPicker")
 }
 
 extension NSScreen {

@@ -8,6 +8,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var onboardingWindow: NSWindow?
     private var settingsWindow: NSWindow?
     private var helpWindow: NSWindow?
+    private var lyricsPickerWindow: NSWindow?
     private var statusItem: NSStatusItem?
     private let spotifyService = SpotifyAppleScriptService()
     let lyricsManager = LyricsManager()
@@ -74,6 +75,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private var trackMenuItem: NSMenuItem?
     private var sourceMenuItem: NSMenuItem?
+    private var chooseLyricsMenuItem: NSMenuItem?
 
     private var toggleMenuItem: NSMenuItem?
     private var settingsMenuItem: NSMenuItem?
@@ -102,6 +104,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         sourceMenuItem?.isEnabled = false
         sourceMenuItem?.isHidden = true
         menu.addItem(sourceMenuItem!)
+
+        chooseLyricsMenuItem = NSMenuItem(
+            title: String(localized: "menu.choose_lyrics"),
+            action: #selector(openLyricsPicker),
+            keyEquivalent: ""
+        )
+        chooseLyricsMenuItem?.isHidden = true
+        menu.addItem(chooseLyricsMenuItem!)
 
         menu.addItem(.separator())
 
@@ -152,10 +162,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         if let source = lyricsManager.currentLyrics?.source {
-            sourceMenuItem?.title = "Source: \(source)"
+            sourceMenuItem?.title = "\(String(localized: "menu.switch_source")): \(ProviderSettings.displayName(for: source))"
             sourceMenuItem?.isHidden = false
+            chooseLyricsMenuItem?.isHidden = false
         } else {
             sourceMenuItem?.isHidden = true
+            chooseLyricsMenuItem?.isHidden = lyricsManager.currentTrack == nil
         }
     }
 
@@ -190,6 +202,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             name: .lyricsOffsetReset,
             object: nil
         )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleOpenLyricsPicker),
+            name: .openLyricsPicker,
+            object: nil
+        )
+    }
+
+    @objc private func handleOpenLyricsPicker() {
+        openLyricsPicker()
     }
 
     @objc private func positionModeSettingsChanged(_ notification: Notification) {
@@ -259,6 +282,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let trackChanged = state.trackId != lastTrackId
             if trackChanged {
                 lastTrackId = state.trackId
+                lyricsPickerWindow?.close()
+                lyricsPickerWindow = nil
                 lyricsManager.resetOffset()
                 UserDefaults.standard.set(0.0, forKey: "currentLyricsOffset")
                 let track = TrackInfo(
@@ -280,6 +305,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // MARK: - Actions
+
+    @objc private func openLyricsPicker() {
+        guard let track = lyricsManager.currentTrack else { return }
+
+        // Always create a fresh window for the current track
+        lyricsPickerWindow?.close()
+        let pickerView = LyricsPickerView(lyricsManager: lyricsManager, track: track)
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 480, height: 500),
+            styleMask: [.titled, .closable, .resizable],
+            backing: .buffered,
+            defer: false
+        )
+        window.center()
+        window.title = String(localized: "picker.title")
+        window.contentView = NSHostingView(rootView: pickerView)
+        window.isReleasedWhenClosed = false
+        window.titlebarAppearsTransparent = true
+        window.backgroundColor = NSColor(white: 0.1, alpha: 1)
+        window.minSize = NSSize(width: 380, height: 300)
+        lyricsPickerWindow = window
+        window.makeKeyAndOrderFront(nil)
+        NSApp.activate()
+    }
 
     @objc private func toggleIsland() {
         if islandPanel?.isVisible == true {

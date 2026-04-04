@@ -8,6 +8,9 @@ final class LyricsManager: ObservableObject {
     @Published private(set) var isLoading = false
     @Published var userOffset: TimeInterval = 0 // ± seconds, applied on top of globalOffset
 
+    /// The track currently loaded (or being loaded), kept for provider switching.
+    private(set) var currentTrack: TrackInfo?
+
     /// Adjust user offset by a delta (e.g. +0.5 or -0.5 seconds).
     func adjustOffset(by delta: TimeInterval) {
         userOffset += delta
@@ -68,10 +71,11 @@ final class LyricsManager: ObservableObject {
     )
 
     func loadLyrics(for track: TrackInfo) async {
+        currentTrack = track
         // Clear stale lyrics immediately so the UI never shows the previous track's lyrics
         currentLyrics = nil
 
-        // Check cache (memory → disk)
+        // Check cache (memory -> disk)
         if let cached = await cache.get(track.id) {
             logDebug("Lyrics cache hit for: \(track.title) — \(track.artist)")
             currentLyrics = cached
@@ -81,6 +85,21 @@ final class LyricsManager: ObservableObject {
         logInfo("Loading lyrics for: \(track.title) — \(track.artist)")
         isLoading = true
         defer { isLoading = false }
+
+        // If user has a per-track override, try that provider first
+        if let overrideProvider = TrackLyricsOverride.preferredProvider(for: track.id),
+           let provider = allProviders.first(where: { $0.name == overrideProvider }) {
+            do {
+                if let lyrics = try await provider.fetchLyrics(for: track) {
+                    logInfo("Override provider \(provider.name) found lyrics for: \(track.title)")
+                    await cache.set(lyrics, forKey: track.id)
+                    currentLyrics = lyrics
+                    return
+                }
+            } catch {
+                logWarning("Override provider \(provider.name) failed: \(error.localizedDescription)")
+            }
+        }
 
         // Walk the fallback chain
         for provider in orderedProviders {
@@ -100,6 +119,38 @@ final class LyricsManager: ObservableObject {
         // No provider returned lyrics
         logWarning("No lyrics found for: \(track.title) — \(track.artist)")
         currentLyrics = nil
+    }
+
+    // MARK: - Lyrics Picker
+
+    /// Kick off parallel searches across all providers. Returns ProviderResult objects
+    /// whose `status` updates reactively as results arrive.
+    /// Intentionally queries all providers (including disabled ones) to maximise the
+    /// chance of finding the correct lyrics for the user.
+    func fetchFromAllProviders(for track: TrackInfo) -> [ProviderResult] {
+        let results = allProviders.map { provider in
+            ProviderResult(id: provider.name, displayName: ProviderSettings.displayName(for: provider.name))
+        }
+        for (provider, result) in zip(allProviders, results) {
+            Task {
+                do {
+                    let searchResults = try await provider.searchLyrics(for: track, limit: 5)
+                    result.status = searchResults.isEmpty ? .notFound : .found(searchResults)
+                } catch {
+                    result.status = .error(error.localizedDescription)
+                }
+            }
+        }
+        return results
+    }
+
+    /// Apply user-selected lyrics: update current display, cache, and per-track override.
+    func applySelectedLyrics(_ lyrics: SyncedLyrics, fromProvider provider: String) async {
+        guard let track = currentTrack else { return }
+        currentLyrics = lyrics
+        await cache.set(lyrics, forKey: track.id)
+        TrackLyricsOverride.setPreferredProvider(provider, for: track.id)
+        logInfo("User selected lyrics from \(provider) for: \(track.title)")
     }
 
     func clearCache() async {

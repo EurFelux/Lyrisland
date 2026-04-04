@@ -3,7 +3,7 @@ import SwiftUI
 /// The root view hosted inside the DynamicIslandPanel.
 struct IslandContentView: View {
     @ObservedObject var syncEngine: PlaybackSyncEngine
-    var lyricsManager: LyricsManager
+    @ObservedObject var lyricsManager: LyricsManager
     @ObservedObject var appState: AppState
     @State private var islandState: IslandState = .compact
     @State private var isAttached: Bool = UserDefaults.standard.islandPositionMode == .attached
@@ -133,15 +133,8 @@ struct IslandContentView: View {
                 .padding(.top, islandState == .full ? 8 : 0)
 
             if islandState == .full {
-                if let source = lyricsManager.currentLyrics?.source {
-                    Text(source)
-                        .font(.system(size: .rem(0.5625, root: rootFontSize), weight: .medium))
-                        .foregroundStyle(appState.contentColor.opacity(0.3))
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 2)
-                        .background(Capsule().fill(appState.contentColor.opacity(0.08)))
-                        .padding(.top, 4)
-                }
+                sourcePickerBadge
+                    .padding(.top, 4)
 
                 // Track info
                 VStack(spacing: 2) {
@@ -164,6 +157,28 @@ struct IslandContentView: View {
                 // Remaining space: controls centered within it
                 PlaybackControlsView(syncEngine: syncEngine)
                     .frame(maxHeight: .infinity)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var sourcePickerBadge: some View {
+        if let currentSource = lyricsManager.currentLyrics?.source {
+            HStack(spacing: 3) {
+                Text(ProviderSettings.displayName(for: currentSource))
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .imageScale(.small)
+            }
+            .font(.system(size: .rem(0.5625, root: rootFontSize), weight: .medium))
+            .foregroundStyle(appState.contentColor.opacity(0.3))
+            .padding(.horizontal, 8)
+            .padding(.vertical, 2)
+            .background(Capsule().fill(appState.contentColor.opacity(0.08)))
+            .overlay {
+                // Real NSButton so DynamicIslandPanel's hitTest detects it as NSControl
+                NativeButtonOverlay {
+                    NotificationCenter.default.post(name: .openLyricsPicker, object: nil)
+                }
             }
         }
     }
