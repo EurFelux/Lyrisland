@@ -20,5 +20,16 @@
     <true/>
     <key>NSAppleEventsUsageDescription</key>
     <string>Lyrisland needs Apple Events access to read Spotify playback status.</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>mobilecdn.kugou.com</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+        </dict>
+    </dict>
 </dict>
 </plist>

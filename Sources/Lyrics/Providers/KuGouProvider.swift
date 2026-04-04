@@ -7,7 +7,8 @@ struct KuGouProvider: LyricsProvider {
     let name = "kugou"
     let priority = 5
 
-    private let searchURL = "https://mobilecdn.kugou.com/api/v3/search/song"
+    // mobilecdn.kugou.com does not support HTTPS — ATS exception in Info.plist
+    private let searchURL = "http://mobilecdn.kugou.com/api/v3/search/song"
     private let lyricsSearchURL = "https://lyrics.kugou.com/search"
     private let lyricsDownloadURL = "https://lyrics.kugou.com/download"
 
