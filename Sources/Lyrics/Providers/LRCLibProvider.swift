@@ -4,7 +4,6 @@ import Foundation
 /// Free, open API — no auth required.
 struct LRCLibProvider: LyricsProvider {
     let name = "lrclib"
-    let priority = 0
 
     private let baseURL = "https://lrclib.net/api"
 

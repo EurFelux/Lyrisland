@@ -5,7 +5,6 @@ import Foundation
 /// Requires a user token obtained once from the token endpoint.
 final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
     let name = "musixmatch"
-    let priority = 1
 
     private let appId = "web-desktop-app-v1.0"
     private let baseURL = "https://apic-desktop.musixmatch.com/ws/1.1"

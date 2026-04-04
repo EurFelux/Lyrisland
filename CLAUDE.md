@@ -60,7 +60,7 @@ AppleScript poll (adaptive: 200ms/1s/3s)
     → SwiftUI views react to @Published currentLineIndex changes
 
 Track change → LyricsManager.loadLyrics()
-    → Provider fallback chain (LRCLIB → Musixmatch → SodaMusic)
+    → Concurrent fetch from all enabled providers → best TrackMatcher score wins
     → SyncedLyrics cached by track ID
 ```
 
@@ -75,7 +75,7 @@ Track change → LyricsManager.loadLyrics()
 
 - **App/** — `AppDelegate` is the orchestrator: wires services, manages onboarding vs main UI, owns the poll timer and menu bar.
 - **Spotify/** — `SpotifyAppleScriptService` (stateless, sync AppleScript calls) and `PlaybackSyncEngine` (@MainActor, owns anchor + tick timer).
-- **Lyrics/** — `LyricsManager` (fallback chain + cache), `Providers/` (each implements `LyricsProvider` protocol), `Models/` (TrackInfo, SyncedLyrics/LyricLine).
+- **Lyrics/** — `LyricsManager` (concurrent best-score selection + cache), `Providers/` (each implements `LyricsProvider` protocol), `Models/` (TrackInfo, SyncedLyrics/LyricLine).
 - **Window/** — `DynamicIslandPanel` (NSPanel subclass) and `IslandState` enum (compact/expanded/full).
 - **Views/** — `IslandContentView` is the root; delegates to Compact/Expanded/Full sub-views. `LyricsScrollView` handles auto-scroll. State changes call `DynamicIslandPanel.animateResize()` to sync NSPanel frame.
 - **Utils/** — `LRCParser` (shared `[mm:ss.xx]` parser used by LRCLIB and Musixmatch), `TrackMatcher` (weighted name/artist/album/duration scoring for search result ranking).
@@ -86,6 +86,6 @@ The project uses a generic two-tier cache (`Cache<Key, Value>`) for all persiste
 
 ### Adding a New Lyrics Provider
 
-1. Create `Sources/Lyrics/Providers/YourProvider.swift` implementing `LyricsProvider` protocol (name, priority, fetchLyrics).
-2. Add it to the `providers` array in `LyricsManager.swift` at the appropriate priority.
+1. Create `Sources/Lyrics/Providers/YourProvider.swift` implementing `LyricsProvider` protocol (name, fetchLyrics, searchLyrics).
+2. Add it to the `allProviders` array in `LyricsManager.swift` and add a default entry in `ProviderSettings.defaultEntries`.
 3. Run `xcodegen generate` to include the new file, then build.

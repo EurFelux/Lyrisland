@@ -199,8 +199,6 @@ private struct LyricsTab: View {
                 List {
                     ForEach($lyricsManager.providerSettings.entries) { $entry in
                         HStack {
-                            Image(systemName: "line.3.horizontal")
-                                .foregroundStyle(.tertiary)
                             Text(Self.displayName(for: entry.id))
                             Spacer()
                             Toggle("", isOn: $entry.isEnabled)
@@ -208,9 +206,6 @@ private struct LyricsTab: View {
                                 .toggleStyle(.switch)
                                 .controlSize(.small)
                         }
-                    }
-                    .onMove { from, to in
-                        lyricsManager.providerSettings.entries.move(fromOffsets: from, toOffset: to)
                     }
                 }
                 .listStyle(.inset)

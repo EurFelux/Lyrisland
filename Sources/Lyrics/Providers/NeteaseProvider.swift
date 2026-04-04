@@ -4,7 +4,6 @@ import Foundation
 /// Uses the public web API — no auth required. Excellent coverage for Chinese and Asian music.
 struct NeteaseProvider: LyricsProvider {
     let name = "netease"
-    let priority = 3
 
     private let searchURL = "https://music.163.com/api/search/get/web"
     private let lyricURL = "https://music.163.com/api/song/lyric"

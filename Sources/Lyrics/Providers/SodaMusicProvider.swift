@@ -4,7 +4,6 @@ import Foundation
 /// Simple REST API, no auth required. Good for Chinese lyrics.
 struct SodaMusicProvider: LyricsProvider {
     let name = "sodamusic"
-    let priority = 2
 
     private let searchURL = "https://api.qishui.com/luna/pc/search/track"
     private let trackURL = "https://api.qishui.com/luna/pc/track_v2"

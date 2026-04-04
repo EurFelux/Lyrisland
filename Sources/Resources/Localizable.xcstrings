@@ -3033,31 +3033,31 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Provider Priority"
+            "value": "Lyrics Providers"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "歌词源优先级"
+            "value": "歌词源"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "歌詞源優先順序"
+            "value": "歌詞源"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "プロバイダーの優先順位"
+            "value": "歌詞プロバイダー"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "제공자 우선순위"
+            "value": "가사 제공자"
           }
         }
       }
@@ -3067,31 +3067,31 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag to reorder. Disabled providers are skipped."
+            "value": "All enabled providers are searched concurrently; the best match wins."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "拖动排序，禁用的歌词源将被跳过。"
+            "value": "启用的歌词源将同时搜索，自动选择匹配度最高的结果。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "拖動排序，停用的歌詞源將被跳過。"
+            "value": "啟用的歌詞源將同時搜尋，自動選擇匹配度最高的結果。"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ドラッグで並び替え。無効なプロバイダーはスキップされます。"
+            "value": "有効なプロバイダーを同時に検索し、最もマッチする結果を自動選択します。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "드래그하여 순서를 변경하세요. 비활성화된 제공자는 건너뜁니다."
+            "value": "활성화된 제공자를 동시에 검색하여 가장 일치하는 결과를 자동 선택합니다."
           }
         }
       }
