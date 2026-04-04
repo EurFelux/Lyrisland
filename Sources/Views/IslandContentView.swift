@@ -67,7 +67,9 @@ struct IslandContentView: View {
                 }
             }
             .frame(
-                maxHeight: Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
+                maxHeight: showAttachedAppearance
+                    ? Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
+                    : .infinity
             )
             .padding(.horizontal, showAttachedAppearance ? Self.earRadius : 0)
             .padding(contentPadding)
@@ -84,6 +86,9 @@ struct IslandContentView: View {
                 ? AnyShape(AttachedIslandShape(bottomRadius: cornerRadius, inverseRadius: Self.earRadius))
                 : AnyShape(RoundedRectangle(cornerRadius: cornerRadius))
         )
+        // In detached mode, offset the clipped island down so content that
+        // overshoots during transitions has transparent space above.
+        .padding(.top, showAttachedAppearance ? 0 : Self.transitionOverflowMargin)
         .shadow(color: appState.contentColor.opacity(isInSnapZone ? 0.3 : 0), radius: 8)
         .onReceive(NotificationCenter.default.publisher(for: .islandTapped)) { _ in
             cycleState()
@@ -224,6 +229,11 @@ struct IslandContentView: View {
     /// Radius of the inverse corner "ears" in attached mode.
     static let earRadius: CGFloat = 10
 
+    /// Extra top margin in detached mode so content that overshoots during
+    /// the SwiftUI transition animation has transparent space to overflow
+    /// into instead of being clipped at the window edge.
+    static let transitionOverflowMargin: CGFloat = 20
+
     /// Total vertical content padding for a given state (top + bottom).
     /// In attached mode this is absorbed by the menu-bar extension; in detached
     /// mode it must be added to the panel height explicitly.
@@ -247,14 +257,27 @@ struct IslandContentView: View {
         if attached {
             return NSSize(width: w, height: h + menuBarHeight(for: screen))
         }
-        return NSSize(width: w, height: h + verticalPadding(for: state))
+        return NSSize(width: w, height: h + verticalPadding(for: state) + transitionOverflowMargin)
     }
 
     private func cycleState() {
-        switch islandState {
-        case .compact: islandState = .expanded
-        case .expanded: islandState = .full
-        case .full: islandState = .compact
+        if isAttached {
+            // Attached mode: no SwiftUI animation — it would pull the
+            // window away from the screen top. Content is bottom-aligned
+            // so it stays visually stable as the NSPanel grows downward.
+            switch islandState {
+            case .compact: islandState = .expanded
+            case .expanded: islandState = .full
+            case .full: islandState = .compact
+            }
+        } else {
+            withAnimation(.easeOut(duration: 0.35)) {
+                switch islandState {
+                case .compact: islandState = .expanded
+                case .expanded: islandState = .full
+                case .full: islandState = .compact
+                }
+            }
         }
     }
 
