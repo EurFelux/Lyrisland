@@ -35,7 +35,7 @@ struct IslandContentView: View {
                         bottomRadius: cornerRadius,
                         inverseRadius: Self.earRadius
                     )
-                    .stroke(.white.opacity(isInSnapZone ? 0.4 : 0.15), lineWidth: isInSnapZone ? 1.0 : 0.5)
+                    .stroke(appState.contentColor.opacity(isInSnapZone ? 0.4 : 0.15), lineWidth: isInSnapZone ? 1.0 : 0.5)
                 )
             } else {
                 IslandBackgroundView(
@@ -47,7 +47,7 @@ struct IslandContentView: View {
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: cornerRadius)
-                        .strokeBorder(.white.opacity(0.15), lineWidth: 0.5)
+                        .strokeBorder(appState.contentColor.opacity(0.15), lineWidth: 0.5)
                 )
             }
 
@@ -75,6 +75,7 @@ struct IslandContentView: View {
             .padding(contentPadding)
         }
         .environment(\.rootFontSize, appState.rootFontSize)
+        .environment(\.contentColor, appState.contentColor)
         // Fill the panel. In detached mode, cap to the exact panel height so
         // the clipShape aligns with the NSPanel edges (prevents corner overflow).
         .frame(
@@ -90,7 +91,7 @@ struct IslandContentView: View {
                 ? AnyShape(AttachedIslandShape(bottomRadius: cornerRadius, inverseRadius: Self.earRadius))
                 : AnyShape(RoundedRectangle(cornerRadius: cornerRadius))
         )
-        .shadow(color: .white.opacity(isInSnapZone ? 0.3 : 0), radius: 8)
+        .shadow(color: appState.contentColor.opacity(isInSnapZone ? 0.3 : 0), radius: 8)
         .onReceive(NotificationCenter.default.publisher(for: .islandTapped)) { _ in
             cycleState()
         }
@@ -135,10 +136,10 @@ struct IslandContentView: View {
                 if let source = lyricsManager.currentLyrics?.source {
                     Text(source)
                         .font(.system(size: .rem(0.5625, root: rootFontSize), weight: .medium))
-                        .foregroundStyle(.white.opacity(0.3))
+                        .foregroundStyle(appState.contentColor.opacity(0.3))
                         .padding(.horizontal, 8)
                         .padding(.vertical, 2)
-                        .background(Capsule().fill(.white.opacity(0.08)))
+                        .background(Capsule().fill(appState.contentColor.opacity(0.08)))
                         .padding(.top, 4)
                 }
 
@@ -147,13 +148,13 @@ struct IslandContentView: View {
                     if let title = syncEngine.trackTitle {
                         Text(title)
                             .font(.system(size: .rem(0.75, root: rootFontSize), weight: .semibold))
-                            .foregroundStyle(.white.opacity(0.8))
+                            .foregroundStyle(appState.contentColor.opacity(0.8))
                             .lineLimit(1)
                     }
                     if let artist = syncEngine.trackArtist {
                         Text(artist)
                             .font(.system(size: .rem(0.6875, root: rootFontSize)))
-                            .foregroundStyle(.white.opacity(0.5))
+                            .foregroundStyle(appState.contentColor.opacity(0.5))
                             .lineLimit(1)
                     }
                 }

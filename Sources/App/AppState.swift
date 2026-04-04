@@ -96,6 +96,29 @@ final class AppState: ObservableObject {
             }
     }
 
+    /// Whether the current background is perceptually light enough to require dark text.
+    /// Uses W3C relative luminance with a WCAG-derived crossover threshold (~0.179).
+    var isLightBackground: Bool {
+        switch backgroundStyle {
+        case .solid:
+            solidColor.relativeLuminance > 0.179
+        case .vibrancy:
+            // .hudWindow material is consistently dark on macOS
+            false
+        case .albumGradient:
+            // ColorExtractor caps brightness at 0.35 — always dark
+            false
+        case .animatedGradient:
+            // Hardcoded brightness 0.13–0.17 — always dark
+            false
+        }
+    }
+
+    /// Base text color adapted to the current background luminance.
+    var contentColor: Color {
+        isLightBackground ? .black : .white
+    }
+
     var resolvedLyricsAlignment: Alignment {
         switch lyricsAlignment {
         case "center": .center

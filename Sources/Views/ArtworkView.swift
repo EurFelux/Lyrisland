@@ -6,6 +6,7 @@ struct ArtworkView: View {
     let artworkURL: URL?
     let size: CGFloat
 
+    @Environment(\.contentColor) private var contentColor
     @State private var image: NSImage?
 
     var body: some View {
@@ -17,7 +18,7 @@ struct ArtworkView: View {
             } else {
                 Image(systemName: "music.note")
                     .font(.system(size: size * 0.4))
-                    .foregroundStyle(.white.opacity(0.3))
+                    .foregroundStyle(contentColor.opacity(0.3))
             }
         }
         .frame(width: size, height: size)
