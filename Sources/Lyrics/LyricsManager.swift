@@ -44,6 +44,8 @@ final class LyricsManager: ObservableObject {
         MusixmatchProvider(),
         SodaMusicProvider(),
         NeteaseProvider(),
+        QQMusicProvider(),
+        KuGouProvider(),
     ]
 
     /// Enabled providers (order is irrelevant — all are fetched concurrently).
