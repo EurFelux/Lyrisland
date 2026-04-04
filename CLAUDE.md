@@ -80,6 +80,23 @@ Track change → LyricsManager.loadLyrics()
 - **Views/** — `IslandContentView` is the root; delegates to Compact/Expanded/Full sub-views. `LyricsScrollView` handles auto-scroll. State changes call `DynamicIslandPanel.animateResize()` to sync NSPanel frame.
 - **Utils/** — `LRCParser` (shared `[mm:ss.xx]` parser used by LRCLIB and Musixmatch), `TrackMatcher` (weighted name/artist/album/duration scoring for search result ranking).
 
+### Logging
+
+The project uses a custom logger (`Sources/Utils/Log.swift`) built on Apple's `OSLog`. It provides dual output: unified system log (viewable in Console.app) and daily rotated log files at `~/Library/Logs/Lyrisland/<yyyy-MM-dd>.log` (30-day retention, auto-cleanup).
+
+**Usage** — call the global convenience functions anywhere in the codebase:
+
+```swift
+logDebug("Cache hit for: \(trackId)")      // verbose tracing
+logInfo("Track changed: \(title)")          // normal milestones
+logWarning("Provider failed: \(error)")     // recoverable issues
+logError("Critical failure: \(error)")      // bugs / unexpected state
+```
+
+Messages are `@autoclosure` so string interpolation is skipped when the level is below `minimumLevel`. The logger buffers writes and flushes every 5 seconds or every 50 messages. Call `Log.shared.flush()` before a crash-prone path if needed.
+
+**Convention** — Providers prefix messages with their tag (e.g. `[lrclib]`, `[musixmatch]`, `[netease]`, `[sodamusic]`) for easy filtering.
+
 ### Caching
 
 The project uses a generic two-tier cache (`Cache<Key, Value>`) for all persistent data. When adding or modifying caching behavior, **read [`docs/cache-spec.md`](docs/cache-spec.md) first** for architecture, API, serializer protocol, and integration guide.
