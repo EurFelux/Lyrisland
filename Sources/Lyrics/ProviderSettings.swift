@@ -13,6 +13,8 @@ struct ProviderSettings: Codable, Equatable {
         ProviderEntry(id: "musixmatch", isEnabled: true),
         ProviderEntry(id: "sodamusic", isEnabled: true),
         ProviderEntry(id: "netease", isEnabled: true),
+        ProviderEntry(id: "qqmusic", isEnabled: true),
+        ProviderEntry(id: "kugou", isEnabled: true),
     ]
 
     static let `default` = ProviderSettings(entries: defaultEntries)
@@ -50,6 +52,8 @@ struct ProviderSettings: Codable, Equatable {
         "musixmatch": "Musixmatch",
         "sodamusic": "Soda Music",
         "netease": "Netease",
+        "qqmusic": "QQ Music",
+        "kugou": "KuGou",
     ]
 
     static func displayName(for id: String) -> String {
