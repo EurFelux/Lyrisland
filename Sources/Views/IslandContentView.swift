@@ -67,23 +67,16 @@ struct IslandContentView: View {
                 }
             }
             .frame(
-                maxHeight: showAttachedAppearance
-                    ? Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
-                    : .infinity
+                maxHeight: Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
             )
             .padding(.horizontal, showAttachedAppearance ? Self.earRadius : 0)
             .padding(contentPadding)
         }
         .environment(\.rootFontSize, appState.rootFontSize)
         .environment(\.contentColor, appState.contentColor)
-        // Fill the panel. In detached mode, cap to the exact panel height so
-        // the clipShape aligns with the NSPanel edges (prevents corner overflow).
         .frame(
             maxWidth: .infinity,
-            maxHeight: showAttachedAppearance
-                ? .infinity
-                : Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
-                + Self.verticalPadding(for: islandState),
+            maxHeight: .infinity,
             alignment: showAttachedAppearance ? .bottom : .topLeading
         )
         .clipShape(
@@ -258,12 +251,10 @@ struct IslandContentView: View {
     }
 
     private func cycleState() {
-        withAnimation(.easeOut(duration: 0.35)) {
-            switch islandState {
-            case .compact: islandState = .expanded
-            case .expanded: islandState = .full
-            case .full: islandState = .compact
-            }
+        switch islandState {
+        case .compact: islandState = .expanded
+        case .expanded: islandState = .full
+        case .full: islandState = .compact
         }
     }
 
