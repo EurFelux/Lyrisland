@@ -4,113 +4,113 @@
 
 ### Changed
 
-- 歌词源选择策略从顺序优先级回退改为并发获取 + 最佳匹配度选择；移除 provider priority 概念，设置界面简化为启用/禁用 (#89)
+- Replace priority-based provider fallback with concurrent fetch + best match score selection; remove provider priority concept, simplify settings UI to enable/disable toggle (#89)
 
 ### Added
 
-- 新增 QQ 音乐和酷狗音乐歌词源，显著提升中文歌曲歌词覆盖率；酷狗歌词支持 KRC 加密格式解密（XOR + DEFLATE）和翻译歌词 (#92)
-- 手动选择歌词源：Full 模式下点击来源标签或菜单栏「选择歌词…」打开歌词选择窗口；从所有 provider 并行搜索，每个可返回多条候选结果，按匹配度统一排序；用户选择后持久化为该曲目偏好，下次播放自动使用 (#86)
+- Add QQ Music and KuGou lyrics providers, significantly improving lyrics coverage for Chinese songs; KuGou supports KRC encrypted format decryption (XOR + DEFLATE) and translated lyrics (#92)
+- Manual lyrics source selection: tap the source label in Full mode or use "Select Lyrics…" from menu bar to open the lyrics picker; searches all providers in parallel, each returning multiple candidates ranked by match score; user selection is persisted as track preference and auto-applied on next play (#86)
 
 ### Fixed
 
-- 浅色背景下文字不可见：文字颜色现在根据背景亮度自适应切换（W3C 相对亮度计算），纯色浅色背景自动使用深色文字 (#87)
-- 模式切换（compact→expanded、expanded→full）时窗口顶部短暂下移抖动 (#84)
+- Text invisible on light backgrounds: text color now adapts based on background luminance (W3C relative luminance calculation), automatically switching to dark text on light solid backgrounds (#87)
+- Brief downward jitter at window top during mode transitions (compact→expanded, expanded→full) (#84)
 
 ## 0.5.1 — 2026-04-04
 
 ### Fixed
 
-- Compact 双行歌词模式下长文本跑马灯不滚动：歌词行从"下一行"升级为"当前行"时 MarqueeText 动画状态未重置 (#82)
+- MarqueeText not scrolling in Compact dual-line lyrics mode: animation state was not reset when a lyric line was promoted from "next line" to "current line" (#82)
 
 ## 0.5.0 — 2026-04-04
 
 ### Fixed
 
-- Full 模式歌词加载过程中封面图片布局偏移 (#75)
-- Full 模式长歌词行换行而非使用 MarqueeText 单行滚动显示 (#78, #79)
+- Album artwork layout shift during lyrics loading in Full mode (#75)
+- Long lyric lines wrapping instead of using MarqueeText single-line scrolling in Full mode (#78, #79)
 
 ### Added
 
-- rem-based 字体缩放机制：所有歌词相关字体大小基于可配置的根字体大小按比例缩放，可在设置窗口外观标签页中调节 (#77)
-- GitHub Actions release workflow：push tag 自动构建并发布 DMG + zip 到 GitHub Releases
-- DMG 安装包：浅色渐变背景 + 拖拽到 Applications 引导箭头
-- Homebrew Cask 安装支持 (#72)
+- rem-based font scaling: all lyrics-related font sizes scale proportionally from a configurable root font size, adjustable in Settings → Appearance (#77)
+- GitHub Actions release workflow: push tag auto-builds and publishes DMG + zip to GitHub Releases
+- DMG installer: light gradient background with drag-to-Applications arrow guide
+- Homebrew Cask installation support (#72)
 
 ## 0.4.0 — 2026-04-04
 
 ### Added
 
-- App 图标：使用 Icon Composer 制作的 Liquid Glass 风格图标（dark variant），集成到 Asset Catalog 和关于页面
-- 菜单栏 Tray 图标：手绘 SVG 矢量图标（小岛 + 波浪），支持深色/浅色模式自适应
+- App icon: Liquid Glass style icon (dark variant) made with Icon Composer, integrated into Asset Catalog and About page
+- Menu bar tray icon: hand-drawn SVG vector icon (island + waves), adapts to dark/light mode
 
 ## 0.3.0 — 2026-04-04
 
 ### Fixed
 
-- Detached + Expanded 模式下内容溢出圆角裁剪区域，通过约束 SwiftUI frame maxHeight 与 NSPanel 尺寸对齐，并将 vertical padding 纳入 detached 面板高度计算 (#67)
+- Content overflowing rounded clipping area in Detached + Expanded mode, fixed by constraining SwiftUI frame maxHeight to align with NSPanel size and including vertical padding in detached panel height calculation (#67)
 
 ### Added
 
-- App 图标：渐变药丸风格图标，集成到 Asset Catalog，关于页面展示
-- 菜单栏 Tray 图标：简化版药丸 PDF 矢量图标，支持深色/浅色模式自适应
-- 拖拽灵动岛接近菜单栏吸附区域时显示视觉反馈：形状预览切换为吸附样式、边框高亮、白色发光阴影，并触发 haptic 对齐反馈；离开区域后自动恢复 (#64)
+- App icon: gradient pill-style icon, integrated into Asset Catalog and displayed on About page
+- Menu bar tray icon: simplified pill PDF vector icon, adapts to dark/light mode
+- Visual feedback when dragging Dynamic Island near menu bar snap zone: shape preview switches to snapped style with highlighted border and white glow shadow, triggers haptic alignment feedback; auto-reverts on leaving the zone (#64)
 
 ## 0.2.0 — 2026-04-04
 
 ### Added
 
-- 设置 → 歌词标签页支持拖拽排序歌词源优先级，可启用/禁用单个歌词源；顺序持久化到 UserDefaults，重置按钮恢复默认顺序 (#55)
-- 新增繁體中文（zh-Hant）、日本語（ja）、한국어（ko）三种 UI 本地化语言支持 (#41)
-- 快捷键管理系统：用户可在设置窗口查看、自定义或禁用所有键盘快捷键，支持冲突检测、跨重启持久化和一键恢复默认，基于 KeyboardShortcuts 库实现全局热键 (#48)
-- 灵动岛背景视觉效果：支持纯色、专辑渐变、毛玻璃、动态渐变四种背景样式，可在设置窗口外观标签页中选择，偏好跨启动持久化 (#44)
-- RTL（从右到左）语言支持：MarqueeText 根据文本内容自动检测书写方向并反向滚动，淡入淡出遮罩自适应；歌词逐行检测文本方向，`.leading`/`.trailing` 对齐自动翻转以匹配文本语言（如英文系统上的阿拉伯语歌词自动右对齐）(#42)
-- Expanded 模式显示歌曲标题和歌手，Full 模式显示歌曲信息和播放控制按钮（上一曲/播放暂停/下一曲）(#29)
-- 歌词对齐方式选项：支持左对齐和居中对齐，可在设置窗口外观标签页中切换，偏好跨启动持久化 (#32)
-- GitHub Actions CI 流水线：PR 到 main 时自动运行 xcodegen、构建、SwiftFormat 检查、SwiftLint 检查和单元测试 (#22)
-- Apple 风格设置窗口（⌘,），包含通用、外观、歌词、关于四个标签页，支持灵动岛位置模式、专辑封面、双行歌词等偏好设置 (#18)
-- 通用两层缓存抽象 `Cache<Key, Value>`：支持内存 + 磁盘双层缓存、LRU 淘汰、可配置容量限制、并发请求合并；`ArtworkCache` 和 `LyricsManager` 已迁移至该通用缓存，歌词现支持磁盘持久化 (#17)
-- 灵动岛支持"吸附菜单栏"和"自由拖拽"两种位置模式，可通过菜单栏切换，位置偏好跨启动持久化 (#7)
-- 测试框架：添加 `LyrislandTests` 测试 target（Swift Testing），包含 LRCParser、TrackMatcher、SyncedLyrics 的单元测试（共 19 个） (#11)
-- 统一日志系统：支持 debug/info/warning/error 级别，按日轮转写入 `~/Library/Logs/Lyrisland/`，启动时自动清理 30 天前日志，同时转发至 os.Logger（Console.app 可查看）(#9)
-- 灵动岛显示专辑封面：Compact 状态显示小缩略图，Expanded 状态左侧显示中等封面，Full 状态左侧显示大封面配合歌词滚动 (#8)
-- 双行歌词显示模式（卡拉OK风格），同时显示当前行和下一行歌词，可通过菜单栏 ⌘D 切换 (#6)
-- 新增网易云音乐歌词源（NeteaseProvider），Fallback 链扩展为 LRCLIB → Musixmatch → SodaMusic → Netease (#4)
-- 国际化支持（i18n），使用 String Catalog（.xcstrings）
-- 简体中文翻译（Onboarding、菜单栏、歌词状态提示）
+- Drag-to-reorder lyrics provider priority in Settings → Lyrics tab, with per-provider enable/disable toggle; order persisted to UserDefaults with reset-to-default button (#55)
+- Add Traditional Chinese (zh-Hant), Japanese (ja), and Korean (ko) UI localizations (#41)
+- Keyboard shortcut management: view, customize, or disable all shortcuts in Settings, with conflict detection, cross-restart persistence, and one-click reset to defaults, built on KeyboardShortcuts library for global hotkeys (#48)
+- Dynamic Island background effects: solid color, album gradient, frosted glass, and animated gradient styles, selectable in Settings → Appearance with cross-launch persistence (#44)
+- RTL language support: MarqueeText auto-detects text direction and reverses scroll, with adaptive fade masks; lyrics per-line direction detection with auto-flipping `.leading`/`.trailing` alignment (e.g. Arabic lyrics right-aligned on English system) (#42)
+- Song title and artist shown in Expanded mode; song info and playback controls (previous/play-pause/next) in Full mode (#29)
+- Lyrics alignment option: left-aligned or centered, selectable in Settings → Appearance with cross-launch persistence (#32)
+- GitHub Actions CI pipeline: auto-runs xcodegen, build, SwiftFormat check, SwiftLint check, and unit tests on PR to main (#22)
+- Apple-style Settings window (⌘,) with General, Appearance, Lyrics, and About tabs, supporting Dynamic Island position mode, album artwork, dual-line lyrics, and other preferences (#18)
+- Generic two-tier cache `Cache<Key, Value>`: memory + disk with LRU eviction, configurable capacity, and concurrent request coalescing; `ArtworkCache` and `LyricsManager` migrated to use it, lyrics now support disk persistence (#17)
+- Dynamic Island supports "Snap to menu bar" and "Free drag" position modes, switchable from menu bar with cross-launch persistence (#7)
+- Test framework: `LyrislandTests` target (Swift Testing) with unit tests for LRCParser, TrackMatcher, and SyncedLyrics (19 tests) (#11)
+- Unified logging system: debug/info/warning/error levels, daily rotation to `~/Library/Logs/Lyrisland/`, auto-cleanup after 30 days, forwarded to os.Logger for Console.app (#9)
+- Album artwork in Dynamic Island: small thumbnail in Compact, medium artwork on left in Expanded, large artwork with lyrics scrolling in Full (#8)
+- Dual-line lyrics display mode (karaoke-style), showing current and next lyric lines simultaneously, toggled via menu bar ⌘D (#6)
+- Add Netease Cloud Music lyrics provider (NeteaseProvider), extending fallback chain to LRCLIB → Musixmatch → SodaMusic → Netease (#4)
+- Internationalization (i18n) using String Catalog (.xcstrings)
+- Simplified Chinese translation (Onboarding, menu bar, lyrics status messages)
 
 ### Fixed
 
-- 吸附模式下 Expanded 状态的歌曲信息（标题—歌手）溢出到 notch 安全区域被裁剪 (#51)
-- Expanded/Full 模式下无歌词时右侧歌词列宽度坍缩导致布局错乱，现在占位文本会撑满可用空间 (#47)
-- 吸附模式首次启动时 notch 检测可能失败的问题：延迟到面板首次上屏后再计算 notch 相关尺寸和位置 (#53)
-- 切换歌曲时旧歌词短暂闪现：在加载新歌词前立即清除 `currentLyrics`，避免 UI 显示上一首歌的歌词 (#50)
-- Expanded 灵动岛歌词改为逐行平滑滚动（ScrollViewReader + scrollTo），替代原有滑动窗口就地刷新；移除 Expanded 视图中对双行歌词模式的引用，双行模式仅作用于 Compact 状态 (#33)
-- 首次进入 Full 模式时歌词不会自动滚动到当前播放行，需等下一次行切换才会滚动 (#39)
-- 菜单栏点击"设置"无反应：LSUIElement 应用中私有 selector 不可靠，改为手动管理 Settings 窗口 (#31)
-- 修复长歌词行 MarqueeText 不再自动滚动的问题：`.id()` 导致视图重建时 `@State` 重置，GeometryReader 尚未测量完成动画就已退出 (#28)
-- 自由拖拽模式下拖动灵动岛不再需要长按 0.5 秒，鼠标按下即可直接拖拽 (#25)
-- 吸附模式在无刘海外接显示器上有多余顶部间距：改为根据屏幕是否有刘海（`safeAreaInsets.top`）动态决定是否延伸至菜单栏后方，并使用面板实际所在屏幕而非 `NSScreen.main` 计算位置 (#21)
-- Full 视图歌词列表滚动卡顿：移除 `tick` 的 30fps 全局发布，视图改为仅响应 `currentLineIndex` 变更；`LyricsScrollView` 不再依赖 `syncEngine`，仅接收必要数据 (#15)
-- 跑马灯歌词在当前行结束前会跳回起点重新滚动，改为单次滚动后停留在末尾，新增 `loops` 参数控制是否循环 (#14)
-- 灵动岛状态切换动画统一：移除 SwiftUI 独立的尺寸动画，由 NSPanel frame 统一驱动大小变化，消除双重动画抖动 (#12)
-- 灵动岛在深色壁纸下边界不可见，改用深灰填充并添加微妙边框 (#10)
-- 歌词行切换时过渡动画更加平滑流畅，优化 Compact/Expanded/Full 三种状态下的视觉过渡效果 (#5)
-- 长歌词行不再被截断，Compact 和 Expanded 状态使用跑马灯自动滚动显示完整歌词 (#3)
-- 歌词第一句出现前不再误显示 "No lyrics available"，改为显示 ♪ 占位符 (#1)
-- 拖动歌词窗口不再误触发形态切换 (#2)
+- Song info (title—artist) overflowing into notch safe area in Snapped + Expanded mode (#51)
+- Lyrics column width collapsing when no lyrics available in Expanded/Full mode, placeholder text now fills available space (#47)
+- Notch detection potentially failing on first launch in Snap mode: deferred calculation until panel first appears on screen (#53)
+- Old lyrics briefly flashing on track change: `currentLyrics` now cleared immediately before loading new lyrics (#50)
+- Expanded Dynamic Island lyrics now scroll line-by-line smoothly (ScrollViewReader + scrollTo), replacing in-place sliding window refresh; removed dual-line mode references from Expanded view — dual-line mode only applies to Compact state (#33)
+- Lyrics not auto-scrolling to current line on first entering Full mode, requiring next line change to trigger scroll (#39)
+- Settings menu item unresponsive in menu bar: private selector unreliable in LSUIElement apps, replaced with manual Settings window management (#31)
+- MarqueeText no longer auto-scrolling for long lyrics: `.id()` causing view rebuild that resets `@State`, GeometryReader not yet measured before animation exits (#28)
+- Free drag mode no longer requires 0.5s long press — mouse down immediately starts dragging (#25)
+- Extra top spacing in Snap mode on external displays without notch: now dynamically decides whether to extend behind menu bar based on screen `safeAreaInsets.top`, using the panel's actual screen instead of `NSScreen.main` (#21)
+- Full view lyrics list scroll stutter: removed 30fps global `tick` publishing, views now only respond to `currentLineIndex` changes; `LyricsScrollView` no longer depends on `syncEngine`, receiving only necessary data (#15)
+- MarqueeText lyrics jumping back to start before current line ends, changed to single scroll then hold at end, added `loops` parameter to control looping (#14)
+- Unified Dynamic Island state transition animations: removed independent SwiftUI size animation, NSPanel frame now drives all size changes, eliminating dual-animation jitter (#12)
+- Dynamic Island border invisible on dark wallpapers, replaced with dark gray fill and subtle border (#10)
+- Smoother lyric line transition animations, improved visual transitions across Compact/Expanded/Full states (#5)
+- Long lyric lines no longer truncated, Compact and Expanded states use marquee auto-scroll to show full lyrics (#3)
+- No longer showing "No lyrics available" before first lyric line, replaced with ♪ placeholder (#1)
+- Dragging lyrics window no longer accidentally triggers mode switch (#2)
 
 ## 0.0.1 — 2026-04-03
 
-首个功能完整版本。
+First functionally complete version.
 
 ### Features
 
-- 灵动岛风格悬浮窗，支持 Compact / Expanded / Full 三种形态
-- 实时读取 Spotify 桌面客户端播放状态（AppleScript，无需登录）
-- 播放时间戳同步引擎（锚点 + 线性插值，30fps 刷新）
-- 多歌词源 Fallback 链：LRCLIB → Musixmatch → Soda Music（汽水音乐）
-- 智能搜索结果匹配（加权评分：曲名 + 艺术家 + 专辑 + 时长）
-- 歌词偏移量手动微调（±0.5s）
-- 自适应轮询频率（播放 200ms / 暂停 1s / 未运行 3s）
-- 首次启动 Onboarding 引导流程
-- 菜单栏常驻，不占用 Dock 栏
+- Dynamic Island-style floating window with Compact / Expanded / Full modes
+- Real-time Spotify desktop client playback state via AppleScript (no login required)
+- Playback timestamp sync engine (anchor + linear interpolation, 30fps refresh)
+- Multi-source lyrics fallback chain: LRCLIB → Musixmatch → Soda Music
+- Smart search result matching (weighted scoring: track name + artist + album + duration)
+- Manual lyrics offset adjustment (±0.5s)
+- Adaptive polling rate (playing 200ms / paused 1s / not running 3s)
+- First-launch onboarding flow
+- Menu bar resident, no Dock icon
