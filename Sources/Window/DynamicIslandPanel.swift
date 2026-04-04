@@ -138,7 +138,6 @@ final class DynamicIslandPanel: NSPanel {
         NSAnimationContext.runAnimationGroup { context in
             context.duration = duration
             context.timingFunction = CAMediaTimingFunction(name: .easeOut)
-            context.allowsImplicitAnimation = true
             self.animator().setFrame(newFrame, display: true)
         }
     }

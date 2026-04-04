@@ -76,14 +76,9 @@ struct IslandContentView: View {
         }
         .environment(\.rootFontSize, appState.rootFontSize)
         .environment(\.contentColor, appState.contentColor)
-        // Fill the panel. In detached mode, cap to the exact panel height so
-        // the clipShape aligns with the NSPanel edges (prevents corner overflow).
         .frame(
             maxWidth: .infinity,
-            maxHeight: showAttachedAppearance
-                ? .infinity
-                : Self.contentHeight(for: islandState, dualLine: appState.dualLineMode, artwork: appState.showArtwork)
-                + Self.verticalPadding(for: islandState),
+            maxHeight: .infinity,
             alignment: showAttachedAppearance ? .bottom : .topLeading
         )
         .clipShape(
@@ -91,6 +86,9 @@ struct IslandContentView: View {
                 ? AnyShape(AttachedIslandShape(bottomRadius: cornerRadius, inverseRadius: Self.earRadius))
                 : AnyShape(RoundedRectangle(cornerRadius: cornerRadius))
         )
+        // In detached mode, offset the clipped island down so content that
+        // overshoots during transitions has transparent space above.
+        .padding(.top, showAttachedAppearance ? 0 : Self.transitionOverflowMargin)
         .shadow(color: appState.contentColor.opacity(isInSnapZone ? 0.3 : 0), radius: 8)
         .onReceive(NotificationCenter.default.publisher(for: .islandTapped)) { _ in
             cycleState()
@@ -231,6 +229,11 @@ struct IslandContentView: View {
     /// Radius of the inverse corner "ears" in attached mode.
     static let earRadius: CGFloat = 10
 
+    /// Extra top margin in detached mode so content that overshoots during
+    /// the SwiftUI transition animation has transparent space to overflow
+    /// into instead of being clipped at the window edge.
+    static let transitionOverflowMargin: CGFloat = 20
+
     /// Total vertical content padding for a given state (top + bottom).
     /// In attached mode this is absorbed by the menu-bar extension; in detached
     /// mode it must be added to the panel height explicitly.
@@ -252,17 +255,32 @@ struct IslandContentView: View {
         case .full: artwork ? 540 : 400
         }
         if attached {
-            return NSSize(width: w, height: h + menuBarHeight(for: screen))
+            // On notch screens menuBarHeight covers the top padding need;
+            // on non-notch screens it is 0 so we must add verticalPadding
+            // explicitly to avoid clipping the expanded content.
+            let topExtra = max(menuBarHeight(for: screen), verticalPadding(for: state))
+            return NSSize(width: w, height: h + topExtra)
         }
-        return NSSize(width: w, height: h + verticalPadding(for: state))
+        return NSSize(width: w, height: h + verticalPadding(for: state) + transitionOverflowMargin)
     }
 
     private func cycleState() {
-        withAnimation(.easeOut(duration: 0.35)) {
+        if isAttached {
+            // Attached mode: no SwiftUI animation — it would pull the
+            // window away from the screen top. Content is bottom-aligned
+            // so it stays visually stable as the NSPanel grows downward.
             switch islandState {
             case .compact: islandState = .expanded
             case .expanded: islandState = .full
             case .full: islandState = .compact
+            }
+        } else {
+            withAnimation(.easeOut(duration: 0.35)) {
+                switch islandState {
+                case .compact: islandState = .expanded
+                case .expanded: islandState = .full
+                case .full: islandState = .compact
+                }
             }
         }
     }
