@@ -53,6 +53,7 @@ final class DynamicIslandPanel: NSPanel {
         self.contentView = container
 
         applyPosition()
+        setupMissionControlObserver()
     }
 
     // MARK: - Position Mode
@@ -240,6 +241,55 @@ final class DynamicIslandPanel: NSPanel {
                 setContentSize(correctSize)
                 positionAttachedToMenuBar()
             }
+        }
+    }
+
+    // MARK: - Mission Control Detection
+
+    private var isHiddenForMissionControl = false
+
+    private func setupMissionControlObserver() {
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(activeAppDidChange(_:)),
+            name: NSWorkspace.didActivateApplicationNotification,
+            object: nil
+        )
+    }
+
+    deinit {
+        NSWorkspace.shared.notificationCenter.removeObserver(self)
+    }
+
+    @objc private func activeAppDidChange(_ notification: Notification) {
+        guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else { return }
+
+        let isDock = app.bundleIdentifier == "com.apple.dock"
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if isDock {
+                hideForMissionControl()
+            } else if isHiddenForMissionControl {
+                showAfterMissionControl()
+            }
+        }
+    }
+
+    private func hideForMissionControl() {
+        guard !isHiddenForMissionControl, isVisible else { return }
+        isHiddenForMissionControl = true
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.2
+            self.animator().alphaValue = 0
+        }
+    }
+
+    private func showAfterMissionControl() {
+        guard isHiddenForMissionControl else { return }
+        isHiddenForMissionControl = false
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.2
+            self.animator().alphaValue = 1
         }
     }
 

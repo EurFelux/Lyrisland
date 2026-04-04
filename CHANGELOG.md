@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- 进入调度中心（Mission Control）时自动隐藏灵动岛，退出后恢复显示 (#84)
+
 ## 0.5.1 — 2026-04-04
 
 ### Fixed
