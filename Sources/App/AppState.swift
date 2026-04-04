@@ -103,7 +103,7 @@ final class AppState: ObservableObject {
         case .solid:
             solidColor.relativeLuminance > 0.179
         case .vibrancy:
-            // .hudWindow material is consistently dark on macOS
+            // VisualEffectBackground forces .darkAqua appearance — always dark
             false
         case .albumGradient:
             // ColorExtractor caps brightness at 0.35 — always dark

@@ -105,12 +105,15 @@ struct IslandBackgroundView: View {
 // MARK: - Visual Effect NSViewRepresentable
 
 /// Wraps NSVisualEffectView for use in SwiftUI, providing a vibrancy/blur effect.
+/// Forces dark appearance so the material always renders with a dark tint,
+/// ensuring white text remains readable regardless of the content behind the window.
 struct VisualEffectBackground: NSViewRepresentable {
     func makeNSView(context _: Context) -> NSVisualEffectView {
         let view = NSVisualEffectView()
         view.material = .hudWindow
         view.blendingMode = .behindWindow
         view.state = .active
+        view.appearance = NSAppearance(named: .darkAqua)
         return view
     }
 
