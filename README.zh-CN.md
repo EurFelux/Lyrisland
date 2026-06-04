@@ -47,7 +47,7 @@ Lyrisland 在屏幕顶部以灵动岛（Dynamic Island）的形式，实时展�
 ### Homebrew（推荐）
 
 ```bash
-brew tap EurFelux/lyrisland
+brew tap EurFelux/tap
 brew install --cask lyrisland
 
 # 更新到最新版本

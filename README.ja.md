@@ -47,7 +47,7 @@ Lyrisland は、画面上部にダイナミックアイランド（Dynamic Islan
 ### Homebrew（推奨）
 
 ```bash
-brew tap EurFelux/lyrisland
+brew tap EurFelux/tap
 brew install --cask lyrisland
 
 # 最新バージョンに更新

@@ -103,7 +103,7 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
           SHA256: ${{ steps.sha.outputs.sha256 }}
         run: |
-          git clone https://x-access-token:${GH_TOKEN}@github.com/EurFelux/homebrew-lyrisland.git /tmp/tap
+          git clone https://x-access-token:${GH_TOKEN}@github.com/EurFelux/homebrew-tap.git /tmp/tap
           cd /tmp/tap
           sed -i "s/version \".*\"/version \"${VERSION}\"/" Casks/lyrisland.rb
           sed -i "s/sha256 \".*\"/sha256 \"${SHA256}\"/" Casks/lyrisland.rb
