@@ -47,7 +47,7 @@ Lyrisland displays real-time Spotify lyrics at the top of your screen in a Dynam
 ### Homebrew (recommended)
 
 ```bash
-brew tap EurFelux/lyrisland
+brew tap EurFelux/tap
 brew install --cask lyrisland
 
 # Update to the latest version

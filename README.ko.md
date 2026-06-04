@@ -47,7 +47,7 @@ Lyrisland은 화면 상단에 다이나믹 아일랜드(Dynamic Island) 스타�
 ### Homebrew (권장)
 
 ```bash
-brew tap EurFelux/lyrisland
+brew tap EurFelux/tap
 brew install --cask lyrisland
 
 # 최신 버전으로 업데이트
