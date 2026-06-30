@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Compact Dynamic Island now uses a narrower reference-sized footprint with tighter spacing, reducing menu bar obstruction (#99)
+
 ## 0.6.0 — 2026-04-04
 
 ### Changed

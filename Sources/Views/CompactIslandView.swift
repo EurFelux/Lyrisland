@@ -9,7 +9,7 @@ struct CompactIslandView: View {
     @Environment(\.rootFontSize) private var rootFontSize
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 8) {
             // Playing indicator bars
             if syncEngine.isPlaying {
                 PlayingIndicator()

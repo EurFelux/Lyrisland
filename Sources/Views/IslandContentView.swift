@@ -52,7 +52,7 @@ struct IslandContentView: View {
             }
 
             // In attached mode, content is aligned to the bottom so it appears below the menu bar
-            HStack(spacing: 10) {
+            HStack(spacing: islandState == .compact ? Self.compactContentSpacing : 10) {
                 if appState.showArtwork {
                     artworkColumn
                 }
@@ -183,7 +183,7 @@ struct IslandContentView: View {
 
     private var artworkSize: CGFloat {
         switch islandState {
-        case .compact: 36
+        case .compact: 28
         case .expanded: 110
         case .full: 200
         }
@@ -192,7 +192,7 @@ struct IslandContentView: View {
     private var contentPadding: EdgeInsets {
         switch islandState {
         case .compact:
-            EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+            EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
         case .expanded:
             // In attached mode, move bottom padding to top so the content clears the notch.
             // The bottom padding otherwise pushes the bottom-aligned content up into the menu bar area.
@@ -220,11 +220,17 @@ struct IslandContentView: View {
     /// The content-only height (without menu bar extension).
     static func contentHeight(for state: IslandState, dualLine: Bool = false, artwork: Bool = true) -> CGFloat {
         switch state {
-        case .compact: dualLine ? 62 : artwork ? 48 : 38
+        case .compact: dualLine ? 62 : 38
         case .expanded: artwork ? 140 : 120
         case .full: artwork ? 340 : 340
         }
     }
+
+    /// Width of the compact pill, matching the small Dynamic Island-style footprint.
+    static let compactWidth: CGFloat = 220
+
+    /// Horizontal spacing inside the compact pill; kept tight so lyrics remain readable.
+    static let compactContentSpacing: CGFloat = 8
 
     /// Radius of the inverse corner "ears" in attached mode.
     static let earRadius: CGFloat = 10
@@ -250,7 +256,7 @@ struct IslandContentView: View {
     ) -> NSSize {
         let h = contentHeight(for: state, dualLine: dualLine, artwork: artwork)
         let w: CGFloat = switch state {
-        case .compact: 350
+        case .compact: Self.compactWidth
         case .expanded: artwork ? 450 : 380
         case .full: artwork ? 540 : 400
         }
