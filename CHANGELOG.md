@@ -1,11 +1,11 @@
 # Changelog
 
-## Unreleased
+## 0.7.0 — 2026-07-14
 
 ### Changed
 
-- Compact Dynamic Island now uses a narrower reference-sized footprint with tighter spacing, reducing menu bar obstruction (#99)
-- On notched displays, the attached compact island now hugs the notch: album artwork and the playing indicator sit in ears on either side of the notch, with lyrics on a full-width row below. Non-notched screens, detached mode, and the expanded/full states keep the existing horizontal layout (#99)
+- Compact Dynamic Island now uses a narrower reference-sized footprint with tighter spacing, reducing menu bar obstruction (#100)
+- On notched displays, the attached compact island now hugs the notch: album artwork and the playing indicator sit in ears on either side of the notch, with lyrics on a full-width row below. Non-notched screens, detached mode, and the expanded/full states keep the existing horizontal layout (#100)
 
 ## 0.6.0 — 2026-04-04
 
