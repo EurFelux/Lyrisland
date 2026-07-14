@@ -8,6 +8,8 @@ struct IslandContentView: View {
     @State private var islandState: IslandState = .compact
     @State private var isAttached: Bool = UserDefaults.standard.islandPositionMode == .attached
     @State private var isInSnapZone = false
+    @State private var notchWidth: CGFloat? = NSScreen.main?.notchWidth
+    @State private var notchHeight: CGFloat = IslandContentView.menuBarHeight(for: NSScreen.main)
 
     private var cornerRadius: CGFloat {
         islandState == .compact ? 20 : 24
@@ -18,7 +20,64 @@ struct IslandContentView: View {
         isAttached || isInSnapZone
     }
 
+    /// Whether to use the notch-hugging compact layout: compact state, truly
+    /// attached (not just a snap-zone preview), and a measurable notch on the
+    /// current screen. Every other case uses the horizontal layout.
+    private var isNotchHugging: Bool {
+        Self.usesNotchHugging(state: islandState, attached: isAttached, notchWidth: notchWidth)
+    }
+
     var body: some View {
+        Group {
+            if isNotchHugging {
+                notchHuggingBody
+            } else {
+                standardBody
+            }
+        }
+        .environment(\.rootFontSize, appState.rootFontSize)
+        .environment(\.contentColor, appState.contentColor)
+        .shadow(color: appState.contentColor.opacity(isInSnapZone ? 0.3 : 0), radius: 8)
+        .onAppear { refreshNotchGeometry() }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didChangeScreenParametersNotification)) { _ in
+            // Resolution change / display hot-plug / main-display switch can
+            // change the notch geometry while attached — refresh and resize.
+            refreshNotchGeometry()
+            resizePanel(for: islandState)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .islandTapped)) { _ in
+            cycleState()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .islandPositionModeChanged)) { notification in
+            if let mode = notification.object as? IslandPositionMode {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                    isAttached = mode == .attached
+                }
+                refreshNotchGeometry()
+                resizePanel(for: islandState)
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .islandSnapZoneChanged)) { notification in
+            if let inZone = notification.object as? Bool {
+                withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
+                    isInSnapZone = inZone
+                }
+            }
+        }
+        .onChange(of: islandState) { _, newState in
+            resizePanel(for: newState)
+        }
+        .onChange(of: appState.dualLineMode) { _, _ in
+            resizePanel(for: islandState)
+        }
+        .onChange(of: appState.showArtwork) { _, _ in
+            resizePanel(for: islandState)
+        }
+    }
+
+    // MARK: - Standard (horizontal) layout
+
+    private var standardBody: some View {
         ZStack(alignment: showAttachedAppearance ? .bottom : .topLeading) {
             // Background: attached mode (or snap zone preview) has inverse top corners, detached has full rounded corners
             if showAttachedAppearance {
@@ -74,8 +133,6 @@ struct IslandContentView: View {
             .padding(.horizontal, showAttachedAppearance ? Self.earRadius : 0)
             .padding(contentPadding)
         }
-        .environment(\.rootFontSize, appState.rootFontSize)
-        .environment(\.contentColor, appState.contentColor)
         .frame(
             maxWidth: .infinity,
             maxHeight: .infinity,
@@ -89,34 +146,42 @@ struct IslandContentView: View {
         // In detached mode, offset the clipped island down so content that
         // overshoots during transitions has transparent space above.
         .padding(.top, showAttachedAppearance ? 0 : Self.transitionOverflowMargin)
-        .shadow(color: appState.contentColor.opacity(isInSnapZone ? 0.3 : 0), radius: 8)
-        .onReceive(NotificationCenter.default.publisher(for: .islandTapped)) { _ in
-            cycleState()
+    }
+
+    // MARK: - Notch-hugging layout
+
+    private var notchHuggingBody: some View {
+        let nw = notchWidth ?? 0
+        // Solid island shape: the physical notch is hardware-black and simply
+        // overlaps the solid body, so there's no cut-out to punch through
+        // (punching one just exposes the desktop behind the window).
+        let shape = AttachedIslandShape(bottomRadius: cornerRadius, inverseRadius: Self.earRadius)
+        return ZStack(alignment: .top) {
+            IslandBackgroundView(
+                style: appState.backgroundStyle,
+                shape: AnyShape(shape),
+                trackId: syncEngine.currentTrackId,
+                artworkURL: syncEngine.artworkURL,
+                isPlaying: syncEngine.isPlaying,
+                solidColor: appState.solidColor
+            )
+            .overlay(
+                shape.stroke(appState.contentColor.opacity(0.15), lineWidth: 0.5)
+            )
+
+            NotchHuggingCompactView(
+                syncEngine: syncEngine,
+                lyricsManager: lyricsManager,
+                appState: appState,
+                notchWidth: nw,
+                notchHeight: notchHeight,
+                earWidth: Self.notchEarWidth,
+                earInset: Self.earRadius
+            )
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
-        .onReceive(NotificationCenter.default.publisher(for: .islandPositionModeChanged)) { notification in
-            if let mode = notification.object as? IslandPositionMode {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    isAttached = mode == .attached
-                }
-                resizePanel(for: islandState)
-            }
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .islandSnapZoneChanged)) { notification in
-            if let inZone = notification.object as? Bool {
-                withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
-                    isInSnapZone = inZone
-                }
-            }
-        }
-        .onChange(of: islandState) { _, newState in
-            resizePanel(for: newState)
-        }
-        .onChange(of: appState.dualLineMode) { _, _ in
-            resizePanel(for: islandState)
-        }
-        .onChange(of: appState.showArtwork) { _, _ in
-            resizePanel(for: islandState)
-        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .clipShape(shape)
     }
 
     // MARK: - Artwork (single persistent instance)
@@ -235,6 +300,14 @@ struct IslandContentView: View {
     /// Radius of the inverse corner "ears" in attached mode.
     static let earRadius: CGFloat = 10
 
+    /// Width of each ear (artwork / playing indicator) in the notch-hugging layout.
+    static let notchEarWidth: CGFloat = 44
+
+    /// Height of the lyrics row below the notch (taller for dual-line mode).
+    static func compactLyricsRowHeight(dualLine: Bool) -> CGFloat {
+        dualLine ? 44 : 26
+    }
+
     /// Extra top margin in detached mode so content that overshoots during
     /// the SwiftUI transition animation has transparent space to overflow
     /// into instead of being clipped at the window edge.
@@ -247,6 +320,25 @@ struct IslandContentView: View {
         state == .expanded ? 24 : 0
     }
 
+    /// Single source of truth for whether the notch-hugging compact layout
+    /// applies: compact state, attached, and a measurable notch. Shared by the
+    /// view (`isNotchHugging`) and `size()` so the two can never disagree.
+    static func usesNotchHugging(state: IslandState, attached: Bool, notchWidth: CGFloat?) -> Bool {
+        state == .compact && attached && (notchWidth ?? 0) > 0
+    }
+
+    /// Pure geometry for the notch-hugging compact layout: two ears flanking
+    /// the notch on top, a lyrics row below. Independent of NSScreen so it can
+    /// be unit-tested.
+    static func notchHuggingSize(
+        notchWidth: CGFloat,
+        notchHeight: CGFloat,
+        earWidth: CGFloat,
+        lyricsRowHeight: CGFloat
+    ) -> NSSize {
+        NSSize(width: earWidth * 2 + notchWidth, height: notchHeight + lyricsRowHeight)
+    }
+
     static func size(
         for state: IslandState,
         attached: Bool = false,
@@ -254,6 +346,17 @@ struct IslandContentView: View {
         artwork: Bool = true,
         screen: NSScreen? = nil
     ) -> NSSize {
+        // Notch-hugging compact layout: only on notched screens in attached mode.
+        if let screen, let nw = screen.notchWidth,
+           usesNotchHugging(state: state, attached: attached, notchWidth: nw) {
+            return notchHuggingSize(
+                notchWidth: nw,
+                notchHeight: menuBarHeight(for: screen),
+                earWidth: notchEarWidth,
+                lyricsRowHeight: compactLyricsRowHeight(dualLine: dualLine)
+            )
+        }
+
         let h = contentHeight(for: state, dualLine: dualLine, artwork: artwork)
         let w: CGFloat = switch state {
         case .compact: Self.compactWidth
@@ -300,5 +403,13 @@ struct IslandContentView: View {
             artwork: appState.showArtwork,
             screen: window.screen
         ))
+    }
+
+    /// Refresh the cached notch geometry from the panel's current screen.
+    private func refreshNotchGeometry() {
+        let panel = NSApp.windows.first { $0 is DynamicIslandPanel }
+        let screen = panel?.screen ?? NSScreen.main
+        notchWidth = screen?.notchWidth
+        notchHeight = Self.menuBarHeight(for: screen)
     }
 }

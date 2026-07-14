@@ -60,13 +60,13 @@ VStack(spacing: 0) {
 - **右耳**:`isPlaying` → `PlayingIndicator`;否则状态图标(复用 `CompactIslandView` 现有的 `statusIcon`:未连接=天线斜杠,暂停=pause.fill)。
 - **歌词行**:复用现有单行 `MarqueeText` / 双行 `DualLineRow` 及其 `displayText` 状态文案逻辑(加载中 / 暂无歌词 / 播放以开始)。为避免与 `CompactIslandView` 重复,把 `displayText` / `currentLineDuration` 等取值逻辑抽到可共享的位置(如一个轻量的 view-model 或共享扩展)。
 
-### 新增 `NotchHuggingShape`(`Sources/Views/`,参照 `AttachedIslandShape`)
+### 岛体形状:复用实心 `AttachedIslandShape`(与初版设计的偏差)
 
-圆角矩形轮廓 + **顶边正中一个向下的矩形凹槽**(宽 = 刘海宽,深 = 刘海高度),凹槽把顶部分成左右两只「耳朵」。凹槽的两个下角加小圆角,平滑贴合刘海的圆角边缘。底部两角为常规圆角。
+初版打算新增 `NotchHuggingShape`,在顶边正中挖一个透明凹槽来「露出」刘海。**实测后放弃**:物理刘海是硬件纯黑、本就叠在窗口之上,挖透明凹槽反而会露出凹槽后面的桌面,视觉上是一块「空心」的洞。因此最终 notch-hugging **不挖凹槽**,直接复用现有的实心 `AttachedIslandShape`(底部圆角 + 顶部贴边凹角)——实心黑岛体与硬件黑刘海自然融合。两耳的视觉分隔完全由 `NotchHuggingCompactView` 的内容排布(左耳 + 刘海宽 `Spacer` + 右耳)实现。
 
 ### `IslandContentView` 改动
 
-- `compact` case 内根据触发条件二选一:满足 → 渲染 `NotchHuggingCompactView`,背景/裁剪用 `NotchHuggingShape`;否则维持现有 `CompactIslandView` + `AttachedIslandShape`/`RoundedRectangle`。
+- `compact` case 内根据触发条件二选一:满足 → 渲染 `NotchHuggingCompactView`,背景/裁剪用实心 `AttachedIslandShape`;否则维持现有 `CompactIslandView` + `AttachedIslandShape`/`RoundedRectangle`。
 - 刘海几何(`notchWidth` / `notchHeight`)存为 `@State`,在 `onAppear` 及位置/屏幕变化时从 `window.screen` 刷新。
 
 ## 尺寸与窗口定位
@@ -74,7 +74,7 @@ VStack(spacing: 0) {
 - `IslandContentView.size(...)` 增加分支:`compact && attached && hasNotch && notchWidth != nil` 时:
   - `宽 = 左耳宽 + 刘海宽 + 右耳宽`
   - `高 = 刘海高度 + 歌词行高`(双行时歌词行更高)
-- 窗口仍居中于屏顶(`screen.frame.midX - width/2`,`y = maxY - height`)。因刘海本身水平居中,凹槽自动对齐刘海。
+- 窗口仍居中于屏顶(`screen.frame.midX - width/2`,`y = maxY - height`)。因刘海本身水平居中,窗口内容(两耳 + 中间刘海宽 `Spacer`)自动对齐刘海。
 - 把**纯几何算式**抽成不依赖 `NSScreen` 的静态函数,便于单测:
 
 ```swift

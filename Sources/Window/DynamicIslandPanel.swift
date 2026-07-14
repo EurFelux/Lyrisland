@@ -289,4 +289,17 @@ extension NSScreen {
     var hasNotch: Bool {
         safeAreaInsets.top > 0
     }
+
+    /// Width of the camera notch in points, or nil when there is no notch
+    /// or the geometry can't be measured.
+    var notchWidth: CGFloat? {
+        Self.notchWidth(auxiliaryLeft: auxiliaryTopLeftArea, auxiliaryRight: auxiliaryTopRightArea)
+    }
+
+    /// Pure geometry helper: the horizontal gap between the two auxiliary top
+    /// areas (the regions of the menu bar to either side of the notch).
+    static func notchWidth(auxiliaryLeft: NSRect?, auxiliaryRight: NSRect?) -> CGFloat? {
+        guard let left = auxiliaryLeft, let right = auxiliaryRight else { return nil }
+        return right.minX - left.maxX
+    }
 }
