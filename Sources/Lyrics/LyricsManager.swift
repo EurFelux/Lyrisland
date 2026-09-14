@@ -56,6 +56,7 @@ final class LyricsManager: ObservableObject {
 
     init() {
         providerSettings = ProviderSettings.load()
+        Self.removeLegacyLyricsCache()
     }
 
     func updateProviderSettings(_ settings: ProviderSettings) {
@@ -65,10 +66,20 @@ final class LyricsManager: ObservableObject {
     /// Two-tier cache (memory + disk) keyed by track ID.
     private let cache = Cache<String, SyncedLyrics>(
         memoryCountLimit: 200,
-        namespace: "Lyrics",
+        namespace: "Lyrics-v2",
         diskLimitBytes: 50 * 1024 * 1024,
         serializer: CodableCacheSerializer<SyncedLyrics>()
     )
+
+    /// Earlier builds scored every Musixmatch result 30.0, so lyrics cached under the old "Lyrics"
+    /// namespace may be the Musixmatch decoy for any track. They cannot be told apart, so drop them.
+    private static func removeLegacyLyricsCache() {
+        guard let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return }
+        let legacy = caches
+            .appendingPathComponent(Bundle.main.bundleIdentifier ?? "Lyrisland")
+            .appendingPathComponent("Lyrics")
+        try? FileManager.default.removeItem(at: legacy)
+    }
 
     func loadLyrics(for track: TrackInfo) async {
         currentTrack = track
