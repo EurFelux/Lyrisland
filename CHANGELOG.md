@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Every track could show the same meaningless lyrics: Musixmatch results are now scored against the track Musixmatch actually matched, so the identical decoy response it returns for any query is rejected; lyrics cached by earlier builds are cleared (#102)
+- LRCLIB now scores all search hits before picking the best one and counts fractional durations, and equal scores across providers are resolved by provider registry order instead of response arrival order (#102)
+
 ## 0.7.0 — 2026-07-14
 
 ### Changed
