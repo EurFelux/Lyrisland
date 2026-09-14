@@ -162,7 +162,9 @@ final class LyricsManager: ObservableObject {
         providerOrder: [String: Int]
     ) -> Bool {
         guard let current else { return true }
-        if candidate.score != current.score { return candidate.score > current.score }
+        if candidate.score != current.score {
+            return candidate.score > current.score
+        }
         return (providerOrder[candidate.provider] ?? .max) < (providerOrder[current.provider] ?? .max)
     }
 
