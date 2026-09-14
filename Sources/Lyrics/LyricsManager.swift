@@ -38,7 +38,7 @@ final class LyricsManager: ObservableObject {
     /// User-configured provider order and enable/disable state.
     @Published var providerSettings: ProviderSettings
 
-    /// All available providers (registry; runtime order is governed by providerSettings).
+    /// All available providers. Array order breaks score ties in `bestResult`; settings only enable or disable.
     private let allProviders: [LyricsProvider] = [
         LRCLibProvider(),
         MusixmatchProvider(),
@@ -48,7 +48,7 @@ final class LyricsManager: ObservableObject {
         KuGouProvider(),
     ]
 
-    /// Enabled providers (order is irrelevant — all are fetched concurrently).
+    /// Enabled providers in registry order. All are fetched concurrently; the order only breaks score ties.
     private var enabledProviders: [LyricsProvider] {
         let enabledIds = Set(providerSettings.entries.filter(\.isEnabled).map(\.id))
         return allProviders.filter { enabledIds.contains($0.name) }
@@ -120,7 +120,8 @@ final class LyricsManager: ObservableObject {
         for track: TrackInfo,
         from providers: [LyricsProvider]
     ) async -> LyricsSearchResult? {
-        await withTaskGroup(of: LyricsSearchResult?.self) { group in
+        let providerOrder = Dictionary(uniqueKeysWithValues: providers.enumerated().map { ($0.element.name, $0.offset) })
+        return await withTaskGroup(of: LyricsSearchResult?.self) { group in
             for provider in providers {
                 group.addTask {
                     do {
@@ -136,12 +137,22 @@ final class LyricsManager: ObservableObject {
             var best: LyricsSearchResult?
             for await result in group {
                 guard let result else { continue }
-                if result.score > (best?.score ?? -1) {
+                if Self.shouldReplaceBest(result, current: best, providerOrder: providerOrder) {
                     best = result
                 }
             }
             return best
         }
+    }
+
+    nonisolated static func shouldReplaceBest(
+        _ candidate: LyricsSearchResult,
+        current: LyricsSearchResult?,
+        providerOrder: [String: Int]
+    ) -> Bool {
+        guard let current else { return true }
+        if candidate.score != current.score { return candidate.score > current.score }
+        return (providerOrder[candidate.provider] ?? .max) < (providerOrder[current.provider] ?? .max)
     }
 
     // MARK: - Lyrics Picker
