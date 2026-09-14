@@ -86,7 +86,8 @@ struct LRCLibProvider: LyricsProvider {
             return []
         }
 
-        return results.prefix(limit).compactMap { item -> LyricsSearchResult? in
+        // Score every result before applying the limit: LRCLIB's own ordering is not by match quality.
+        let scored = results.compactMap { item -> LyricsSearchResult? in
             guard let syncedLyrics = item["syncedLyrics"] as? String else { return nil }
 
             let lines = LRCParser.parse(syncedLyrics)
@@ -111,7 +112,7 @@ struct LRCLibProvider: LyricsProvider {
                 confidence: confidence
             )
         }
-        .sorted { $0.score > $1.score }
+        return Array(scored.sorted { $0.score > $1.score }.prefix(limit))
     }
 
     // MARK: - Response Parsing
