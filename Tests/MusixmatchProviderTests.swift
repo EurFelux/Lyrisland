@@ -18,13 +18,22 @@ struct MusixmatchProviderTests {
     }
 
     /// A macro.subtitles.get response whose matcher returned the given track metadata.
-    private func response(_ title: String, _ artist: String, album: String, lengthSeconds: Int) throws -> Data {
+    private func response(
+        _ title: String,
+        _ artist: String,
+        album: String,
+        lengthSeconds: Int,
+        subtitleLengthSeconds: Int = 0
+    ) throws -> Data {
         let body: [String: Any] = ["macro_calls": [
             "matcher.track.get": ["message": ["body": ["track": [
                 "track_name": title, "artist_name": artist, "album_name": album, "track_length": lengthSeconds,
             ]]]],
             "track.subtitles.get": ["message": ["body": ["subtitle_list": [
-                ["subtitle": ["subtitle_body": "[00:12.00]First line\n[00:16.00]Second line"]],
+                ["subtitle": [
+                    "subtitle_body": "[00:12.00]First line\n[00:16.00]Second line",
+                    "subtitle_length": subtitleLengthSeconds,
+                ]],
             ]]]],
         ]]
         return try JSONSerialization.data(withJSONObject: ["message": ["body": body]])
@@ -74,5 +83,31 @@ struct MusixmatchProviderTests {
         let score = try #require(result?.score)
         #expect(abs(score - expected) < 0.001)
         #expect(score < 30)
+    }
+
+    @Test("falls back to subtitle_length when track_length is 0")
+    func fallsBackToSubtitleLength() throws {
+        let playing = track("夜に駆ける", "YOASOBI", album: "THE BOOK", durationMs: 261_000)
+        let matching = try MusixmatchProvider().parseMacroResponse(
+            response("夜に駆ける", "YOASOBI", album: "THE BOOK", lengthSeconds: 0, subtitleLengthSeconds: 261),
+            for: playing
+        )
+        #expect(matching?.score == 30)
+
+        // An 11 s longer subtitle scores duration 0, so the fallback visibly lowers the score.
+        let wrongLength = try MusixmatchProvider().parseMacroResponse(
+            response("夜に駆ける", "YOASOBI", album: "THE BOOK", lengthSeconds: 0, subtitleLengthSeconds: 272),
+            for: playing
+        )
+        let score = try #require(wrongLength?.score)
+        #expect(abs(score - (7 + 7 + 2.8) / 23.8 * 30) < 0.001)
+    }
+
+    @Test("rejects the placeholder token issued to retired client identities")
+    func rejectsPlaceholderToken() {
+        #expect(!MusixmatchProvider.isUsableToken(String(repeating: "0", count: 56)))
+        #expect(!MusixmatchProvider.isUsableToken(""))
+        #expect(MusixmatchProvider.isUsableToken("0001"))
+        #expect(MusixmatchProvider.isUsableToken("abc123def456"))
     }
 }
