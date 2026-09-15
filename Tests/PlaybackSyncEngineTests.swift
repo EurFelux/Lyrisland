@@ -12,18 +12,43 @@ struct PlaybackSyncEngineTests {
         )
     }
 
-    @Test("lyrics loaded while paused never keep the previous track's out-of-range line index")
-    func lyricsChangeWhilePausedRecomputesIndex() {
+    @Test("paused lyrics changes update the index through the manager subscription")
+    func lyricsChangeWhilePausedRecomputesIndex() async {
+        let cache = Cache<String, SyncedLyrics>(memoryCountLimit: 10)
+        let manager = LyricsManager(cache: cache)
+        manager.updateProviderSettings(ProviderSettings(entries: []))
         let engine = PlaybackSyncEngine()
+        engine.lyricsManager = manager
         engine.calibrate(position: 100, isPlaying: false)
 
-        engine.lyricsDidChange(lyrics(lineCount: 200))
+        let track = TrackInfo(
+            id: UUID().uuidString, title: "test", artist: "test", album: "test", durationMs: 200_000
+        )
+        await cache.set(lyrics(lineCount: 200), forKey: track.id)
+        await manager.loadLyrics(for: track)
         #expect(engine.currentLineIndex == 100)
 
-        engine.lyricsDidChange(lyrics(lineCount: 3))
+        await cache.set(lyrics(lineCount: 3), forKey: track.id)
+        await manager.loadLyrics(for: track)
         #expect(engine.currentLineIndex == 2)
 
-        engine.lyricsDidChange(nil)
+        // Offset changes publish without first clearing lyrics. Reading the old property
+        // from the willSet notification would leave this at line 2 instead of line 0.
+        manager.adjustOffset(by: -100)
+        #expect(engine.currentLineIndex == 0)
+
+        await cache.set(lyrics(lineCount: 0), forKey: track.id)
+        await manager.loadLyrics(for: track)
         #expect(engine.currentLineIndex == nil)
+
+        await cache.set(lyrics(lineCount: 200), forKey: track.id)
+        await manager.loadLyrics(for: track)
+        #expect(engine.currentLineIndex == 100)
+
+        await cache.removeAll()
+        await manager.loadLyrics(for: track)
+        #expect(manager.currentLyrics?.lines == nil)
+        #expect(engine.currentLineIndex == nil)
+        #expect(!engine.isPlaying)
     }
 }
