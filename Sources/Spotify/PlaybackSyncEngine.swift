@@ -28,7 +28,15 @@ final class PlaybackSyncEngine: ObservableObject {
     private(set) var position: TimeInterval = 0
 
     /// Reference to lyrics for line index caching.
-    weak var lyricsManager: LyricsManager?
+    weak var lyricsManager: LyricsManager? {
+        didSet {
+            lyricsSubscription = lyricsManager?.$currentLyrics.sink { [weak self] lyrics in
+                self?.lyricsDidChange(lyrics)
+            }
+        }
+    }
+
+    private var lyricsSubscription: AnyCancellable?
 
     /// Reference to Spotify service for playback commands.
     var spotifyService: SpotifyAppleScriptService?
@@ -121,6 +129,17 @@ final class PlaybackSyncEngine: ObservableObject {
         }
         // Keep firing even during tracking loops (e.g. window drag)
         RunLoop.main.add(tickTimer!, forMode: .common)
+    }
+
+    /// Recompute the line index against newly loaded lyrics right away.
+    /// The tick timer is stopped while paused, so a track change during pause would otherwise keep
+    /// the previous track's index and views would read past the end of the new lines (crash).
+    /// `$currentLyrics` emits before the property is set, so the new value is passed in.
+    func lyricsDidChange(_ lyrics: SyncedLyrics?) {
+        let newIdx = lyrics?.lineIndex(at: interpolatedPosition)
+        if newIdx != currentLineIndex {
+            currentLineIndex = newIdx
+        }
     }
 
     private func updatePosition() {

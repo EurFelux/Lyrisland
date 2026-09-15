@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Crash when the track changes while Spotify is paused and the new lyrics have fewer lines than the current line index: the line index is now recomputed as soon as lyrics change instead of waiting for the next tick (#103)
+
 ## 0.7.0 — 2026-07-14
 
 ### Changed
