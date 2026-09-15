@@ -54,7 +54,13 @@ final class LyricsManager: ObservableObject {
         return allProviders.filter { enabledIds.contains($0.name) }
     }
 
-    init() {
+    init(cache: Cache<String, SyncedLyrics> = Cache(
+        memoryCountLimit: 200,
+        namespace: "Lyrics-v2",
+        diskLimitBytes: 50 * 1024 * 1024,
+        serializer: CodableCacheSerializer<SyncedLyrics>()
+    )) {
+        self.cache = cache
         providerSettings = ProviderSettings.load()
         Self.removeLegacyLyricsCache()
     }
@@ -64,12 +70,7 @@ final class LyricsManager: ObservableObject {
     }
 
     /// Two-tier cache (memory + disk) keyed by track ID.
-    private let cache = Cache<String, SyncedLyrics>(
-        memoryCountLimit: 200,
-        namespace: "Lyrics-v2",
-        diskLimitBytes: 50 * 1024 * 1024,
-        serializer: CodableCacheSerializer<SyncedLyrics>()
-    )
+    private let cache: Cache<String, SyncedLyrics>
 
     /// Earlier builds scored every Musixmatch result 30.0, so lyrics cached under the old "Lyrics"
     /// namespace may be the Musixmatch decoy for any track. They cannot be told apart, so drop them.
