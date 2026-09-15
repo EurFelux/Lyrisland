@@ -78,7 +78,7 @@ Built-in implementations:
 ```swift
 private let cache = Cache<String, SyncedLyrics>(
     memoryCountLimit: 200,
-    namespace: "Lyrics-v2",
+    namespace: "Lyrics",
     diskLimitBytes: 50 * 1024 * 1024,     // 50 MB
     serializer: CodableCacheSerializer<SyncedLyrics>()
 )
@@ -87,8 +87,7 @@ private let cache = Cache<String, SyncedLyrics>(
 - Key: Spotify track ID
 - Serializer: JSON (SyncedLyrics conforms to `Codable`)
 - Pattern: `cache.get()` for lookup, `cache.set()` for store after provider fetch
-- Disk: `~/Library/Caches/com.wangjiyuan.Lyrisland/Lyrics-v2/`
-- The old `Lyrics/` namespace is deleted on launch: it may hold Musixmatch decoy lyrics cached before Musixmatch results were scored against the matched track. Bump the namespace again whenever cached lyrics must not be served
+- Disk: `~/Library/Caches/com.wangjiyuan.Lyrisland/Lyrics/`
 
 ### Artwork — `ArtworkCache`
 
@@ -160,7 +159,7 @@ struct MySerializer: CacheSerializer {
 
 | Cache | Memory limit | Disk limit | Disk path |
 |---|---|---|---|
-| Lyrics | 200 items | 50 MB | `~/Library/Caches/.../Lyrics-v2/` |
+| Lyrics | 200 items | 50 MB | `~/Library/Caches/.../Lyrics/` |
 | Artwork (data) | 50 items | 100 MB | `~/Library/Caches/.../Artwork/` |
 | Artwork (image) | 50 items | N/A (memory only) | — |
 
