@@ -14,6 +14,10 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
     // MARK: - LyricsProvider
 
     func fetchLyrics(for track: TrackInfo) async throws -> SyncedLyrics? {
+        try await searchLyrics(for: track, limit: 1).first?.lyrics
+    }
+
+    func searchLyrics(for track: TrackInfo, limit _: Int = 5) async throws -> [LyricsSearchResult] {
         let token = try await ensureToken()
 
         // Try macro.subtitles.get which returns richsync + subtitle + plain lyrics
@@ -34,9 +38,9 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
             URLQueryItem(name: "t", value: String(Int.random(in: 1000 ... 9999))),
         ]
 
-        guard let url = components.url else { return nil }
+        guard let url = components.url else { return [] }
         let data = try await requestWithRetry(url: url)
-        return try parseMacroResponse(data)
+        return try parseMacroResponse(data, for: track).map { [$0] } ?? []
     }
 
     // MARK: - Token Management
@@ -115,29 +119,47 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
 
     // MARK: - Response Parsing
 
-    /// Parse the macro.subtitles.get response.
-    /// Fallback order: richsync (word-level) → subtitle (LRC) → plain lyrics.
-    private func parseMacroResponse(_ data: Data) throws -> SyncedLyrics? {
+    /// Parse the macro.subtitles.get response, scored against the track Musixmatch actually matched.
+    /// Musixmatch can answer every query with the same decoy track (e.g. "NOKIA — Drake" with
+    /// gibberish lyrics), so the query metadata must never be trusted as the match.
+    /// Fallback order: richsync (word-level) → subtitle (LRC) → plain lyrics (unsynced — skipped).
+    func parseMacroResponse(_ data: Data, for track: TrackInfo) throws -> LyricsSearchResult? {
         guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
               let message = json["message"] as? [String: Any],
               let body = message["body"] as? [String: Any],
-              let macroCalls = body["macro_calls"] as? [String: Any]
+              let macroCalls = body["macro_calls"] as? [String: Any],
+              let matcher = macroCalls["matcher.track.get"] as? [String: Any],
+              let matcherMessage = matcher["message"] as? [String: Any],
+              let matcherBody = matcherMessage["body"] as? [String: Any],
+              let matched = matcherBody["track"] as? [String: Any],
+              let title = matched["track_name"] as? String,
+              let artist = matched["artist_name"] as? String
         else {
             return nil
         }
 
-        // 1. Try richsync (word-level synced)
-        if let richsync = extractRichSync(from: macroCalls) {
-            return richsync
+        let candidate = TrackMatcher.Candidate(
+            title: title,
+            artist: artist,
+            album: matched["album_name"] as? String,
+            durationMs: (matched["track_length"] as? Int).map { $0 * 1000 }
+        )
+        let (score, confidence) = TrackMatcher.score(target: track, candidate: candidate)
+        guard confidence >= .low else {
+            logDebug("[musixmatch] Rejected mismatched track: \(title) — \(artist)")
+            return nil
         }
 
-        // 2. Try subtitle (LRC line-synced)
-        if let subtitle = extractSubtitle(from: macroCalls) {
-            return subtitle
+        guard let lyrics = extractRichSync(from: macroCalls) ?? extractSubtitle(from: macroCalls) else {
+            return nil
         }
-
-        // 3. Try plain lyrics (unsynced — skip, we only want synced)
-        return nil
+        return LyricsSearchResult(
+            provider: name,
+            lyrics: lyrics,
+            matchInfo: "\(title) \u{2014} \(artist)",
+            score: score,
+            confidence: confidence
+        )
     }
 
     /// Parse richsync JSON: array of objects with `ts` (start), `te` (end), `x` (text).

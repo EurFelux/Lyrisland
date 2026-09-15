@@ -5,6 +5,8 @@
 ### Fixed
 
 - Crash when the track changes while Spotify is paused and the new lyrics have fewer lines than the current line index: the line index is now recomputed as soon as lyrics change instead of waiting for the next tick (#103)
+- Every track could show the same meaningless lyrics: Musixmatch results are now scored against the track Musixmatch actually matched, so the identical decoy response it returns for any query no longer scores as a perfect match (#102)
+- LRCLIB now scores all search hits before picking the best one and counts fractional durations, and equal scores across providers are resolved by provider registry order instead of response arrival order (#102)
 
 ## 0.7.0 — 2026-07-14
 

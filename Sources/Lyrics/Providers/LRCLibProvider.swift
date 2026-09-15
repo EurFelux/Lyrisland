@@ -86,7 +86,12 @@ struct LRCLibProvider: LyricsProvider {
             return []
         }
 
-        return results.prefix(limit).compactMap { item -> LyricsSearchResult? in
+        return rankedResults(results, for: track, limit: limit)
+    }
+
+    /// Score every search hit, then keep the best `limit`. LRCLIB's own ordering is not by match quality.
+    func rankedResults(_ results: [[String: Any]], for track: TrackInfo, limit: Int) -> [LyricsSearchResult] {
+        let scored = results.compactMap { item -> LyricsSearchResult? in
             guard let syncedLyrics = item["syncedLyrics"] as? String else { return nil }
 
             let lines = LRCParser.parse(syncedLyrics)
@@ -95,10 +100,11 @@ struct LRCLibProvider: LyricsProvider {
             let trackName = item["trackName"] as? String ?? ""
             let artistName = item["artistName"] as? String ?? ""
             let albumName = item["albumName"] as? String
-            let duration = item["duration"] as? Int
+            // Durations can be fractional seconds (e.g. 197.57825); `as? Int` silently dropped those.
+            let duration = (item["duration"] as? NSNumber)?.doubleValue
 
             let candidate = TrackMatcher.Candidate(
-                title: trackName, artist: artistName, album: albumName, durationMs: duration.map { $0 * 1000 }
+                title: trackName, artist: artistName, album: albumName, durationMs: duration.map { Int($0 * 1000) }
             )
             let (score, confidence) = TrackMatcher.score(target: track, candidate: candidate)
 
@@ -111,7 +117,7 @@ struct LRCLibProvider: LyricsProvider {
                 confidence: confidence
             )
         }
-        .sorted { $0.score > $1.score }
+        return Array(scored.sorted { $0.score > $1.score }.prefix(limit))
     }
 
     // MARK: - Response Parsing
