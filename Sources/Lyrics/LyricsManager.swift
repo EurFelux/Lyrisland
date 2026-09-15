@@ -54,7 +54,13 @@ final class LyricsManager: ObservableObject {
         return allProviders.filter { enabledIds.contains($0.name) }
     }
 
-    init() {
+    init(cache: Cache<String, SyncedLyrics> = Cache(
+        memoryCountLimit: 200,
+        namespace: "Lyrics",
+        diskLimitBytes: 50 * 1024 * 1024,
+        serializer: CodableCacheSerializer<SyncedLyrics>()
+    )) {
+        self.cache = cache
         providerSettings = ProviderSettings.load()
     }
 
@@ -63,12 +69,7 @@ final class LyricsManager: ObservableObject {
     }
 
     /// Two-tier cache (memory + disk) keyed by track ID.
-    private let cache = Cache<String, SyncedLyrics>(
-        memoryCountLimit: 200,
-        namespace: "Lyrics",
-        diskLimitBytes: 50 * 1024 * 1024,
-        serializer: CodableCacheSerializer<SyncedLyrics>()
-    )
+    private let cache: Cache<String, SyncedLyrics>
 
     func loadLyrics(for track: TrackInfo) async {
         currentTrack = track
