@@ -145,8 +145,7 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
             durationMs: (matched["track_length"] as? Int).map { $0 * 1000 }
         )
         let (score, confidence) = TrackMatcher.score(target: track, candidate: candidate)
-        // The decoy is by a real artist, so an artist-only match must not pass for that artist's other songs.
-        guard confidence >= .low, TrackMatcher.compareName(track.title, title) != .noMatch else {
+        guard confidence >= .low else {
             logDebug("[musixmatch] Rejected mismatched track: \(title) — \(artist)")
             return nil
         }
