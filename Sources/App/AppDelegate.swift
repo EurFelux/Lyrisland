@@ -10,6 +10,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var helpWindow: NSWindow?
     private var lyricsPickerWindow: NSWindow?
     private var auxiliaryWindows = AuxiliaryWindowRegistry()
+    private var colorPanelObservation: NSKeyValueObservation?
     private var statusItem: NSStatusItem?
     private let spotifyService = SpotifyAppleScriptService()
     let lyricsManager = LyricsManager()
@@ -378,6 +379,7 @@ extension AppDelegate {
             window.title = String(localized: "settings.window.title")
             window.contentView = NSHostingView(rootView: SettingsView(lyricsManager: lyricsManager))
             window.contentMinSize = SettingsView.minimumSize
+            observeSharedColorPanel()
             window.isReleasedWhenClosed = false
             settingsWindow = window
             bringToFront(window)
@@ -395,6 +397,41 @@ extension AppDelegate {
     /// `.moveToActiveSpace` pulls a window left open on another Space over to the
     /// current one instead of switching Spaces, and `orderFrontRegardless` keeps
     /// the window visible even if activation is still denied.
+    /// Keeps the shared `NSColorPanel` on the same display as the settings window.
+    ///
+    /// The panel is a process-wide singleton that reopens wherever it was last
+    /// left, so on a multi-display setup it happily appears on a screen the
+    /// settings window is not even on. It never becomes the key window (the
+    /// settings window keeps key while the panel is up), so its visibility is
+    /// observed directly rather than through the key-window notifications.
+    private func observeSharedColorPanel() {
+        guard colorPanelObservation == nil else { return }
+        colorPanelObservation = NSColorPanel.shared.observe(\.isVisible, options: [.new]) { [weak self] panel, change in
+            guard change.newValue == true else { return }
+            Task { @MainActor in
+                self?.placeNearSettingsWindow(panel)
+            }
+        }
+    }
+
+    /// Moves `panel` beside the settings window, but only when it opened on
+    /// another screen, so a spot the user picked on this screen is left alone.
+    private func placeNearSettingsWindow(_ panel: NSPanel) {
+        // Compared by frame: `NSScreen` instances are not guaranteed to be
+        // identical across calls, but one frame belongs to exactly one display.
+        guard let window = settingsWindow, window.isVisible,
+              let screen = window.screen, panel.screen?.frame != screen.frame
+        else { return }
+
+        panel.setFrameOrigin(
+            PanelPlacement.origin(
+                forPanelSize: panel.frame.size,
+                anchoredTo: window.frame,
+                within: screen.visibleFrame
+            )
+        )
+    }
+
     private func bringToFront(_ window: NSWindow) {
         window.collectionBehavior.insert(.moveToActiveSpace)
         window.delegate = self

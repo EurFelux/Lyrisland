@@ -5,6 +5,7 @@
 ### Fixed
 
 - Settings tabs collapsed into an overflow menu on macOS 26 and later, which moved `TabView`'s tab bar into the window title bar: settings now use a sidebar that keeps every category visible on all supported releases (#108)
+- The color picker opened on whichever display it was last used on rather than the one showing the settings window: the shared `NSColorPanel` is now placed beside the settings window whenever it would come up on another screen (#108)
 - Settings, Help and the lyrics picker could open behind other windows, or on the Space they were last used on: as a menu bar app Lyrisland is never the active app, so it now becomes a regular app for as long as such a window is open, pulls the window to the active Space and orders it front (#108)
 
 ## 0.7.1 — 2026-09-16
