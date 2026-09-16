@@ -48,6 +48,8 @@ Lyrisland은 화면 상단에 다이나믹 아일랜드(Dynamic Island) 스타�
 
 ```bash
 brew tap EurFelux/tap
+# Homebrew 7부터 신뢰되지 않은 서드파티 tap의 cask는 로드되지 않습니다
+brew trust EurFelux/tap
 brew install --cask lyrisland
 
 # 최신 버전으로 업데이트

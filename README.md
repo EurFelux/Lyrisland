@@ -48,6 +48,8 @@ Lyrisland displays real-time Spotify lyrics at the top of your screen in a Dynam
 
 ```bash
 brew tap EurFelux/tap
+# Homebrew 7 and later refuses to load casks from untrusted third-party taps
+brew trust EurFelux/tap
 brew install --cask lyrisland
 
 # Update to the latest version
