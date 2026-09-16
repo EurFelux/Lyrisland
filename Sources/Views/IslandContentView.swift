@@ -38,7 +38,12 @@ struct IslandContentView: View {
         .environment(\.rootFontSize, appState.rootFontSize)
         .environment(\.contentColor, appState.contentColor)
         .shadow(color: appState.contentColor.opacity(isInSnapZone ? 0.3 : 0), radius: 8)
-        .onAppear { refreshNotchGeometry() }
+        .onAppear {
+            refreshNotchGeometry()
+            // The panel was created before its screen (and the user's artwork /
+            // dual-line settings) were known, so re-derive its frame now.
+            resizePanel(for: islandState)
+        }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didChangeScreenParametersNotification)) { _ in
             // Resolution change / display hot-plug / main-display switch can
             // change the notch geometry while attached — refresh and resize.
@@ -401,7 +406,9 @@ struct IslandContentView: View {
             attached: isAttached,
             dualLine: appState.dualLineMode,
             artwork: appState.showArtwork,
-            screen: window.screen
+            // Same fallback as `refreshNotchGeometry`: an off-screen panel reports
+            // no screen, and the two must agree on which screen they describe.
+            screen: window.screen ?? NSScreen.main
         ))
     }
 

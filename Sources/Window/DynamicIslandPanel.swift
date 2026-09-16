@@ -88,18 +88,15 @@ final class DynamicIslandPanel: NSPanel {
     /// Center the panel horizontally, flush with the top of the screen (no gap).
     private func positionAttachedToMenuBar() {
         guard let screen = screen ?? NSScreen.main else { return }
-        let x = screen.frame.midX - frame.width / 2
-        let y = screen.frame.maxY - frame.height
-        setFrameOrigin(NSPoint(x: x, y: y))
+        setFrameOrigin(IslandPlacement.attachedOrigin(panelSize: frame.size, screenFrame: screen.frame))
     }
 
     /// Position below the menu bar (default detached fallback).
     private func positionBelowMenuBar() {
         guard let screen = NSScreen.main else { return }
-        let screenFrame = screen.visibleFrame
-        let x = screenFrame.midX - frame.width / 2
-        let y = screenFrame.maxY - frame.height - 12
-        setFrameOrigin(NSPoint(x: x, y: y))
+        setFrameOrigin(
+            IslandPlacement.detachedFallbackOrigin(panelSize: frame.size, visibleFrame: screen.visibleFrame)
+        )
     }
 
     private func saveDetachedPosition() {
@@ -125,8 +122,9 @@ final class DynamicIslandPanel: NSPanel {
         let newY: CGFloat
 
         if positionMode == .attached, let screen = screen ?? NSScreen.main {
-            newX = screen.frame.midX - newSize.width / 2
-            newY = screen.frame.maxY - newSize.height
+            let origin = IslandPlacement.attachedOrigin(panelSize: newSize, screenFrame: screen.frame)
+            newX = origin.x
+            newY = origin.y
         } else {
             // Detached: keep top-left pinned
             newX = currentFrame.minX
@@ -253,16 +251,39 @@ final class DynamicIslandPanel: NSPanel {
 
     override func orderFront(_ sender: Any?) {
         super.orderFront(sender)
-        // On first appearance the panel now has a valid screen.
-        // Recalculate size and position so notch detection works correctly.
-        if !hasAppliedScreenLayout {
-            hasAppliedScreenLayout = true
-            if positionMode == .attached {
-                let correctSize = IslandContentView.size(for: .compact, attached: true, screen: screen)
-                setContentSize(correctSize)
-                positionAttachedToMenuBar()
-            }
-        }
+        applyScreenDependentLayoutIfNeeded()
+    }
+
+    override func orderFrontRegardless() {
+        super.orderFrontRegardless()
+        // `orderFrontRegardless()` does not go through `orderFront(_:)`, and it is
+        // how the island is shown at launch — without this the first layout pass
+        // never ran and the island stayed sized (and centered) for a screen
+        // without a notch.
+        applyScreenDependentLayoutIfNeeded()
+    }
+
+    /// Re-applies the layout that needs a real screen, once the panel has one.
+    ///
+    /// The size the panel was created with is a guess: notch detection needs the
+    /// screen the panel ends up on, and the notch-hugging layout is wider than
+    /// the plain compact one. The origin has to follow that size, otherwise the
+    /// island sits off-center by half the difference.
+    private func applyScreenDependentLayoutIfNeeded() {
+        guard !hasAppliedScreenLayout else { return }
+        // Consumed on the first appearance whatever the mode, so that showing the
+        // island again later never resizes it back down to compact.
+        hasAppliedScreenLayout = true
+
+        guard positionMode == .attached else { return }
+        setContentSize(IslandContentView.size(
+            for: .compact,
+            attached: true,
+            dualLine: UserDefaults.standard.islandUsesDualLineLyrics,
+            artwork: UserDefaults.standard.islandShowsArtwork,
+            screen: screen
+        ))
+        positionAttachedToMenuBar()
     }
 
     override var canBecomeKey: Bool {

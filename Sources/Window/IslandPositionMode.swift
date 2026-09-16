@@ -16,6 +16,18 @@ extension UserDefaults {
         static let detachedX = "islandDetachedX"
         static let detachedY = "islandDetachedY"
         static let hasDetachedPosition = "islandHasDetachedPosition"
+        static let dualLineMode = "dualLineMode"
+        static let showArtwork = "showArtwork"
+    }
+
+    /// The appearance settings the island's size depends on, readable before
+    /// `AppState` exists — the panel sizes itself while it is being created.
+    var islandUsesDualLineLyrics: Bool {
+        bool(forKey: Keys.dualLineMode)
+    }
+
+    var islandShowsArtwork: Bool {
+        object(forKey: Keys.showArtwork) as? Bool ?? true
     }
 
     var islandPositionMode: IslandPositionMode {
