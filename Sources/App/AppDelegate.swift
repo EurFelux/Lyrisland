@@ -386,17 +386,6 @@ extension AppDelegate {
         }
     }
 
-    /// Shows an auxiliary window on top of whatever else is on screen.
-    ///
-    /// Lyrisland is an `LSUIElement` app, so it is never the active app when a
-    /// window is requested from the menu bar or a global shortcut. macOS 14 made
-    /// activation cooperative and routinely refuses an accessory app's request,
-    /// which left the window buried behind the app the user was looking at.
-    /// Switching to `.regular` for as long as a window is open makes the app a
-    /// normal activation target (at the cost of a temporary Dock icon);
-    /// `.moveToActiveSpace` pulls a window left open on another Space over to the
-    /// current one instead of switching Spaces, and `orderFrontRegardless` keeps
-    /// the window visible even if activation is still denied.
     /// Keeps the shared `NSColorPanel` on the same display as the settings window.
     ///
     /// The panel is a process-wide singleton that reopens wherever it was last
@@ -432,6 +421,17 @@ extension AppDelegate {
         )
     }
 
+    /// Shows an auxiliary window on top of whatever else is on screen.
+    ///
+    /// Lyrisland is an `LSUIElement` app, so it is never the active app when a
+    /// window is requested from the menu bar or a global shortcut. macOS 14 made
+    /// activation cooperative and routinely refuses an accessory app's request,
+    /// which left the window buried behind the app the user was looking at.
+    /// Switching to `.regular` for as long as a window is open makes the app a
+    /// normal activation target (at the cost of a temporary Dock icon);
+    /// `.moveToActiveSpace` pulls a window left open on another Space over to the
+    /// current one instead of switching Spaces, and `orderFrontRegardless` keeps
+    /// the window visible even if activation is still denied.
     private func bringToFront(_ window: NSWindow) {
         window.collectionBehavior.insert(.moveToActiveSpace)
         window.delegate = self
