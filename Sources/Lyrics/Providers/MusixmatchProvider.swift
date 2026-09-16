@@ -1,11 +1,51 @@
 import Foundation
 
+/// Where the Musixmatch user token is kept between launches.
+protocol MusixmatchTokenStore: AnyObject {
+    var token: String? { get set }
+    /// When token.get last refused to mint a token, so requests can back off.
+    var refusedAt: Date? { get set }
+}
+
+/// Token store backed by `UserDefaults`.
+final class UserDefaultsMusixmatchTokenStore: MusixmatchTokenStore {
+    private let defaults: UserDefaults
+    private let tokenKey = "musixmatch.userToken"
+    private let refusedAtKey = "musixmatch.tokenRefusedAt"
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+    }
+
+    var token: String? {
+        get { defaults.string(forKey: tokenKey) }
+        set { set(newValue, forKey: tokenKey) }
+    }
+
+    var refusedAt: Date? {
+        get { defaults.object(forKey: refusedAtKey) as? Date }
+        set { set(newValue, forKey: refusedAtKey) }
+    }
+
+    private func set(_ value: Any?, forKey key: String) {
+        if let value {
+            defaults.set(value, forKey: key)
+        } else {
+            defaults.removeObject(forKey: key)
+        }
+    }
+}
+
 /// Fetches lyrics from the Musixmatch API using the Android player client identity.
 /// Supports line-synced (LRC via subtitle) and word-synced (richsync).
 /// Requires a user token obtained once from the token endpoint.
 ///
 /// The desktop identity (`apic-desktop.musixmatch.com`, `web-desktop-app-v1.0`) is retired:
 /// its token.get only issues an all-zero token, and every query with it returns the same decoy track.
+///
+/// token.get answers 401 "captcha" to all but the occasional request from an IP, while a minted
+/// token keeps working for at least a day, so the token is persisted and reused across launches
+/// and a refused request backs off instead of asking again on the next track change.
 final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
     let name = "musixmatch"
 
@@ -13,6 +53,16 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
     private let baseURL = "https://apic.musixmatch.com/ws/1.1"
     private var userToken: String?
     private let maxCaptchaRetries = 8
+    private let tokenStore: MusixmatchTokenStore
+    /// How long to wait before asking token.get again after it refused to mint a token.
+    private let tokenRetryInterval: TimeInterval = 30 * 60
+
+    init(tokenStore: MusixmatchTokenStore = UserDefaultsMusixmatchTokenStore()) {
+        self.tokenStore = tokenStore
+        if let stored = tokenStore.token, Self.isUsableToken(stored) {
+            userToken = stored
+        }
+    }
 
     // MARK: - LyricsProvider
 
@@ -46,6 +96,13 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
     private func ensureToken() async throws -> String {
         if let token = userToken { return token }
 
+        guard Self.shouldRequestToken(
+            lastRefusal: tokenStore.refusedAt, now: Date(), retryInterval: tokenRetryInterval
+        ) else {
+            logDebug("[musixmatch] Skipping token request; token.get refused one \(Int(tokenRetryInterval / 60)) min ago or less")
+            throw MusixmatchError.tokenFailed
+        }
+
         var components = URLComponents(string: "\(baseURL)/token.get")!
         components.queryItems = [
             URLQueryItem(name: "app_id", value: appId),
@@ -66,16 +123,39 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
             let status = header?["status_code"] as? Int ?? 0
             let hint = header?["hint"] as? String ?? ""
             logWarning("[musixmatch] Token request refused: status \(status), hint \(hint)")
+            tokenStore.refusedAt = Date()
             throw MusixmatchError.tokenFailed
         }
         guard Self.isUsableToken(token) else {
             logWarning("[musixmatch] Received a placeholder token; the client identity may be retired")
+            tokenStore.refusedAt = Date()
             throw MusixmatchError.tokenFailed
         }
 
         logDebug("[musixmatch] Token acquired")
         userToken = token
+        tokenStore.token = token
+        tokenStore.refusedAt = nil
         return token
+    }
+
+    /// The token currently in use, restored from the token store at init. Exposed for tests.
+    var currentToken: String? {
+        userToken
+    }
+
+    /// Forget the current token so the next request mints a new one.
+    private func discardToken() {
+        userToken = nil
+        tokenStore.token = nil
+    }
+
+    /// token.get is rate limited per IP, so wait out `retryInterval` after it refused to mint a token.
+    static func shouldRequestToken(lastRefusal: Date?, now: Date, retryInterval: TimeInterval) -> Bool {
+        guard let lastRefusal else { return true }
+        let elapsed = now.timeIntervalSince(lastRefusal)
+        // A refusal in the future means the clock moved backwards; don't wait for it to catch up.
+        return elapsed >= retryInterval || elapsed < 0
     }
 
     /// Retired client identities receive a placeholder token made of one repeated character (all zeros).
@@ -111,7 +191,7 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
                         let hint = header["hint"] as? String ?? ""
                         if hint == "renew" {
                             logDebug("[musixmatch] Token expired, renewing (attempt \(attempt + 1))")
-                            userToken = nil
+                            discardToken()
                             continue
                         }
                         if hint == "captcha" {
@@ -128,7 +208,7 @@ final class MusixmatchProvider: LyricsProvider, @unchecked Sendable {
             }
 
             if httpResponse.statusCode == 401 {
-                userToken = nil
+                discardToken()
                 continue
             }
 

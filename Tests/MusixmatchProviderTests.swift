@@ -110,4 +110,36 @@ struct MusixmatchProviderTests {
         #expect(MusixmatchProvider.isUsableToken("0001"))
         #expect(MusixmatchProvider.isUsableToken("abc123def456"))
     }
+
+    @Test("waits out the retry interval after token.get refused a token")
+    func backsOffAfterTokenRefusal() {
+        let now = Date()
+        let interval: TimeInterval = 30 * 60
+        #expect(MusixmatchProvider.shouldRequestToken(lastRefusal: nil, now: now, retryInterval: interval))
+        #expect(!MusixmatchProvider.shouldRequestToken(
+            lastRefusal: now.addingTimeInterval(-60), now: now, retryInterval: interval
+        ))
+        #expect(MusixmatchProvider.shouldRequestToken(
+            lastRefusal: now.addingTimeInterval(-interval), now: now, retryInterval: interval
+        ))
+        // A refusal dated in the future means the clock moved backwards.
+        #expect(MusixmatchProvider.shouldRequestToken(
+            lastRefusal: now.addingTimeInterval(3600), now: now, retryInterval: interval
+        ))
+    }
+
+    @Test("reuses a stored token across launches and ignores a placeholder one")
+    func restoresStoredToken() {
+        let store = InMemoryTokenStore()
+        store.token = "abc123def456"
+        #expect(MusixmatchProvider(tokenStore: store).currentToken == "abc123def456")
+
+        store.token = String(repeating: "0", count: 56)
+        #expect(MusixmatchProvider(tokenStore: store).currentToken == nil)
+    }
+}
+
+private final class InMemoryTokenStore: MusixmatchTokenStore {
+    var token: String?
+    var refusedAt: Date?
 }
