@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- Homebrew installation failed on Homebrew 7, which refuses to load casks from untrusted third-party taps: the install instructions now include `brew trust EurFelux/tap` (#106)
 - Musixmatch returned no usable lyrics: its desktop client identity is retired, so the provider now uses the Android identity on `apic.musixmatch.com`, rejects the placeholder token that identity handed out, and reuses a stored token across launches instead of asking the rate-limited token endpoint on every launch (#105)
 - Crash when the track changes while Spotify is paused and the new lyrics have fewer lines than the current line index: the line index is now recomputed as soon as lyrics change instead of waiting for the next tick (#103)
 - Every track could show the same meaningless lyrics: Musixmatch results are now scored against the track Musixmatch actually matched, so the identical decoy response it returns for any query no longer scores as a perfect match (#102)

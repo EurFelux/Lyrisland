@@ -48,6 +48,8 @@ Lyrisland は、画面上部にダイナミックアイランド（Dynamic Islan
 
 ```bash
 brew tap EurFelux/tap
+# Homebrew 7 以降、信頼されていないサードパーティ tap の cask は読み込まれません
+brew trust EurFelux/tap
 brew install --cask lyrisland
 
 # 最新バージョンに更新

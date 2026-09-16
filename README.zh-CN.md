@@ -48,6 +48,8 @@ Lyrisland 在屏幕顶部以灵动岛（Dynamic Island）的形式，实时展�
 
 ```bash
 brew tap EurFelux/tap
+# Homebrew 7 起，未信任的第三方 tap 中的 cask 会被拒绝加载
+brew trust EurFelux/tap
 brew install --cask lyrisland
 
 # 更新到最新版本
