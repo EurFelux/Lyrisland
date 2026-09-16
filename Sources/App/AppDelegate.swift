@@ -9,6 +9,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var settingsWindow: NSWindow?
     private var helpWindow: NSWindow?
     private var lyricsPickerWindow: NSWindow?
+    private var auxiliaryWindows = AuxiliaryWindowRegistry()
+    private var colorPanelObservation: NSKeyValueObservation?
     private var statusItem: NSStatusItem?
     private let spotifyService = SpotifyAppleScriptService()
     let lyricsManager = LyricsManager()
@@ -56,10 +58,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         window.isReleasedWhenClosed = false
         window.titlebarAppearsTransparent = true
         window.backgroundColor = NSColor(white: 0.1, alpha: 1)
-        window.makeKeyAndOrderFront(nil)
-
-        // Bring app to front for onboarding
-        NSApp.activate(ignoringOtherApps: true)
+        bringToFront(window)
 
         onboardingWindow = window
     }
@@ -304,13 +303,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    // MARK: - Actions
+    @objc private func quitApp() {
+        NSApp.terminate(nil)
+    }
+}
 
+// MARK: - Window Actions
+
+extension AppDelegate {
     @objc private func openLyricsPicker() {
         guard let track = lyricsManager.currentTrack else { return }
 
         // Always create a fresh window for the current track
-        lyricsPickerWindow?.close()
+        let previousWindow = lyricsPickerWindow
         let pickerView = LyricsPickerView(lyricsManager: lyricsManager, track: track)
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 480, height: 500),
@@ -326,8 +331,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         window.backgroundColor = NSColor(white: 0.1, alpha: 1)
         window.minSize = NSSize(width: 380, height: 300)
         lyricsPickerWindow = window
-        window.makeKeyAndOrderFront(nil)
-        NSApp.activate()
+        bringToFront(window)
+        // Closed last so the app never briefly drops back to accessory mode
+        previousWindow?.close()
     }
 
     @objc private func toggleIsland() {
@@ -340,7 +346,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func openHelp() {
         if let window = helpWindow {
-            window.makeKeyAndOrderFront(nil)
+            bringToFront(window)
         } else {
             let window = NSWindow(
                 contentRect: NSRect(x: 0, y: 0, width: 420, height: 480),
@@ -355,33 +361,99 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             window.titlebarAppearsTransparent = true
             window.backgroundColor = NSColor(white: 0.1, alpha: 1)
             helpWindow = window
-            window.makeKeyAndOrderFront(nil)
+            bringToFront(window)
         }
-        NSApp.activate()
     }
 
     @objc private func openSettings() {
         if let window = settingsWindow {
-            window.makeKeyAndOrderFront(nil)
+            bringToFront(window)
         } else {
             let window = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 420, height: 380),
-                styleMask: [.titled, .closable],
+                contentRect: NSRect(origin: .zero, size: SettingsView.minimumSize),
+                styleMask: [.titled, .closable, .resizable],
                 backing: .buffered,
                 defer: false
             )
             window.center()
-            window.title = String(localized: "menu.settings")
+            window.title = String(localized: "settings.window.title")
             window.contentView = NSHostingView(rootView: SettingsView(lyricsManager: lyricsManager))
+            window.contentMinSize = SettingsView.minimumSize
+            observeSharedColorPanel()
             window.isReleasedWhenClosed = false
             settingsWindow = window
-            window.makeKeyAndOrderFront(nil)
+            bringToFront(window)
         }
-        NSApp.activate()
     }
 
-    @objc private func quitApp() {
-        NSApp.terminate(nil)
+    /// Keeps the shared `NSColorPanel` on the same display as the settings window.
+    ///
+    /// The panel is a process-wide singleton that reopens wherever it was last
+    /// left, so on a multi-display setup it happily appears on a screen the
+    /// settings window is not even on. It never becomes the key window (the
+    /// settings window keeps key while the panel is up), so its visibility is
+    /// observed directly rather than through the key-window notifications.
+    private func observeSharedColorPanel() {
+        guard colorPanelObservation == nil else { return }
+        colorPanelObservation = NSColorPanel.shared.observe(\.isVisible, options: [.new]) { [weak self] panel, change in
+            guard change.newValue == true else { return }
+            Task { @MainActor in
+                self?.placeNearSettingsWindow(panel)
+            }
+        }
+    }
+
+    /// Moves `panel` beside the settings window, but only when it opened on
+    /// another screen, so a spot the user picked on this screen is left alone.
+    private func placeNearSettingsWindow(_ panel: NSPanel) {
+        // Compared by frame: `NSScreen` instances are not guaranteed to be
+        // identical across calls, but one frame belongs to exactly one display.
+        guard let window = settingsWindow, window.isVisible,
+              let screen = window.screen, panel.screen?.frame != screen.frame
+        else { return }
+
+        panel.setFrameOrigin(
+            PanelPlacement.origin(
+                forPanelSize: panel.frame.size,
+                anchoredTo: window.frame,
+                within: screen.visibleFrame
+            )
+        )
+    }
+
+    /// Shows an auxiliary window on top of whatever else is on screen.
+    ///
+    /// Lyrisland is an `LSUIElement` app, so it is never the active app when a
+    /// window is requested from the menu bar or a global shortcut. macOS 14 made
+    /// activation cooperative and routinely refuses an accessory app's request,
+    /// which left the window buried behind the app the user was looking at.
+    /// Switching to `.regular` for as long as a window is open makes the app a
+    /// normal activation target (at the cost of a temporary Dock icon);
+    /// `.moveToActiveSpace` pulls a window left open on another Space over to the
+    /// current one instead of switching Spaces, and `orderFrontRegardless` keeps
+    /// the window visible even if activation is still denied.
+    private func bringToFront(_ window: NSWindow) {
+        window.collectionBehavior.insert(.moveToActiveSpace)
+        window.delegate = self
+        auxiliaryWindows.opened(window)
+        if NSApp.activationPolicy() != .regular {
+            NSApp.setActivationPolicy(.regular)
+        }
+        NSApp.activate(ignoringOtherApps: true)
+        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
+    }
+}
+
+// MARK: - NSWindowDelegate
+
+extension AppDelegate: NSWindowDelegate {
+    /// Drops the Dock icon again once the last auxiliary window is gone.
+    func windowWillClose(_ notification: Notification) {
+        guard let window = notification.object as? NSWindow,
+              auxiliaryWindows.closed(window)
+        else { return }
+        NSApp.setActivationPolicy(.accessory)
     }
 }
 

@@ -1,37 +1,89 @@
 import KeyboardShortcuts
 import SwiftUI
 
+/// The settings categories, in sidebar order.
+///
+/// macOS 26 moved `TabView`'s tab bar into the window title bar, where a settings
+/// window this narrow collapses every tab into an overflow menu. A sidebar keeps
+/// all categories visible and renders identically on every supported release.
+enum SettingsTab: String, CaseIterable, Identifiable {
+    case general
+    case appearance
+    case lyrics
+    case shortcuts
+    case about
+
+    var id: String {
+        rawValue
+    }
+
+    var title: String {
+        switch self {
+        case .general: String(localized: "settings.tab.general")
+        case .appearance: String(localized: "settings.tab.appearance")
+        case .lyrics: String(localized: "settings.tab.lyrics")
+        case .shortcuts: String(localized: "settings.tab.shortcuts")
+        case .about: String(localized: "settings.tab.about")
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .general: "gearshape"
+        case .appearance: "paintbrush"
+        case .lyrics: "music.note.list"
+        case .shortcuts: "keyboard"
+        case .about: "info.circle"
+        }
+    }
+}
+
 struct SettingsView: View {
     @ObservedObject var lyricsManager: LyricsManager
 
+    @State private var selection: SettingsTab = .general
+
+    static let minimumSize = CGSize(width: 640, height: 460)
+
+    private static let sidebarWidth: CGFloat = 176
+
+    /// Discards the `nil` the sidebar reports when empty space is clicked, so a row
+    /// stays highlighted instead of the detail pane outliving its selection.
+    private var selectionBinding: Binding<SettingsTab?> {
+        Binding(
+            get: { selection },
+            set: { if let newValue = $0 { selection = newValue } }
+        )
+    }
+
     var body: some View {
-        TabView {
-            GeneralTab()
-                .tabItem {
-                    Label(String(localized: "settings.tab.general"), systemImage: "gearshape")
+        HStack(spacing: 0) {
+            List(selection: selectionBinding) {
+                ForEach(SettingsTab.allCases) { tab in
+                    Label(tab.title, systemImage: tab.systemImage)
+                        .tag(tab)
                 }
+            }
+            .listStyle(.sidebar)
+            .frame(width: Self.sidebarWidth)
 
-            AppearanceTab()
-                .tabItem {
-                    Label(String(localized: "settings.tab.appearance"), systemImage: "paintbrush")
-                }
+            Divider()
 
-            LyricsTab(lyricsManager: lyricsManager)
-                .tabItem {
-                    Label(String(localized: "settings.tab.lyrics"), systemImage: "music.note.list")
-                }
-
-            ShortcutsTab()
-                .tabItem {
-                    Label(String(localized: "settings.tab.shortcuts"), systemImage: "keyboard")
-                }
-
-            AboutTab()
-                .tabItem {
-                    Label(String(localized: "settings.tab.about"), systemImage: "info.circle")
-                }
+            detail
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
-        .frame(width: 420, height: 380)
+        .frame(minWidth: Self.minimumSize.width, minHeight: Self.minimumSize.height)
+    }
+
+    @ViewBuilder
+    private var detail: some View {
+        switch selection {
+        case .general: GeneralTab()
+        case .appearance: AppearanceTab()
+        case .lyrics: LyricsTab(lyricsManager: lyricsManager)
+        case .shortcuts: ShortcutsTab()
+        case .about: AboutTab()
+        }
     }
 }
 
@@ -155,63 +207,43 @@ private struct LyricsTab: View {
     @AppStorage("currentLyricsOffset") private var currentOffset: Double = 0
 
     var body: some View {
-        VStack(spacing: 0) {
-            Form {
-                Section {
-                    HStack {
-                        Text(String(localized: "settings.lyrics.current_offset"))
-                        Spacer()
-                        Text(String(format: "%+.1fs", currentOffset))
-                            .monospacedDigit()
-                            .foregroundStyle(.secondary)
-                    }
-
-                    HStack(spacing: 12) {
-                        Button(String(localized: "settings.lyrics.offset.earlier")) {
-                            NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: -0.5)
-                        }
-                        Button(String(localized: "settings.lyrics.offset.later")) {
-                            NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: 0.5)
-                        }
-                        Spacer()
-                        Button(String(localized: "settings.lyrics.offset.reset")) {
-                            NotificationCenter.default.post(name: .lyricsOffsetReset, object: nil)
-                        }
-                    }
-                    .controlSize(.small)
-
-                    Text(String(localized: "settings.lyrics.offset_hint"))
-                        .foregroundStyle(.tertiary)
-                        .font(.caption)
-                } header: {
-                    Text(String(localized: "settings.lyrics.offset_section"))
+        Form {
+            Section {
+                HStack {
+                    Text(String(localized: "settings.lyrics.current_offset"))
+                    Spacer()
+                    Text(String(format: "%+.1fs", currentOffset))
+                        .monospacedDigit()
+                        .foregroundStyle(.secondary)
                 }
+
+                HStack(spacing: 12) {
+                    Button(String(localized: "settings.lyrics.offset.earlier")) {
+                        NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: -0.5)
+                    }
+                    Button(String(localized: "settings.lyrics.offset.later")) {
+                        NotificationCenter.default.post(name: .lyricsOffsetAdjust, object: 0.5)
+                    }
+                    Spacer()
+                    Button(String(localized: "settings.lyrics.offset.reset")) {
+                        NotificationCenter.default.post(name: .lyricsOffsetReset, object: nil)
+                    }
+                }
+                .controlSize(.small)
+
+                Text(String(localized: "settings.lyrics.offset_hint"))
+                    .foregroundStyle(.tertiary)
+                    .font(.caption)
+            } header: {
+                Text(String(localized: "settings.lyrics.offset_section"))
             }
-            .formStyle(.grouped)
 
-            VStack(alignment: .leading, spacing: 6) {
-                Text(String(localized: "settings.lyrics.providers_section"))
-                    .font(.system(size: 11))
-                    .foregroundStyle(.secondary)
-                    .textCase(.uppercase)
-                    .padding(.leading, 24)
-
-                List {
-                    ForEach($lyricsManager.providerSettings.entries) { $entry in
-                        HStack {
-                            Text(Self.displayName(for: entry.id))
-                            Spacer()
-                            Toggle("", isOn: $entry.isEnabled)
-                                .labelsHidden()
-                                .toggleStyle(.switch)
-                                .controlSize(.small)
-                        }
-                    }
+            Section {
+                ForEach($lyricsManager.providerSettings.entries) { $entry in
+                    Toggle(Self.displayName(for: entry.id), isOn: $entry.isEnabled)
+                        .toggleStyle(.switch)
+                        .controlSize(.small)
                 }
-                .listStyle(.inset)
-                .frame(height: 120)
-                .clipShape(RoundedRectangle(cornerRadius: 6))
-                .padding(.horizontal, 20)
 
                 HStack {
                     Text(String(localized: "settings.lyrics.providers_hint"))
@@ -223,10 +255,11 @@ private struct LyricsTab: View {
                     }
                     .controlSize(.small)
                 }
-                .padding(.horizontal, 24)
+            } header: {
+                Text(String(localized: "settings.lyrics.providers_section"))
             }
-            .padding(.bottom, 12)
         }
+        .formStyle(.grouped)
         .onChange(of: lyricsManager.providerSettings) { _, newValue in
             newValue.save()
         }
