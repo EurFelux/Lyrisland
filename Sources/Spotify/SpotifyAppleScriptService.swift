@@ -95,8 +95,8 @@ final class SpotifyAppleScriptService {
         let parts = raw.components(separatedBy: "||")
         guard parts.count >= 7 else { return nil }
 
-        let position = Double(parts[5]) ?? 0
-        let durationMs = Int(parts[4]) ?? 0
+        let position = parseNumber(parts[5]) ?? 0
+        let durationMs = parseNumber(parts[4]).map { Int($0) } ?? 0
         let isPlaying = parts[6] == "playing"
         let artworkURL = parts.count > 7 ? parts[7] : nil
 
@@ -110,5 +110,14 @@ final class SpotifyAppleScriptService {
             isPlaying: isPlaying,
             artworkURL: artworkURL
         )
+    }
+
+    /// Parses a number AppleScript turned into a string.
+    ///
+    /// `as string` formats reals with the decimal separator of the user's region, so a region such as
+    /// Ukraine or Germany yields `288,351` instead of `288.351`, which `Double(_:)` rejects.
+    static func parseNumber(_ raw: String) -> Double? {
+        let trimmed = raw.trimmingCharacters(in: .whitespaces)
+        return Double(trimmed.replacingOccurrences(of: ",", with: "."))
     }
 }
