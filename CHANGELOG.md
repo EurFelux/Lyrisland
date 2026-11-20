@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Lyrics never advanced past the first line when macOS was set to a region that formats numbers differently from the US, such as a comma decimal separator (Ukraine, Germany) or native digits (Arabic, Persian): AppleScript turned Spotify's player position into region-formatted text (`288,351`, `٢٨٨٫٣٥١`) that failed to parse and left the position at 0 (with native digits the track length was lost too, which weakened lyrics matching), so playback values are now read as typed AppleScript values instead of text (#111, #112)
+- A track whose title, artist or album contained `||` never synced its lyrics and was searched under a cut-off name: the AppleScript result was joined into one `||`-separated string and split in the wrong places, so its fields are now returned separately (#112)
+
 ## 0.7.2 — 2026-09-16
 
 ### Fixed
